@@ -7,9 +7,7 @@
     <artifactId>ERSi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>nl.knaw.dans.ersi</groupId>
   <artifactId>data-selector</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>data-selector</name>
   <url>http://maven.apache.org</url>
   <properties>

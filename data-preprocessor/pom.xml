@@ -7,7 +7,6 @@
     <artifactId>ERSi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>nl.knaw.dans.ersi</groupId>
   <artifactId>data-preprocessor</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>data-preprocessor</name>
