@@ -26,5 +26,23 @@
 		<artifactId>oai4j</artifactId>
 		<version>0.6b1</version>
 	</dependency>	
+	<!--  Language Recognition -->
+   <dependency>
+		<groupId>net.arnx</groupId>
+		<artifactId>jsonic</artifactId>
+		<version>1.2.7</version>
+	</dependency>
+	<dependency>
+		<groupId>com.cybozu.labs</groupId>
+    	<artifactId>langdetect</artifactId>
+    	<version>1.2.2</version>
+	</dependency>
+
   </dependencies>
+   <repositories>
+  	<repository>
+    <id>Github Imaginatio</id>
+    <url>https://github.com/Imaginatio/Maven-repository/raw/master</url>
+  </repository>
+  </repositories>
 </project>
