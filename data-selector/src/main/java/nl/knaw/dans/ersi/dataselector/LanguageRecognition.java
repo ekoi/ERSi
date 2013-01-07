@@ -12,11 +12,12 @@ public class LanguageRecognition {
 	public static String EN = "en";
 	public static String FR = "fr";
 	public static String DE = "de";
+	public static String ID = "id";
 	public static String UN_RECOGNIZED = "[UN-RECOGNIZED]";
 	
 	
 	public LanguageRecognition() throws LangDetectException{
-		init(new String[]{EN, NL, FR, DE});
+		init(new String[]{EN, NL, FR, DE, ID});
 	}
 	private void init(String[] profileDirectory) throws LangDetectException {
         DetectorFactory.loadProfiles(profileDirectory);
@@ -28,7 +29,6 @@ public class LanguageRecognition {
 			detector.append(text.toLowerCase());
 			return detector.detect();
 		} catch (LangDetectException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return UN_RECOGNIZED + text;
@@ -39,19 +39,5 @@ public class LanguageRecognition {
         detector.append(text);
         return detector.getProbabilities();
     }
-    
-    public static void main(String args[]) {
-    	try {
-			LanguageRecognition dr = new LanguageRecognition();
-			String eko = "Emmer-Compascuum, Herstructurering Runde (Dr.) onderzoeksrapport";
-			String eko1 = "As you have already known, I am using the most newest technology";
-			String eko2= "Berhenti tak ada tempat di jalan ini. Sikap lambat berarti mati. Mereka yang bergerak, merekalah yang maju ke muka. Mereka yang menunggu sejenak sekalipun, pasti tergilas";
-			String result = dr.detect(eko2);
-			System.out.println(result);
-    	} catch (LangDetectException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
+  
 }
