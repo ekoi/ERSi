@@ -92,12 +92,7 @@ public class MetadataExtractor {
 					System.out.println("******** FINISH  ********");
 					String report = "Number of resumption tokens: " + numberOfResumption + "\n";
 					report+= "Number of processed records: " + numberOfRecords + "\n";
-					
 					System.out.println(report);
-					
-					//outFile.println();
-					//outFile.println("************* REPORT **************");
-					//outFile.println(report);
 				}
 			}
 
