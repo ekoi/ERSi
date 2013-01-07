@@ -59,22 +59,28 @@ public class DataSelectionToXML {
 
 		try {
 			File extractedOutputDirectory = new File("xmldata-from-easy");
-			if (extractedOutputDirectory.exists()) {
-				boolean deleteDirectory = deleteDir(extractedOutputDirectory);
-				if (!deleteDirectory)
-					System.out
-							.println("Cannot delete the existing extracted-output directory.");
-			}
-			boolean success = extractedOutputDirectory.mkdir();
-			if (!success)
-				System.out.println("Cannot create a directory.");
+//			if (extractedOutputDirectory.exists()) {
+//				boolean deleteDirectory = deleteDir(extractedOutputDirectory);
+//				if (!deleteDirectory)
+//					System.out
+//							.println("Cannot delete the existing extracted-output directory.");
+//			}
+//			boolean success = extractedOutputDirectory.mkdir();
+//			if (!success)
+//				System.out.println("Cannot create a directory.");
 			
 			Map<String, List<Map<String, String>>> data = new HashMap<String, List<Map<String,String>>>();
 			
 			List<Map<String, String>> nlData = new ArrayList<Map<String,String>>();	
-			data.put("en", nlData);
+			data.put(LanguageRecognition.NL, nlData);
 			List<Map<String, String>> enData = new ArrayList<Map<String,String>>();
-			data.put("nl", enData);
+			data.put(LanguageRecognition.EN, enData);
+			List<Map<String, String>> frData = new ArrayList<Map<String,String>>();	
+			data.put(LanguageRecognition.FR, frData);
+			List<Map<String, String>> deData = new ArrayList<Map<String,String>>();	
+			data.put(LanguageRecognition.DE, deData);
+			List<Map<String, String>> unData = new ArrayList<Map<String,String>>();	
+			data.put(LanguageRecognition.UN_RECOGNIZED, unData);
 			
 			RecordsList records = server.listRecords("oai_dc", null, null, getOaipmhSetValue());
 			LanguageRecognition dl = new LanguageRecognition();
@@ -105,16 +111,22 @@ public class DataSelectionToXML {
 								enText.put(identifier, text);
 								enData.add(enText);
 								numberOfNlRecords++;
-							}/* else if (language.equals(LanguageRecognition.FR)) {
-								outFRFile.println(datasetId + text);
+							} else if (language.equals(LanguageRecognition.FR)) {
+								Map<String, String> frText = new HashMap<String, String>();
+								frText.put(identifier, text);
+								frData.add(frText);
 								numberOfFrRecords++;
 							} else if (language.equals(LanguageRecognition.DE)) {
-								outDEFile.println(datasetId + text);
+								Map<String, String> deText = new HashMap<String, String>();
+								deText.put(identifier, text);
+								deData.add(deText);
 								numberOfDeRecords++;
-							}else {
-								outUNFile.println(datasetId + text);
+							} else {
+								Map<String, String> unText = new HashMap<String, String>();
+								unText.put(identifier, text);
+								unData.add(unText);
 								numberOfUNRecords++;
-							}*/
+							}
 						}
 					}
 				}
@@ -131,10 +143,13 @@ public class DataSelectionToXML {
 					records = server.listRecords(rt);
 				}
 				else {
-					more = false;
 					more=false;
 					WriteXMLFile wxf = new WriteXMLFile();
-					wxf.createDataElements(data, new File(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName()+ ".xml"));
+					File xmlOutput = new File(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName()+ ".xml");
+					if (xmlOutput.exists())
+						xmlOutput.delete();
+					
+					wxf.createDataElements(data, xmlOutput);
 					System.out.println("******** FINISH  ********");
 					String report = "Number of resumption tokens: " + numberOfResumption + "\n";
 					report+= "Number of processed records: " + numberOfRecords + "\n";
@@ -147,6 +162,13 @@ public class DataSelectionToXML {
 					System.out.println(report);
 					
 				}
+				
+//				if (numberOfResumption>2) {
+//					more=false;
+//					WriteXMLFile wxf = new WriteXMLFile();
+//					wxf.createDataElements(data, new File(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName()+ ".xml"));
+//					System.out.println("******** FINISH  ********");
+//				}
 			}
 
 		} catch (OAIException e) {
