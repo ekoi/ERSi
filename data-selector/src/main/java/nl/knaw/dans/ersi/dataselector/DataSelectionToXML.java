@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -23,7 +26,7 @@ import com.cybozu.labs.langdetect.LangDetectException;
  * Hello world!
  * 
  */
-public class SimpleMetadataExtractor {
+public class DataSelectionToXML {
 	private String oaipmhServerURL;
 	private String outputFileName;
 	private String oaipmhSetValue;
@@ -36,7 +39,7 @@ public class SimpleMetadataExtractor {
 	private static int numberOfUNRecords;
 	private static int numberOfResumption;
 	
-	public SimpleMetadataExtractor(String oaipmhServerURL, String outpuFileName, String oaipmhSetValue, String[] elementNames) {
+	public DataSelectionToXML(String oaipmhServerURL, String outpuFileName, String oaipmhSetValue, String[] elementNames) {
 		this.oaipmhServerURL = oaipmhServerURL;
 		this.outputFileName = outpuFileName;
 		this.oaipmhSetValue = oaipmhSetValue;
@@ -45,7 +48,7 @@ public class SimpleMetadataExtractor {
 	
 	public static void main(String[] args) {
 		// OaiPmhServer("https://easy.dans.knaw.nl/oai?verb=ListRecords&metadataPrefix=oai_dc&set=D30000:D34000");
-		SimpleMetadataExtractor seme = new SimpleMetadataExtractor("https://easy.dans.knaw.nl/oai", "datasetId-title-description",null
+		DataSelectionToXML seme = new DataSelectionToXML("https://easy.dans.knaw.nl/oai", "datasetId-title-description",null
 				, new String[]{"dc:title", "dc:description"});
 		seme.extract();
 
@@ -53,14 +56,9 @@ public class SimpleMetadataExtractor {
 	
 	public void extract(){
 		OaiPmhServer server = new OaiPmhServer(getOaipmhServerURL());
-		PrintWriter outNLFile = null;
-		PrintWriter outENFile = null;
-		PrintWriter outDEFile = null;
-		PrintWriter outFRFile = null;
-		PrintWriter outFile = null;
-		PrintWriter outUNFile = null;
+
 		try {
-			File extractedOutputDirectory = new File("extracted-data-from-easy");
+			File extractedOutputDirectory = new File("xmldata-from-easy");
 			if (extractedOutputDirectory.exists()) {
 				boolean deleteDirectory = deleteDir(extractedOutputDirectory);
 				if (!deleteDirectory)
@@ -70,40 +68,44 @@ public class SimpleMetadataExtractor {
 			boolean success = extractedOutputDirectory.mkdir();
 			if (!success)
 				System.out.println("Cannot create a directory.");
-			outNLFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-nl.txt"));
-			outENFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-en.txt"));
-			outDEFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-de.txt"));
-			outFRFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-fr.txt"));
-			outUNFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-un.txt"));
-			outFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + ".txt"));
+			
+			Map<String, List<Map<String, String>>> data = new HashMap<String, List<Map<String,String>>>();
+			
+			List<Map<String, String>> nlData = new ArrayList<Map<String,String>>();	
+			data.put("en", nlData);
+			List<Map<String, String>> enData = new ArrayList<Map<String,String>>();
+			data.put("nl", enData);
+			
 			RecordsList records = server.listRecords("oai_dc", null, null, getOaipmhSetValue());
 			LanguageRecognition dl = new LanguageRecognition();
 			boolean more = true;
 			while (more) {
 				numberOfResumption++;
+				
 				numberOfRecords += records.size();
 				for (Record record : records.asList()) {
 					Element element = record.getMetadata();
 					Header header = record.getHeader();
 					String identifier = header.getIdentifier();
 					System.out.println("identifier: " + identifier);
-					String easyIdentifier[] = identifier.split("easy-dataset:");
-					String datasetId = "<###" + easyIdentifier[1] + "###>";
-					System.out.println("identifier: " + datasetId);
 					if (element != null ) {
 						Node nodeTitle = element.selectSingleNode("./dc:title");
 						Node nodeDescription = element.selectSingleNode("./dc:description");
 						if (nodeTitle != null && nodeDescription != null) {
-							String text = nodeTitle.getStringValue() + " " + nodeDescription.getStringValue();
+							String text = nodeDescription.getStringValue();
 							// detect the language of the text
 							String language = dl.detect(text);
-							if (language.equals(LanguageRecognition.EN)) {
-								outENFile.println(datasetId + text);
+							if (language.equals(LanguageRecognition.NL)) {
+								Map<String, String> nlText = new HashMap<String, String>();
+								nlText.put(identifier, text);
+								nlData.add(nlText);
 								numberOfEnRecords++;
-							} else if (language.equals(LanguageRecognition.NL)) {
-								outNLFile.println(datasetId + text);
+							} else if (language.equals(LanguageRecognition.EN)) {
+								Map<String, String> enText = new HashMap<String, String>();
+								enText.put(identifier, text);
+								enData.add(enText);
 								numberOfNlRecords++;
-							} else if (language.equals(LanguageRecognition.FR)) {
+							}/* else if (language.equals(LanguageRecognition.FR)) {
 								outFRFile.println(datasetId + text);
 								numberOfFrRecords++;
 							} else if (language.equals(LanguageRecognition.DE)) {
@@ -112,7 +114,7 @@ public class SimpleMetadataExtractor {
 							}else {
 								outUNFile.println(datasetId + text);
 								numberOfUNRecords++;
-							}
+							}*/
 						}
 					}
 				}
@@ -130,6 +132,9 @@ public class SimpleMetadataExtractor {
 				}
 				else {
 					more = false;
+					more=false;
+					WriteXMLFile wxf = new WriteXMLFile();
+					wxf.createDataElements(data, new File(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName()+ ".xml"));
 					System.out.println("******** FINISH  ********");
 					String report = "Number of resumption tokens: " + numberOfResumption + "\n";
 					report+= "Number of processed records: " + numberOfRecords + "\n";
@@ -141,30 +146,15 @@ public class SimpleMetadataExtractor {
 					
 					System.out.println(report);
 					
-					outFile.println("************* REPORT **************");
-					outFile.println(report);
 				}
 			}
 
 		} catch (OAIException e) {
 			e.printStackTrace();
-		}catch (LangDetectException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (LangDetectException e) {
 			e.printStackTrace();
 		} finally {
-			if (outNLFile != null)
-				outNLFile.close();
-			if (outENFile != null)
-				outENFile.close();
-			if (outDEFile != null)
-				outDEFile.close();
-			if (outFRFile != null)
-				outFRFile.close();
-			if (outUNFile != null)
-				outUNFile.close();
-			if (outFile != null)
-				outFile.close();
+			
 
 		}
 	}
