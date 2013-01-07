@@ -43,7 +43,10 @@ public class LanguageRecognition {
     public static void main(String args[]) {
     	try {
 			LanguageRecognition dr = new LanguageRecognition();
-			String result = dr.detect("Emmer-Compascuum, Herstructurering Runde (Dr.) onderzoeksrapport");
+			String eko = "Emmer-Compascuum, Herstructurering Runde (Dr.) onderzoeksrapport";
+			String eko1 = "As you have already known, I am using the most newest technology";
+			String eko2= "Berhenti tak ada tempat di jalan ini. Sikap lambat berarti mati. Mereka yang bergerak, merekalah yang maju ke muka. Mereka yang menunggu sejenak sekalipun, pasti tergilas";
+			String result = dr.detect(eko2);
 			System.out.println(result);
     	} catch (LangDetectException e) {
 			// TODO Auto-generated catch block
