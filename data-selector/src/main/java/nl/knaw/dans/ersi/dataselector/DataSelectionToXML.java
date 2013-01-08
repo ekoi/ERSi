@@ -1,11 +1,7 @@
 package nl.knaw.dans.ersi.dataselector;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +26,6 @@ public class DataSelectionToXML {
 	private String oaipmhServerURL;
 	private String outputFileName;
 	private String oaipmhSetValue;
-	private List<String> elementNames;
 	private static int numberOfRecords;
 	private static int numberOfEnRecords;
 	private static int numberOfNlRecords;
@@ -43,7 +38,6 @@ public class DataSelectionToXML {
 		this.oaipmhServerURL = oaipmhServerURL;
 		this.outputFileName = outpuFileName;
 		this.oaipmhSetValue = oaipmhSetValue;
-		this.elementNames = Arrays.asList(elementNames);
 	}
 	
 	public static void main(String[] args) {

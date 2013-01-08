@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.List;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -27,7 +26,6 @@ public class SimpleMetadataExtractor {
 	private String oaipmhServerURL;
 	private String outputFileName;
 	private String oaipmhSetValue;
-	private List<String> elementNames;
 	private static int numberOfRecords;
 	private static int numberOfEnRecords;
 	private static int numberOfNlRecords;
@@ -40,7 +38,7 @@ public class SimpleMetadataExtractor {
 		this.oaipmhServerURL = oaipmhServerURL;
 		this.outputFileName = outpuFileName;
 		this.oaipmhSetValue = oaipmhSetValue;
-		this.elementNames = Arrays.asList(elementNames);
+		Arrays.asList(elementNames);
 	}
 	
 	public static void main(String[] args) {
