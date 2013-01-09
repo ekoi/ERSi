@@ -26,12 +26,12 @@ public class MetadataSeqFileReader {
                                 reader.getKeyClass(), conf);
                 Writable value = (Writable) ReflectionUtils.newInstance(
                                 reader.getValueClass(), conf);
-                long position = reader.getPosition();
+               // long position = reader.getPosition();
                 while (reader.next(key, value)) {
-                        String syncSeen = reader.syncSeen() ? "*" : "";
+                        //String syncSeen = reader.syncSeen() ? "*" : "";
                         System.out.println("key: " + key + " value: " +
                                         value);
-                        position = reader.getPosition(); // beginning of next record
+                        //position = reader.getPosition(); // beginning of next record
                 }
         } finally {
                 IOUtils.closeStream(reader);

@@ -47,7 +47,7 @@ public class MetadataToSeqFile {
 	
 	public static void main(String[] args) {
 		// OaiPmhServer("https://easy.dans.knaw.nl/oai?verb=ListRecords&metadataPrefix=oai_dc&set=D30000:D34000");
-		MetadataToSeqFile seme = new MetadataToSeqFile("https://easy.dans.knaw.nl/oai", "datasetId-title-description",null
+		MetadataToSeqFile seme = new MetadataToSeqFile("https://easy.dans.knaw.nl/oai", "datasetId-title-description.seq",null
 				, new String[]{"dc:title", "dc:description"});
 		seme.extract();
 
@@ -70,7 +70,7 @@ public class MetadataToSeqFile {
 			
 			
 			Path seqDir = new Path("seqfiles-from-easy");
-			String uri = seqDir.getName()+"/nlEasy.seq";
+			String uri = seqDir.getName()+"/" + outputFileName;
 	        Configuration conf = new Configuration();
 	        HadoopUtil.delete(conf, seqDir);
 	        FileSystem fs = FileSystem.get(URI.create(uri), conf);
@@ -194,12 +194,6 @@ public class MetadataToSeqFile {
 		return oaipmhServerURL;
 	}
 
-	/**
-	 * @return the outputFileName
-	 */
-	private String getOutputFileName() {
-		return outputFileName;
-	}
 
 	/**
 	 * @return the oaipmhSetValue
