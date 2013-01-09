@@ -3,9 +3,10 @@
  */
 package nl.knaw.dans.ersi.dataselector;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
+import org.w3c.dom.DOMConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
 
 /**
  * @author akmi
@@ -51,15 +54,24 @@ public class WriteXMLFile {
 	}
 
 	private void writeXML(File f) throws TransformerFactoryConfigurationError,
-			FileNotFoundException, IOException {
+			FileNotFoundException, IOException, ClassCastException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		DOMImplementationLS impl = (DOMImplementationLS) 
+	            DOMImplementationRegistry.newInstance().getDOMImplementation("LS");
 
-		OutputFormat format = new OutputFormat(doc);
-		format.setIndenting(true);
-
-		// to generate a file output use fileoutputstream instead of system.out
-		XMLSerializer serializer = new XMLSerializer(new FileOutputStream(f),
-				format);
-		serializer.serialize(doc);
+		LSSerializer writer = impl.createLSSerializer();
+		DOMConfiguration config = writer.getDomConfig();
+        config.setParameter("format-pretty-print", Boolean.TRUE);
+       
+        BufferedWriter out = new BufferedWriter(new FileWriter(f));
+        out.write(writer.writeToString(doc));
+        out.close();
+//		OutputFormat format = new OutputFormat(doc);
+//		format.setIndenting(true);
+//
+//		// to generate a file output use fileoutputstream instead of system.out
+//		XMLSerializer serializer = new XMLSerializer(new FileOutputStream(f),
+//				format);
+//		serializer.serialize(doc);
 
 		System.out.println("XML File saved! Location: " + f.getAbsolutePath());
 
@@ -103,6 +115,18 @@ public class WriteXMLFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassCastException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
