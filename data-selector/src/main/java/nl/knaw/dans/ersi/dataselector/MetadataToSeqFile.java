@@ -1,6 +1,7 @@
 package nl.knaw.dans.ersi.dataselector;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 
@@ -13,6 +14,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.mahout.common.HadoopUtil;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
 
 import se.kb.oai.OAIException;
 import se.kb.oai.pmh.Header;
@@ -81,6 +84,16 @@ public class MetadataToSeqFile {
 	        writer = SequenceFile.createWriter( fs, conf, path, key.getClass(), value.getClass());
 	        
 			RecordsList records = server.listRecords("oai_dc", null, null, getOaipmhSetValue());
+			/*
+			 temp: write response to a file or system.out for debugging.
+			// Pretty print the document to System.out
+	        OutputFormat format = OutputFormat.createPrettyPrint();
+	        XMLWriter w = new XMLWriter( new FileWriter( "/Users/akmi/oai-dc.xml" ) );
+	        //XMLWriter w = new XMLWriter( System.out, format );
+	        w.write( records.getResponse() );
+	        */
+			
+			
 			LanguageRecognition dl = new LanguageRecognition();
 			boolean more = true;
 			while (more) {
