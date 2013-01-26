@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -41,6 +43,23 @@ public class MetadataToSeqFile {
 	private static int numberOfFrRecords;
 	private static int numberOfUNRecords;
 	private static int numberOfResumption;
+	private static int numberOfAllWords;
+	private static int numberOfWords3;
+	private static int numberOfWords5;
+	private static int numberOfWords10;
+	private static int numberOfWords3Nl;
+	private static int numberOfWords5Nl;
+	private static int numberOfWords10Nl;
+	private static int numberOfWords3En;
+	private static int numberOfWords5En;
+	private static int numberOfWords10En;
+	private static List<String> listOfWords3Nl = new ArrayList<String>();
+	private static List<String> listOfWords5Nl = new ArrayList<String>();
+	private static List<String> listOfWords10Nl = new ArrayList<String>();
+	private static List<String> listOfWords3En = new ArrayList<String>();
+	private static List<String> listOfWords5En = new ArrayList<String>();
+	private static List<String> listOfWords10En = new ArrayList<String>();
+	
 	
 	public MetadataToSeqFile(String oaipmhServerURL, String outpuFileName, String oaipmhSetValue, String[] elementNames) {
 		this.oaipmhServerURL = oaipmhServerURL;
@@ -72,7 +91,7 @@ public class MetadataToSeqFile {
 //				System.out.println("Cannot create a directory.");
 			
 			
-			Path seqDir = new Path("seqfiles-from-easy");
+			Path seqDir = new Path("seqfiles-from-easy-20130126-1810");
 			String uri = seqDir.getName()+"/" + outputFileName;
 	        Configuration conf = new Configuration();
 	        HadoopUtil.delete(conf, seqDir);
@@ -109,7 +128,11 @@ public class MetadataToSeqFile {
 						Node nodeTitle = element.selectSingleNode("./dc:title");
 						Node nodeDescription = element.selectSingleNode("./dc:description");
 						if (nodeTitle != null && nodeDescription != null) {
-							String text = nodeDescription.getStringValue();
+							String text = nodeTitle.getStringValue() + " " + nodeDescription.getStringValue();
+							int numberOfWords = text.split(" ").length;
+							numberOfAllWords += numberOfWords;
+							String id = identifier.split("easy-dataset:")[1];
+							
 							// detect the language of the text
 							String language = dl.detect(text);
 							if (language.equals(LanguageRecognition.NL)) {
@@ -117,9 +140,30 @@ public class MetadataToSeqFile {
 								value.set(text);
 								writer.append( key, value);
 								numberOfEnRecords++;
-							} else if (language.equals(LanguageRecognition.EN)) {
 								
+								if (numberOfWords < 3 ) {
+									listOfWords3Nl.add(id);
+									numberOfWords3Nl++;
+								} else if (numberOfWords >= 3 && numberOfWords < 5){
+									listOfWords5Nl.add(id);
+									numberOfWords5Nl++;
+								} else if (numberOfWords >= 5 && numberOfWords < 10) {
+									listOfWords10Nl.add(id);
+									numberOfWords10Nl++;
+								}
+							} else if (language.equals(LanguageRecognition.EN)) {
 								numberOfNlRecords++;
+								if (numberOfWords < 3 ) {
+									listOfWords3En.add(id);
+									numberOfWords3En++;
+								}else if (numberOfWords >= 3 && numberOfWords < 5){
+									listOfWords5En.add(id);
+									numberOfWords5En++;
+								}else if (numberOfWords >= 5 && numberOfWords < 10){
+									numberOfWords10En++;
+									listOfWords10En.add(id);
+								}
+								
 							} else if (language.equals(LanguageRecognition.FR)) {
 								
 								numberOfFrRecords++;
@@ -138,7 +182,7 @@ public class MetadataToSeqFile {
 					ResumptionToken rt = records.getResumptionToken();
 					System.out.println("=========== " + numberOfResumption + "  " + rt.getId() + " ===========");
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(3000);
 
 					} catch (InterruptedException ie) {
 						System.out.println(ie.getMessage());
@@ -156,16 +200,37 @@ public class MetadataToSeqFile {
 					report+= "Number of DE records: " + numberOfDeRecords + "\n";
 					report+= "Number of FR records: " + numberOfFrRecords + "\n";
 					report+= "Number of UN records: " + numberOfUNRecords + "\n";
-					
+					report+= "Number of NL records less than 3: " + numberOfWords3Nl + "\n";
+					report+= "NL3: " + listOfWords3Nl.size() + "\n";
+					report+= "Number of NL records at least 3 and less than 5: " + numberOfWords5Nl + "\n";
+					report+= "NL5: " + listOfWords5Nl.size() + "\n";
+					report+= "Number of NL records at least 5 and less than 10: " + numberOfWords10Nl + "\n";
+					report+= "NL10: " + listOfWords10Nl.size() + "\n";
+					report+= "Number of EN records less than 3: " + numberOfWords3En + "\n";
+					report+= "EN3: " + listOfWords3En.size() + "\n";
+					report+= "Number of EN records at least 3 and less than 5: " + numberOfWords5En + "\n";
+					report+= "EN5: " + listOfWords5En.size() + "\n";
+					report+= "Number of EN records at least 5 and less than 10: " + numberOfWords10En + "\n";
+					report+= "EN10: " + listOfWords10En.size() + "\n";
+					report+= "========================================\n";
+					report+= "List NL3: " + listOfWords3Nl + "\n";
+					report+= "List NL5: " + listOfWords5Nl + "\n";
+					report+= "List NL10: " + listOfWords10Nl + "\n";
+					report+= "List EN3: " + listOfWords3En + "\n";
+					report+= "List EN5: " + listOfWords5En + "\n";
+					report+= "List EN10: " + listOfWords10En + "\n";
+					report+= "========================================\n";
+					report+= "TOTAL WORDS: " + numberOfAllWords;
+					report+= "******** FINISH  ********\n";
 					System.out.println(report);
 					
 				}
 				
-				if (numberOfResumption>0) {
-					more=false;
-					
-					System.out.println("******** FINISH  ********");
-				}
+//				if (numberOfResumption>0) {
+//					more=false;
+//					
+//					System.out.println("******** FINISH  ********");
+//				}
 			}
 
 		} catch (OAIException e) {
