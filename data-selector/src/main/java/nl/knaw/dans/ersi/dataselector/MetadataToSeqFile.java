@@ -37,6 +37,7 @@ public class MetadataToSeqFile {
 	private String outputFileName;
 	private String oaipmhSetValue;
 	private static int numberOfRecords;
+	private static int numberOfIds;
 	private static int numberOfEnRecords;
 	private static int numberOfNlRecords;
 	private static int numberOfDeRecords;
@@ -59,6 +60,8 @@ public class MetadataToSeqFile {
 	private static List<String> listOfWords3En = new ArrayList<String>();
 	private static List<String> listOfWords5En = new ArrayList<String>();
 	private static List<String> listOfWords10En = new ArrayList<String>();
+	private static List<String> listOfWordsDe = new ArrayList<String>();
+	private static List<String> listOfWordsFr = new ArrayList<String>();
 	
 	
 	public MetadataToSeqFile(String oaipmhServerURL, String outpuFileName, String oaipmhSetValue, String[] elementNames) {
@@ -91,7 +94,7 @@ public class MetadataToSeqFile {
 //				System.out.println("Cannot create a directory.");
 			
 			
-			Path seqDir = new Path("seqfiles-from-easy-20130126-1810");
+			Path seqDir = new Path("seqfiles-from-easy-20130126-2308");
 			String uri = seqDir.getName()+"/" + outputFileName;
 	        Configuration conf = new Configuration();
 	        HadoopUtil.delete(conf, seqDir);
@@ -128,7 +131,9 @@ public class MetadataToSeqFile {
 						Node nodeTitle = element.selectSingleNode("./dc:title");
 						Node nodeDescription = element.selectSingleNode("./dc:description");
 						if (nodeTitle != null && nodeDescription != null) {
+							numberOfIds ++;
 							String text = nodeTitle.getStringValue() + " " + nodeDescription.getStringValue();
+							text = text.replace(",", "");
 							int numberOfWords = text.split(" ").length;
 							numberOfAllWords += numberOfWords;
 							String id = identifier.split("easy-dataset:")[1];
@@ -165,10 +170,10 @@ public class MetadataToSeqFile {
 								}
 								
 							} else if (language.equals(LanguageRecognition.FR)) {
-								
+								listOfWordsFr.add(id);
 								numberOfFrRecords++;
 							} else if (language.equals(LanguageRecognition.DE)) {
-								
+								listOfWordsDe.add(id);
 								numberOfDeRecords++;
 							} else {
 								
@@ -195,6 +200,7 @@ public class MetadataToSeqFile {
 					System.out.println("******** FINISH  ********");
 					String report = "Number of resumption tokens: " + numberOfResumption + "\n";
 					report+= "Number of processed records: " + numberOfRecords + "\n";
+					report+= "Number of processed ids: " + numberOfIds + "\n";
 					report+= "Number of NL records: " + numberOfNlRecords + "\n";
 					report+= "Number of EN records: " + numberOfEnRecords + "\n";
 					report+= "Number of DE records: " + numberOfDeRecords + "\n";
@@ -219,6 +225,9 @@ public class MetadataToSeqFile {
 					report+= "List EN3: " + listOfWords3En + "\n";
 					report+= "List EN5: " + listOfWords5En + "\n";
 					report+= "List EN10: " + listOfWords10En + "\n";
+					report+= "========================================\n";
+					report+= "List DE: " + listOfWordsDe + "\n";
+					report+= "List FR: " + listOfWordsFr + "\n";
 					report+= "========================================\n";
 					report+= "TOTAL WORDS: " + numberOfAllWords;
 					report+= "******** FINISH  ********\n";
