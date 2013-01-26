@@ -5,7 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -62,6 +64,9 @@ public class MetadataToSeqFile {
 	private static List<String> listOfWords10En = new ArrayList<String>();
 	private static List<String> listOfWordsDe = new ArrayList<String>();
 	private static List<String> listOfWordsFr = new ArrayList<String>();
+	
+	private static List<String> listOfWords = new ArrayList<String>();
+	private static Map<String, Integer> mapOfWords = new HashMap<String, Integer>();
 	
 	
 	public MetadataToSeqFile(String oaipmhServerURL, String outpuFileName, String oaipmhSetValue, String[] elementNames) {
@@ -134,7 +139,17 @@ public class MetadataToSeqFile {
 							numberOfIds ++;
 							String text = nodeTitle.getStringValue() + " " + nodeDescription.getStringValue();
 							text = text.replace(",", "");
-							int numberOfWords = text.split(" ").length;
+							String textchunks[] = text.split(" ");
+							int numberOfWords = textchunks.length;
+							for(String s:textchunks) {
+								if (!mapOfWords.containsKey(s))
+									mapOfWords.put(s, 1);
+								else {
+									int i = mapOfWords.get(s);
+									i = i+1;
+								}
+									
+							}
 							numberOfAllWords += numberOfWords;
 							String id = identifier.split("easy-dataset:")[1];
 							
@@ -187,7 +202,7 @@ public class MetadataToSeqFile {
 					ResumptionToken rt = records.getResumptionToken();
 					System.out.println("=========== " + numberOfResumption + "  " + rt.getId() + " ===========");
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(5000);
 
 					} catch (InterruptedException ie) {
 						System.out.println(ie.getMessage());
