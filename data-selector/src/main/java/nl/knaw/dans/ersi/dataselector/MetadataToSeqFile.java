@@ -3,6 +3,7 @@ package nl.knaw.dans.ersi.dataselector;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +19,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.mahout.common.HadoopUtil;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import se.kb.oai.OAIException;
 import se.kb.oai.pmh.Header;
@@ -120,7 +119,45 @@ public class MetadataToSeqFile {
 	        w.write( records.getResponse() );
 	        */
 			
+			FileWriter fw = new FileWriter("title-description-report-20130128.txt");
+            PrintWriter out = new PrintWriter(fw);
 			
+			FileWriter fwNl = new FileWriter("title-description-NL-20130128.txt");
+            PrintWriter outNl = new PrintWriter(fwNl);
+            FileWriter fwEn = new FileWriter("title-description-EN-20130128.txt");
+            PrintWriter outEn = new PrintWriter(fwEn);
+            FileWriter fwOther = new FileWriter("title-description-Other-20130128.txt");
+            PrintWriter outOther = new PrintWriter(fwOther);
+            
+            FileWriter fwNl3 = new FileWriter("title-description-NL3-20130128.txt");
+            PrintWriter outNl3 = new PrintWriter(fwNl3);
+            FileWriter fwNl5 = new FileWriter("title-description-NL5-20130128.txt");
+            PrintWriter outNl5 = new PrintWriter(fwNl5);
+            FileWriter fwNl10 = new FileWriter("title-description-NL10-20130128.txt");
+            PrintWriter outNl10 = new PrintWriter(fwNl10);
+            
+            FileWriter fwEn3 = new FileWriter("title-description-NL5-20130128.txt");
+            PrintWriter outEn3 = new PrintWriter(fwEn3);
+            FileWriter fwEn5 = new FileWriter("title-description-NL5-20130128.txt");
+            PrintWriter outEn5 = new PrintWriter(fwEn5);
+            FileWriter fwEn10 = new FileWriter("title-description-NL10-20130128.txt");
+            PrintWriter outEn10 = new PrintWriter(fwEn10);
+            
+            
+            FileWriter fwNl3id = new FileWriter("title-description-NL3id-20130128.txt");
+            PrintWriter outNl3id = new PrintWriter(fwNl3id);
+            FileWriter fwNl5id = new FileWriter("title-description-NL5id-20130128.txt");
+            PrintWriter outNl5id = new PrintWriter(fwNl5id);
+            FileWriter fwNl10id = new FileWriter("title-description-NL10id-20130128.txt");
+            PrintWriter outNl10id = new PrintWriter(fwNl10id);
+            
+            FileWriter fwEn3id = new FileWriter("title-description-NL5id-20130128.txt");
+            PrintWriter outEn3id = new PrintWriter(fwEn3id);
+            FileWriter fwEn5id = new FileWriter("title-description-NL5id-20130128.txt");
+            PrintWriter outEn5id = new PrintWriter(fwEn5id);
+            FileWriter fwEn10id = new FileWriter("title-description-NL10id-20130128.txt");
+            PrintWriter outEn10id = new PrintWriter(fwEn10id);
+            
 			LanguageRecognition dl = new LanguageRecognition();
 			boolean more = true;
 			while (more) {
@@ -156,42 +193,59 @@ public class MetadataToSeqFile {
 							// detect the language of the text
 							String language = dl.detect(text);
 							if (language.equals(LanguageRecognition.NL)) {
+								outNl.println(text);
+
 								key.set(identifier);
 								value.set(text);
 								writer.append( key, value);
-								numberOfEnRecords++;
+								numberOfNlRecords++;
 								
 								if (numberOfWords < 3 ) {
+									outNl3.println(text);
+									outNl3.println(id + "#&#" + text);
 									listOfWords3Nl.add(id);
 									numberOfWords3Nl++;
 								} else if (numberOfWords >= 3 && numberOfWords < 5){
+									outNl5.println(text);
+									outNl5.println(id + "#&#" + text);
 									listOfWords5Nl.add(id);
 									numberOfWords5Nl++;
 								} else if (numberOfWords >= 5 && numberOfWords < 10) {
+									outNl10.println(text);
+									outNl10.println(id + "#&#" + text);
 									listOfWords10Nl.add(id);
 									numberOfWords10Nl++;
 								}
 							} else if (language.equals(LanguageRecognition.EN)) {
-								numberOfNlRecords++;
+								outEn.println(text);
+								numberOfEnRecords++;
 								if (numberOfWords < 3 ) {
+									outEn3.println(text);
+									outEn3.println(id + "#&#" + text);
 									listOfWords3En.add(id);
 									numberOfWords3En++;
 								}else if (numberOfWords >= 3 && numberOfWords < 5){
+									outEn5.println(text);
+									outEn5.println(id + "#&#" + text);
 									listOfWords5En.add(id);
 									numberOfWords5En++;
 								}else if (numberOfWords >= 5 && numberOfWords < 10){
+									outEn10.println(text);
+									outEn10.println(id + "#&#" + text);
 									numberOfWords10En++;
 									listOfWords10En.add(id);
 								}
 								
 							} else if (language.equals(LanguageRecognition.FR)) {
+								outOther.println(id + "#&#" + text);
 								listOfWordsFr.add(id);
 								numberOfFrRecords++;
 							} else if (language.equals(LanguageRecognition.DE)) {
+								outOther.println(id + "#&#" + text);
 								listOfWordsDe.add(id);
 								numberOfDeRecords++;
 							} else {
-								
+								outOther.println(id + "#&#" + text);
 								numberOfUNRecords++;
 							}
 						}
@@ -246,8 +300,33 @@ public class MetadataToSeqFile {
 					report+= "========================================\n";
 					report+= "TOTAL WORDS: " + numberOfAllWords;
 					report+= "******** FINISH  ********\n";
+					out.print(report);
 					System.out.println(report);
-					
+					 outNl.close();
+			         fwNl.close(); 
+			         outEn.close();
+			         fwEn.close(); 
+			         outOther.close();
+			         fwOther.close(); 
+			         
+			         out.close();
+			         fw.close(); 
+			         
+			         outNl3.close();
+			         fwNl3.close(); 
+			         
+			         outNl5.close();
+			         fwNl5.close(); 
+			         outNl10.close();
+			         fwNl10.close(); 
+			         
+			         outEn3.close();
+			         fwEn5.close(); 
+			         outEn5.close();
+			         fwEn5.close();
+			         outEn10.close();
+			         fwEn10.close(); 
+			         
 				}
 				
 //				if (numberOfResumption>0) {
