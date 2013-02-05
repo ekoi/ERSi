@@ -98,7 +98,7 @@ public class MetadataToSeqFile {
 //				System.out.println("Cannot create a directory.");
 			
 			
-			Path seqDir = new Path("seqfiles-from-easy-20130126-2308");
+			Path seqDir = new Path("seqfiles-from-easy-20130205C-1206");
 			String uri = seqDir.getName()+"/" + outputFileName;
 	        Configuration conf = new Configuration();
 	        HadoopUtil.delete(conf, seqDir);
@@ -119,43 +119,43 @@ public class MetadataToSeqFile {
 	        w.write( records.getResponse() );
 	        */
 			
-			FileWriter fw = new FileWriter("title-description-report-20130128.txt");
+			FileWriter fw = new FileWriter("title-description-report-20130205C.txt");
             PrintWriter out = new PrintWriter(fw);
 			
-			FileWriter fwNl = new FileWriter("title-description-NL-20130128.txt");
+			FileWriter fwNl = new FileWriter("title-description-NL-20130205C.txt");
             PrintWriter outNl = new PrintWriter(fwNl);
-            FileWriter fwEn = new FileWriter("title-description-EN-20130128.txt");
+            FileWriter fwEn = new FileWriter("title-description-EN-20130205C.txt");
             PrintWriter outEn = new PrintWriter(fwEn);
-            FileWriter fwOther = new FileWriter("title-description-Other-20130128.txt");
+            FileWriter fwOther = new FileWriter("title-description-Other-20130205C.txt");
             PrintWriter outOther = new PrintWriter(fwOther);
             
-            FileWriter fwNl3 = new FileWriter("title-description-NL3-20130128.txt");
+            FileWriter fwNl3 = new FileWriter("title-description-NL3-20130205C.txt");
             PrintWriter outNl3 = new PrintWriter(fwNl3);
-            FileWriter fwNl5 = new FileWriter("title-description-NL5-20130128.txt");
+            FileWriter fwNl5 = new FileWriter("title-description-NL5-20130205C.txt");
             PrintWriter outNl5 = new PrintWriter(fwNl5);
-            FileWriter fwNl10 = new FileWriter("title-description-NL10-20130128.txt");
+            FileWriter fwNl10 = new FileWriter("title-description-NL10-20130205C.txt");
             PrintWriter outNl10 = new PrintWriter(fwNl10);
             
-            FileWriter fwEn3 = new FileWriter("title-description-NL5-20130128.txt");
+            FileWriter fwEn3 = new FileWriter("title-description-NL5-20130205C.txt");
             PrintWriter outEn3 = new PrintWriter(fwEn3);
-            FileWriter fwEn5 = new FileWriter("title-description-NL5-20130128.txt");
+            FileWriter fwEn5 = new FileWriter("title-description-NL5-20130205C.txt");
             PrintWriter outEn5 = new PrintWriter(fwEn5);
-            FileWriter fwEn10 = new FileWriter("title-description-NL10-20130128.txt");
+            FileWriter fwEn10 = new FileWriter("title-description-NL10-20130205C.txt");
             PrintWriter outEn10 = new PrintWriter(fwEn10);
             
             
-            FileWriter fwNl3id = new FileWriter("title-description-NL3id-20130128.txt");
+            FileWriter fwNl3id = new FileWriter("title-description-NL3id-20130205C.txt");
             PrintWriter outNl3id = new PrintWriter(fwNl3id);
-            FileWriter fwNl5id = new FileWriter("title-description-NL5id-20130128.txt");
+            FileWriter fwNl5id = new FileWriter("title-description-NL5id-20130205C.txt");
             PrintWriter outNl5id = new PrintWriter(fwNl5id);
-            FileWriter fwNl10id = new FileWriter("title-description-NL10id-20130128.txt");
+            FileWriter fwNl10id = new FileWriter("title-description-NL10id-20130205C.txt");
             PrintWriter outNl10id = new PrintWriter(fwNl10id);
             
-            FileWriter fwEn3id = new FileWriter("title-description-NL5id-20130128.txt");
+            FileWriter fwEn3id = new FileWriter("title-description-NL5id-20130205C.txt");
             PrintWriter outEn3id = new PrintWriter(fwEn3id);
-            FileWriter fwEn5id = new FileWriter("title-description-NL5id-20130128.txt");
+            FileWriter fwEn5id = new FileWriter("title-description-NL5id-20130205C.txt");
             PrintWriter outEn5id = new PrintWriter(fwEn5id);
-            FileWriter fwEn10id = new FileWriter("title-description-NL10id-20130128.txt");
+            FileWriter fwEn10id = new FileWriter("title-description-NL10id-20130205C.txt");
             PrintWriter outEn10id = new PrintWriter(fwEn10id);
             
 			LanguageRecognition dl = new LanguageRecognition();
@@ -170,12 +170,38 @@ public class MetadataToSeqFile {
 					String identifier = header.getIdentifier();
 					System.out.println("identifier: " + identifier);
 					if (element != null ) {
-						Node nodeTitle = element.selectSingleNode("./dc:title");
+						List<Node> nodeTitles = element.selectNodes("./dc:title");
 						Node nodeDescription = element.selectSingleNode("./dc:description");
-						if (nodeTitle != null && nodeDescription != null) {
+						List<Node> nodeSubjects = element.selectNodes("./dc:subject");
+						List<Node> nodeCoverages = element.selectNodes("./dc:coverage");
+						if (nodeTitles != null && nodeDescription != null) {
 							numberOfIds ++;
-							String text = nodeTitle.getStringValue() + " " + nodeDescription.getStringValue();
-							text = text.replace(",", "");
+							if (identifier.equals("oai:easy.dans.knaw.nl:easy-dataset:44229")) {
+								for (Node n:nodeTitles) {
+								System.out.println(n.getStringValue());
+								}
+							}
+							StringBuffer title = new StringBuffer();
+							for (Node n:nodeTitles) {
+								title.append(n.getStringValue());
+								title.append(" ");
+							}
+							
+							StringBuffer subject = new StringBuffer();
+							for (Node n:nodeSubjects) {
+								subject.append(n.getStringValue());
+								subject.append(" ");
+							}
+							
+							StringBuffer coverages = new StringBuffer();
+							for (Node n:nodeCoverages) {
+								coverages.append(n.getStringValue());
+								coverages.append(" ");
+							}
+							System.out.println("coverages: " + coverages);
+							String text = title + "" + subject + coverages + nodeDescription.getStringValue();
+							text = text.replace(",", " ");
+							//System.out.println(text);
 							String textchunks[] = text.split(" ");
 							int numberOfWords = textchunks.length;
 							for(String s:textchunks) {
@@ -256,7 +282,7 @@ public class MetadataToSeqFile {
 					ResumptionToken rt = records.getResumptionToken();
 					System.out.println("=========== " + numberOfResumption + "  " + rt.getId() + " ===========");
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(3000);
 
 					} catch (InterruptedException ie) {
 						System.out.println(ie.getMessage());
