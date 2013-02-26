@@ -8,6 +8,7 @@
   <modules>
     <module>data-selector</module>
     <module>data-preprocessor</module>
+    <module>config</module>
   </modules>
   <build>
   	<resources>
