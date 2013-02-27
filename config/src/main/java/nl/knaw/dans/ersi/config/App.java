@@ -22,8 +22,8 @@ public class App
         List<Output> ouputList = new ArrayList<Output>();
         Output outputNl = new Output();
         outputNl.setLanguage("nl");
-        outputNl.setTxtFileLocation("./output/test.txt");
-        outputNl.setHdfsFileLocation("");
+        outputNl.setFileName("taikucing");
+        outputNl.setTxtFilePath("./output");
         ouputList.add(outputNl);
         OaiPmhRepos oaiPmhRepos = new OaiPmhRepos();
         ExtractedOutput extractedOutput = new ExtractedOutput();

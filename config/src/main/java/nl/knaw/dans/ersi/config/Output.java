@@ -2,18 +2,20 @@ package nl.knaw.dans.ersi.config;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 public class Output {
 	@Attribute
 	private String language;
 
-	@Element
-	private String txtFileLocation;
+	@Element(name="file-name")
+	private String fileName;
 	
-	@Element(required=false)
-	private String hdfsFileLocation;
-
+	@Element(name="txt-file-path")
+	private String txtFilePath;
+	
+	@Element(required=false, name="hdfs-file-path")
+	private String hdfsFilePath;
+	
 	public String getLanguage() {
 		return language;
 	}
@@ -22,22 +24,28 @@ public class Output {
 		this.language = language;
 	}
 
-	public String getTxtFileLocation() {
-		return txtFileLocation;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setTxtFileLocation(String txtFileLocation) {
-		this.txtFileLocation = txtFileLocation;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public String getHdfsFileLocation() {
-		return hdfsFileLocation;
+	public String getTxtFilePath() {
+		return txtFilePath;
 	}
 
-	public void setHdfsFileLocation(String hdfsFileLocation) {
-		this.hdfsFileLocation = hdfsFileLocation;
+	public void setTxtFilePath(String txtFilePath) {
+		this.txtFilePath = txtFilePath;
 	}
 
-	
+	public String getHdfsFilePath() {
+		return hdfsFilePath;
+	}
+
+	public void setHdfsFilePath(String hdfsFilePath) {
+		this.hdfsFilePath = hdfsFilePath;
+	}
 
 }

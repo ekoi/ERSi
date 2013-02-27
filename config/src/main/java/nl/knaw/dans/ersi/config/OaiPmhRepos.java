@@ -6,10 +6,10 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
 public class OaiPmhRepos {
-	@Element
+	@Element(name="base-url")
 	private String baseUrl = "localhost";
 
-	@Element
+	@Element(name="metadata-prefix")
 	private String metadataPrefix = "oai_dc";
 
 	@Element(required = false)
