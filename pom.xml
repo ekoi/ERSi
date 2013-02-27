@@ -6,9 +6,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
+  	<module>config</module>
     <module>data-selector</module>
     <module>data-preprocessor</module>
-    <module>config</module>
   </modules>
   <build>
   	<resources>
