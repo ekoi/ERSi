@@ -1,18 +1,20 @@
 package nl.knaw.dans.ersi.config;
 
-import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 
 public class OaiPmh {
-
 	@Element
 	private String host = "localhost";
 	
 	@Element	
 	private int port = 80;
+	
+	@Element	
+	private String metadataPrefix = "oai_dc";
+	
+	@Element(required=false)	
+	private String set;
 
-//	@Element
-//	private Security security;
 
 	public int getPort() {
 		return port;
@@ -21,8 +23,4 @@ public class OaiPmh {
 	public String getHost() {
 		return host;
 	}
-
-//	public Security getSecurity() {
-//		return security;
-//	}
 }
