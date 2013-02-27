@@ -16,7 +16,7 @@ public class App
     {
         System.out.println( "Hello World!" );
         Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding= \"UTF-8\" ?>"));
-        OaiPmhServer oaiPmhServer = new OaiPmhServer();
+        OaiPmhRepos oaiPmhServer = new OaiPmhRepos();
         Configuration configuration = new Configuration("nl", "nl");
         configuration.setOaiPmh(oaiPmhServer);
         File result = new File("./src/resources/configuration.xml");

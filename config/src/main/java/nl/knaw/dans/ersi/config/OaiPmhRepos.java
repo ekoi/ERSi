@@ -2,7 +2,7 @@ package nl.knaw.dans.ersi.config;
 
 import org.simpleframework.xml.Element;
 
-public class OaiPmhServer {
+public class OaiPmhRepos {
 	@Element
 	private String host = "localhost";
 	
