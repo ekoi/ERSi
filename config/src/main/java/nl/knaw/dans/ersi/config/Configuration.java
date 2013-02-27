@@ -16,10 +16,13 @@ public class Configuration {
 	private String country = "nl";
 
 	@Element(name="OAI-PMH") 
-	private OaiPmhRepos oaiPmh;
+	private OaiPmhRepos oaiPmhRepos;
 
 	@Attribute
 	private String generated;
+	
+	@Element
+	private ExtractedOutput extractedOutput;
 
 	public Configuration() {
 		init();
@@ -43,11 +46,19 @@ public class Configuration {
 		return generated;
 	}
 
-	public OaiPmhRepos getOaiPmh() {
-		return oaiPmh;
+	public OaiPmhRepos getOaiPmhRepos() {
+		return oaiPmhRepos;
 	}
 
-	public void setOaiPmh(OaiPmhRepos oaiPmh) {
-		this.oaiPmh = oaiPmh;
+	public void setOaiPmhRepos(OaiPmhRepos oaiPmhRepos) {
+		this.oaiPmhRepos = oaiPmhRepos;
+	}
+
+	public ExtractedOutput getExtractedOutputt() {
+		return extractedOutput;
+	}
+
+	public void setExtractedOutput(ExtractedOutput extractedOutput) {
+		this.extractedOutput = extractedOutput;
 	}
 }
