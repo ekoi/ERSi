@@ -16,7 +16,7 @@ public class Configuration {
 	private String country = "nl";
 
 	@Element(name="OAI-PMH") 
-	private OaiPmh oaiPmh;
+	private OaiPmhServer oaiPmh;
 
 	@Attribute
 	private String generated;
@@ -43,11 +43,11 @@ public class Configuration {
 		return generated;
 	}
 
-	public OaiPmh getOaiPmh() {
+	public OaiPmhServer getOaiPmh() {
 		return oaiPmh;
 	}
 
-	public void setOaiPmh(OaiPmh oaiPmh) {
+	public void setOaiPmh(OaiPmhServer oaiPmh) {
 		this.oaiPmh = oaiPmh;
 	}
 }
