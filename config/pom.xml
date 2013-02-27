@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>nl.knaw.dans.ersi</groupId>
+    <artifactId>ERSi</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>nl.knaw.dans.ersi</groupId>
+  <artifactId>config</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>config</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Simple is a high performance XML serialization and configuration framework for Java.  -->
+    <dependency>
+    	<groupId>org.simpleframework</groupId>
+    	<artifactId>simple-xml</artifactId>
+    	<version>2.7</version>
+	</dependency>
+	
+	<!-- JODA time -->
+	<dependency>
+		<groupId>joda-time</groupId>
+		<artifactId>joda-time</artifactId>
+		<version>2.1</version>
+	</dependency>
+  </dependencies>
+</project>
