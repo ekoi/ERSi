@@ -20,6 +20,12 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+    	<groupId>${project.groupId}</groupId>
+    	<artifactId>config</artifactId>
+    	<version>${project.version}</version>
+    </dependency>
     <!-- OAI-PMH library -->
 	<dependency>
 		<groupId>se.kb</groupId>

@@ -1,32 +1,20 @@
 package nl.knaw.dans.ersi.config;
 
-import java.util.List;
+import java.util.Map;
 
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
+import org.simpleframework.xml.ElementMap;
 
 public class ExtractedOutput {
-	@Element(name="report-location")
-	private String reportLocation = "default";
 	
-	@ElementList(inline=true)
-	private List<Output> output;
+	@ElementMap(entry="file", key="language", value="description", attribute=true, inline=true)
+	private Map<String, OutputFileConfig> outputFileConfig;
 
-	public String getReportLocation() {
-		return reportLocation;
+	public Map<String, OutputFileConfig> getOutputFileConfig() {
+		return outputFileConfig;
 	}
 
-	public void setReportLocation(String reportLocation) {
-		this.reportLocation = reportLocation;
-	}
-
-	public List<Output> getOutput() {
-		return output;
-	}
-
-	public void setOutput(List<Output> output) {
-		this.output = output;
+	public void setOutputFileConfig(Map<String, OutputFileConfig> outputFileConfig) {
+		this.outputFileConfig = outputFileConfig;
 	}
 	
 

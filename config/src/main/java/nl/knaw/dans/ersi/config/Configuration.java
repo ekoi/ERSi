@@ -15,18 +15,11 @@ public class Configuration {
 	private String language = "nl";
 	private String country = "nl";
 
-	@Element(name="OAI-PMH") 
-	private OaiPmhRepos oaiPmhRepos;
+	@Element(name="data-extraction") 
+	private DataExtractionConfig dataExtractionConfig;
 
 	@Attribute
 	private String generated;
-	
-	@Element
-	private ExtractedOutput extractedOutput;
-
-	public Configuration() {
-		init();
-	}
 	
 	public Configuration (String language, String country) {
 		this.language = language;
@@ -46,19 +39,12 @@ public class Configuration {
 		return generated;
 	}
 
-	public OaiPmhRepos getOaiPmhRepos() {
-		return oaiPmhRepos;
+	public DataExtractionConfig getDataExtractionConfig() {
+		return dataExtractionConfig;
 	}
 
-	public void setOaiPmhRepos(OaiPmhRepos oaiPmhRepos) {
-		this.oaiPmhRepos = oaiPmhRepos;
+	public void setDataExtractionConfig(DataExtractionConfig dataExtractionConfig) {
+		this.dataExtractionConfig = dataExtractionConfig;
 	}
 
-	public ExtractedOutput getExtractedOutputt() {
-		return extractedOutput;
-	}
-
-	public void setExtractedOutput(ExtractedOutput extractedOutput) {
-		this.extractedOutput = extractedOutput;
-	}
 }

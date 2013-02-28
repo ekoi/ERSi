@@ -61,4 +61,25 @@
 		</plugin>
     </plugins>
   </build>
+  <dependencies>
+  
+  <!-- LogBack -->
+  	<dependency>                               
+	  	<groupId>ch.qos.logback</groupId>      
+	  	<artifactId>logback-classic</artifactId>
+	  	<version>1.0.9</version>  
+	</dependency> 
+  	    <dependency>
+    	<groupId>org.apache.mahout</groupId>
+    	<artifactId>mahout-core</artifactId>
+    	<version>0.7</version>
+    </dependency>
+    <dependency>
+    <!--  SOLVING THE FOLLOWING PROBLEM:SEVERE: Failed to set setXIncludeAware(true) for parser -->
+	    <groupId>xerces</groupId>
+	    <artifactId>xercesImpl</artifactId>
+	    <version>2.9.1</version>
+    </dependency>
+  	
+  </dependencies>
 </project>

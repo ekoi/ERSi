@@ -1,12 +1,9 @@
 package nl.knaw.dans.ersi.config;
 
-import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 
-public class Output {
-	@Attribute
-	private String language;
 
+public class OutputFileConfig {
 	@Element(name="file-name")
 	private String fileName;
 	
@@ -16,14 +13,6 @@ public class Output {
 	@Element(required=false, name="hdfs-file-path")
 	private String hdfsFilePath;
 	
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
 	public String getFileName() {
 		return fileName;
 	}

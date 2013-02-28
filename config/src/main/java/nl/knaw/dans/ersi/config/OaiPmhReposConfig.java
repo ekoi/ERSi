@@ -5,9 +5,9 @@ import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
-public class OaiPmhRepos {
+public class OaiPmhReposConfig {
 	@Element(name="base-url")
-	private String baseUrl = "localhost";
+	private String baseUrl = "https://easy.dans.knaw.nl/oai";
 
 	@Element(name="metadata-prefix")
 	private String metadataPrefix = "oai_dc";
@@ -15,8 +15,8 @@ public class OaiPmhRepos {
 	@Element(required = false)
 	private String set;
 
-	@ElementList(name = "selection-fields", entry = "field-name")
-	private List<String> selectionFields;
+	@ElementList(name = "selected-fields")
+	private List<Field> selectedFields;
 
 	public String getMetadataPrefix() {
 		return metadataPrefix;
@@ -34,13 +34,6 @@ public class OaiPmhRepos {
 		this.set = set;
 	}
 
-	public List<String> getSelectionFields() {
-		return selectionFields;
-	}
-
-	public void setSelectionFields(List<String> selectionFields) {
-		this.selectionFields = selectionFields;
-	}
 
 	public String getBaseUrl() {
 		return baseUrl;
@@ -48,6 +41,14 @@ public class OaiPmhRepos {
 
 	public void setBaseUrl(String baseUrl) {
 		this.baseUrl = baseUrl;
+	}
+
+	public void setSelectedFields(List<Field> selectedFields) {
+		this.selectedFields = selectedFields;
+	}
+
+	public List<Field> getSelectedFields() {
+		return selectedFields;
 	}
 
 }
