@@ -29,7 +29,7 @@ public class ConfigurationCreator
         OutputFileConfig outputNl = new OutputFileConfig();
         outputNl.setFileName("metadata in Dutch");
         outputNl.setTxtFilePath("./output/txt");
-        outputNl.setHdfsFilePath("./output/hdfs");
+        outputNl.setHdfsFilePath("/Users/akmi/TEMP");
         
         OaiPmhReposConfig oaiPmhRepos = new OaiPmhReposConfig();
         ExtractedOutput extractedOutput = new ExtractedOutput();
@@ -37,11 +37,10 @@ public class ConfigurationCreator
         OutputFileConfig outputEn = new OutputFileConfig();
         outputEn.setFileName("metadata in English");
         outputEn.setTxtFilePath("./output/txt");
-        outputEn.setHdfsFilePath("./output/hdfs");
         
         Map<String, OutputFileConfig> map = new HashMap<String, OutputFileConfig>();
         map.put("nl",outputNl);
-        map.put("en",outputNl);
+        map.put("en",outputEn);
         
         extractedOutput.setOutputFileConfig(map);
         

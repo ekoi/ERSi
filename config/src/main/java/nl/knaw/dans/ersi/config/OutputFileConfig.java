@@ -1,9 +1,15 @@
 package nl.knaw.dans.ersi.config;
 
 import org.simpleframework.xml.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class OutputFileConfig {
+	
+	private static String USER_HOME = "user.home"; 
+	private static Logger LOG = LoggerFactory.getLogger(OutputFileConfig.class);
+	
 	@Element(name="file-name")
 	private String fileName;
 	
@@ -34,7 +40,12 @@ public class OutputFileConfig {
 	}
 
 	public void setHdfsFilePath(String hdfsFilePath) {
-		this.hdfsFilePath = hdfsFilePath;
+		String path = System.getProperty(USER_HOME);
+		if (hdfsFilePath.equals(path)) {
+			LOG.error(path + " is not permitted. Please create a folder underneath of " + path + ".");
+			this.hdfsFilePath = null;
+		} else 
+			this.hdfsFilePath = hdfsFilePath;
 	}
 
 }
