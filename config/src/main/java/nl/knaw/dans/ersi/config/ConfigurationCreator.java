@@ -32,6 +32,7 @@ public class ConfigurationCreator
         outputNl.setHdfsFilePath("/Users/akmi/TEMP");
         
         OaiPmhReposConfig oaiPmhRepos = new OaiPmhReposConfig();
+        LocalSourceDataConfig localSource = new LocalSourceDataConfig();
         ExtractedOutput extractedOutput = new ExtractedOutput();
        
         OutputFileConfig outputEn = new OutputFileConfig();
@@ -44,6 +45,7 @@ public class ConfigurationCreator
         
         extractedOutput.setOutputFileConfig(map);
         
+        //OAI-PMH Setting
          Field selectedFieldTitle = new Field();
          selectedFieldTitle.setName("dc:title");
          Field selectedFieldDesc = new Field();
@@ -62,12 +64,30 @@ public class ConfigurationCreator
         selectedFields.add(selectedFieldCov);
          
         oaiPmhRepos.setSelectedFields(selectedFields);
+        
+        //Local Setting 
+        Field selectedFieldUrn = new Field();
+        selectedFieldUrn.setDetectLang(false);
+        selectedFieldUrn.setName("urn");
+        Field selectedFieldData = new Field();
+        selectedFieldData.setDetectLang(false);
+        selectedFieldData.setName("data_abr");
+        
+        List<Field> selectedLocalFields = new ArrayList<Field>();
+        selectedLocalFields.add(selectedFieldUrn);
+        selectedLocalFields.add(selectedFieldData);
+        localSource.setSelectedFields(selectedLocalFields);
+        localSource.setFileName("tsd-eko");
+        localSource.setFilePath("/Users/akmi/Dropbox/THESIS/Sharing-thesis-project");
+        localSource.setFileType("txt");
+        
         Configuration configuration = new Configuration("nl", "nl");
         
         DataExtractionConfig dep = new DataExtractionConfig();
         configuration.setDataExtractionConfig(dep);
         
         dep.setOaiPmhReposConfig(oaiPmhRepos);
+		dep.setLocalSource(localSource);
         dep.setExtractedOutput(extractedOutput);
         Report report = new Report();
         report.setName("taikucing-report");

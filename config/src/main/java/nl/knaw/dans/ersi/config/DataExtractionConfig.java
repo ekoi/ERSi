@@ -10,6 +10,9 @@ public class DataExtractionConfig {
 	@Element(name="OAI-PMH") 
 	private OaiPmhReposConfig oaiPmhReposConfig;
 	
+	@Element(name="local-source")
+	private LocalSourceDataConfig localSource;
+	
 	@Element(name="extracted-output")
 	private ExtractedOutput extractedOutput;
 	
@@ -30,6 +33,14 @@ public class DataExtractionConfig {
 
 	public void setOaiPmhReposConfig(OaiPmhReposConfig oaiPmhReposConfig) {
 		this.oaiPmhReposConfig = oaiPmhReposConfig;
+	}
+	
+	public LocalSourceDataConfig getLocalSource() {
+		return localSource;
+	}
+
+	public void setLocalSource(LocalSourceDataConfig localSource) {
+		this.localSource = localSource;
 	}
 
 	public ExtractedOutput getExtractedOutput() {
