@@ -90,8 +90,8 @@ public class ConfigurationCreator
 		dep.setLocalSource(localSource);
         dep.setExtractedOutput(extractedOutput);
         Report report = new Report();
-        report.setName("taikucing-report");
-        report.setPath("");
+        report.setName("data-extraction-report");
+        report.setPath("/Users/akmi/tmp");
 		dep.setReport(report);
         
         File result = new File("./src/resources/configuration.xml");

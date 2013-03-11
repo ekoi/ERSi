@@ -19,6 +19,7 @@ public class ConfigurationReader {
 	/**
 	 * 
 	 */
+	
 	public ConfigurationReader(String confFileLocation) {
 		this.confFileLocation = confFileLocation;
 		init();
