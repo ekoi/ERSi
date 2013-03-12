@@ -94,6 +94,21 @@ public class ConfigurationCreator
         report.setPath("/Volumes/Holdtank/Experiments/ERSi/report");
 		dep.setReport(report);
         
+		
+		//Data cleaning configuration
+		DataCleansingConfig dcc = new DataCleansingConfig();
+		SimpleDimensionReduction sdr = new SimpleDimensionReduction();
+		sdr.setMinWordLength(3);
+		List<String> skipWords = new ArrayList<String>();
+		skipWords.add("onderzoeksrapport");
+		skipWords.add("ekoindarto");
+		sdr.setSkipWord(skipWords);
+		dcc.setSimpleDimensionReduction(sdr);
+		
+		dcc.setInputDirectory("/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp");
+		dcc.setOutputDirectory("/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/local");
+		
+		configuration.setDataCleansingConfig(dcc);
         File result = new File("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
 
         try {

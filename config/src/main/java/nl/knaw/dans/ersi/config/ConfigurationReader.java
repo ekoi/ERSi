@@ -16,6 +16,7 @@ public class ConfigurationReader {
 	
 	private String confFileLocation;
 	private DataExtractionConfig  dataExtractionConfig;
+	private DataCleansingConfig dataCleansingConfig;
 	/**
 	 * 
 	 */
@@ -30,6 +31,7 @@ public class ConfigurationReader {
 		try {
 			Configuration configuration = serializer.read(Configuration.class, source);
 			dataExtractionConfig = configuration.getDataExtractionConfig();
+			dataCleansingConfig = configuration.getDataCleansingConfig();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,5 +41,8 @@ public class ConfigurationReader {
 	}
 	public DataExtractionConfig getDataExtractionConfig() {
 		return dataExtractionConfig;
+	}
+	public DataCleansingConfig getDataCleansingConfig() {
+		return dataCleansingConfig;
 	}
 }

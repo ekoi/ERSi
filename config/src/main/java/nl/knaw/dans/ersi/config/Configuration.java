@@ -8,18 +8,23 @@ import org.joda.time.format.DateTimeFormatter;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
 @Root
 public class Configuration {
 	
 	private String language = "nl";
 	private String country = "nl";
-
+    
+	@Attribute
+	private String generated; 
+	
 	@Element(name="data-extraction") 
 	private DataExtractionConfig dataExtractionConfig;
-
-	@Attribute
-	private String generated;
+	
+	@Element(name="data-cleansing")
+	private DataCleansingConfig dataCleansingConfig;
 	
 	public Configuration() {
 	      super();
@@ -51,4 +56,22 @@ public class Configuration {
 		this.dataExtractionConfig = dataExtractionConfig;
 	}
 
+	public DataCleansingConfig getDataCleansingConfig() {
+		return dataCleansingConfig;
+	}
+
+	public void setDataCleansingConfig(DataCleansingConfig dataCleansingConfig) {
+		this.dataCleansingConfig = dataCleansingConfig;
+	}
+
+	
+	public static Configuration Load(String xml) {
+		Serializer serializer = new Persister();
+		try {
+			return serializer.read(Configuration.class, xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

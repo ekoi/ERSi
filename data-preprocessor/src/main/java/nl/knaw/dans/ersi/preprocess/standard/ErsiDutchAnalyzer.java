@@ -8,6 +8,8 @@ package nl.knaw.dans.ersi.preprocess.standard;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +20,14 @@ import org.apache.lucene.analysis.nl.DutchAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
 
-public class ErsiDutchAnalyzer extends Analyzer {
-	private static int i=0;
-
+public final class ErsiDutchAnalyzer extends Analyzer {
+	
 	private final Pattern alphabets = Pattern.compile("[a-z-]+|^[^\\-]+\\-[^\\-]+$");
 
+	public static int minTernLength = 2;
+	
+	public static List<String> ignoreWords =  new ArrayList<String>();
+	
 	@Override
 	public TokenStream tokenStream(String fieldName, Reader reader) {
 		DutchAnalyzer da = new DutchAnalyzer(Version.LUCENE_36);
@@ -40,21 +45,16 @@ public class ErsiDutchAnalyzer extends Analyzer {
 				// int startOffset = offsetAttribute.startOffset();
 				// int endOffset = offsetAttribute.endOffset();
 				String term = charTermAttribute.toString().toLowerCase();
-				if (term.length() < 3)
+				if (term.length() <= minTernLength)
 					continue;
-				if (term.contains("onderzoeksrapport")) {
-					i++;
-					System.out.println(i);
+				if (ignoreWords.contains(term)) {
 					continue;
 				}
-				Matcher m = alphabets.matcher(term);
 				
+				Matcher m = alphabets.matcher(term);
 				if (m.matches()) {
 					buf.append(term).append(" ");
-					System.out.println(term);
 				}
-				if (term.indexOf("brabant") > -1)
-				System.out.println("====================================================");
 			}
 			return new WhitespaceTokenizer(Version.LUCENE_36, new StringReader(
 					buf.toString()));
