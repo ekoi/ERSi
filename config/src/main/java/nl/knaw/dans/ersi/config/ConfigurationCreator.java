@@ -22,7 +22,7 @@ public class ConfigurationCreator
     public static void main( String[] args )
     {
     	 
-    	 LOG.debug("Create configuration.xml file");
+    	LOG.debug("Create configuration.xml file");
         Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding= \"UTF-8\" ?>"));
         
        
@@ -101,12 +101,11 @@ public class ConfigurationCreator
 		sdr.setMinWordLength(3);
 		List<String> skipWords = new ArrayList<String>();
 		skipWords.add("onderzoeksrapport");
-		skipWords.add("ekoindarto");
 		sdr.setSkipWord(skipWords);
 		dcc.setSimpleDimensionReduction(sdr);
 		
 		dcc.setInputDirectory("/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp");
-		dcc.setOutputDirectory("/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/local");
+		dcc.setOutputDirectory("/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/local/output-vector");
 		
 		configuration.setDataCleansingConfig(dcc);
         File result = new File("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
@@ -114,18 +113,8 @@ public class ConfigurationCreator
         try {
 			serializer.write(configuration, result);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
-        
-//        File source = new File("./src/resources/example.xml");
-//
-//        try {
-//			Example example2 = serializer.read(Example.class, source);
-//			System.out.println(example2.getMessage());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+        LOG.debug("Configuration fiel is created. Location: " + result.getAbsolutePath());
     }
 }
