@@ -21,6 +21,10 @@ public class Configuration {
 	@Attribute
 	private String generated;
 	
+	public Configuration() {
+	      super();
+	   }  
+	
 	public Configuration (String language, String country) {
 		this.language = language;
 		this.country = country;

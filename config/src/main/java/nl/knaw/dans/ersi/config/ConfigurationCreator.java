@@ -27,7 +27,7 @@ public class ConfigurationCreator
         
        
         OutputFileConfig outputNl = new OutputFileConfig();
-        outputNl.setFileName("metadata in Dutch");
+        outputNl.setFileName("Metadata-in-dutch");
         outputNl.setTxtFilePath("./output/txt");
         outputNl.setHdfsFilePath("/Users/akmi/TEMP");
         
@@ -36,7 +36,7 @@ public class ConfigurationCreator
         ExtractedOutput extractedOutput = new ExtractedOutput();
        
         OutputFileConfig outputEn = new OutputFileConfig();
-        outputEn.setFileName("metadata in English");
+        outputEn.setFileName("Metadata-in-english");
         outputEn.setTxtFilePath("./output/txt");
         
         Map<String, OutputFileConfig> map = new HashMap<String, OutputFileConfig>();
