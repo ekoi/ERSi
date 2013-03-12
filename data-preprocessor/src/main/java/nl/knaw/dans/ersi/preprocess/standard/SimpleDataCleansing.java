@@ -18,7 +18,7 @@ import org.apache.mahout.vectorizer.DictionaryVectorizer;
 import org.apache.mahout.vectorizer.DocumentProcessor;
 import org.apache.mahout.vectorizer.tfidf.TFIDFConverter;
 
-public class CleanData {
+public class SimpleDataCleansing {
   
   public static void main(String args[]) throws Exception {
 	ConfigurationReader c = new ConfigurationReader("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
@@ -33,12 +33,12 @@ public class CleanData {
     int norm = dcc.getNorm();
     boolean sequentialAccessOutput = dcc.isSequentialAccessOutput();
     
-    String inputDir = "/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp";
+    String inputDir = dcc.getInputDirectory();
 
     Configuration conf = new Configuration();
     FileSystem fs = FileSystem.get(conf);
  
-    String outputDir = "/Volumes/Holdtank/Experiments/ERSi/clustering-result/local/output-vectors";
+    String outputDir = dcc.getOutputDirectory();
     HadoopUtil.delete(conf, new Path(outputDir));
     Path tokenizedPath = new Path(outputDir,
         DocumentProcessor.TOKENIZED_DOCUMENT_OUTPUT_FOLDER);
