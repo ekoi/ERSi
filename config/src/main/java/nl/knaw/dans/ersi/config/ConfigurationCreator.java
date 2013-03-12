@@ -28,8 +28,8 @@ public class ConfigurationCreator
        
         OutputFileConfig outputNl = new OutputFileConfig();
         outputNl.setFileName("Metadata-in-dutch");
-        outputNl.setTxtFilePath("./output/txt");
-        outputNl.setHdfsFilePath("/Users/akmi/TEMP");
+        outputNl.setTxtFilePath("/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/txt");
+        outputNl.setHdfsFilePath("/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp");
         
         OaiPmhReposConfig oaiPmhRepos = new OaiPmhReposConfig();
         LocalSourceDataConfig localSource = new LocalSourceDataConfig();
@@ -37,7 +37,7 @@ public class ConfigurationCreator
        
         OutputFileConfig outputEn = new OutputFileConfig();
         outputEn.setFileName("Metadata-in-english");
-        outputEn.setTxtFilePath("./output/txt");
+        outputEn.setTxtFilePath("/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/txt");
         
         Map<String, OutputFileConfig> map = new HashMap<String, OutputFileConfig>();
         map.put("nl",outputNl);
@@ -78,7 +78,7 @@ public class ConfigurationCreator
         selectedLocalFields.add(selectedFieldData);
         localSource.setSelectedFields(selectedLocalFields);
         localSource.setFileName("tsd-eko");
-        localSource.setFilePath("/Users/akmi/Dropbox/THESIS/Sharing-thesis-project");
+        localSource.setFilePath("/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO");
         localSource.setFileType("txt");
         
         Configuration configuration = new Configuration("nl", "nl");
@@ -91,10 +91,10 @@ public class ConfigurationCreator
         dep.setExtractedOutput(extractedOutput);
         Report report = new Report();
         report.setName("data-extraction-report");
-        report.setPath("/Users/akmi/tmp");
+        report.setPath("/Volumes/Holdtank/Experiments/ERSi/report");
 		dep.setReport(report);
         
-        File result = new File("./src/resources/configuration.xml");
+        File result = new File("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
 
         try {
 			serializer.write(configuration, result);

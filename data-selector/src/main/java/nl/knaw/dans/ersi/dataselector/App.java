@@ -17,8 +17,10 @@ public class App
 {
 	public static void main(String[] args) {
 		ConfigurationReader configurationReader = new ConfigurationReader(
-				"/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/config/src/resources/configuration.xml");
-		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
+				"/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
+		//SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
+		
+		SimpleLocalSourceExtractor seme = new SimpleLocalSourceExtractor(configurationReader.getDataExtractionConfig());
 
 		try {
 			seme.extract();

@@ -5,30 +5,6 @@ import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
-/*
- </OAI-PMH>
-      <local>
-         <file-name></file-name>
-         <file-path></file-path>
-         <selected-fields class="java.util.ArrayList">
-            <field>
-               <name>dc:title</name>
-               <detect-lang>true</detect-lang>
-            </field>
-            <field>
-               <name>dc:description</name>
-               <detect-lang>true</detect-lang>
-            </field>
-            <field>
-               <name>dc:subject</name>
-               <detect-lang>false</detect-lang>
-            </field>
-            <field>
-               <name>dc:coverage</name>
-               <detect-lang>false</detect-lang>
-            </field>
-         </selected-fields>
- */
 public class LocalSourceDataConfig {
 	@Element(name="file-name")
 	private String fileName;
