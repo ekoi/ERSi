@@ -4,6 +4,7 @@ import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
+import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhExtractor;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,9 +18,11 @@ import org.apache.mahout.math.VectorWritable;
 import org.apache.mahout.vectorizer.DictionaryVectorizer;
 import org.apache.mahout.vectorizer.DocumentProcessor;
 import org.apache.mahout.vectorizer.tfidf.TFIDFConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SimpleDataCleansing {
-  
+	private static Logger LOG = LoggerFactory.getLogger(SimpleDataCleansing.class);
   public static void main(String args[]) throws Exception {
 	ConfigurationReader c = new ConfigurationReader("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
@@ -77,7 +80,7 @@ public class SimpleDataCleansing {
     }
     reader.close();
     System.out.println("==================");
-    System.out.println("Count: " + count);
+    LOG.debug("Number of processing data: " + count);
     System.out.println("=========END=========");
   }
 }

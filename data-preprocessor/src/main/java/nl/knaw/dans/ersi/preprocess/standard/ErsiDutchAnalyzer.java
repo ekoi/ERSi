@@ -19,9 +19,12 @@ import org.apache.lucene.analysis.WhitespaceTokenizer;
 import org.apache.lucene.analysis.nl.DutchAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ErsiDutchAnalyzer extends Analyzer {
-	
+	private static Logger LOG = LoggerFactory.getLogger(ErsiDutchAnalyzer.class);	
+	private static int numberOfTokens;
 	private final Pattern alphabets = Pattern.compile("[a-z-]+|^[^\\-]+\\-[^\\-]+$");
 
 	public static int minTernLength = 2;
@@ -42,6 +45,7 @@ public final class ErsiDutchAnalyzer extends Analyzer {
 
 			StringBuilder buf = new StringBuilder();
 			while (result.incrementToken()) {
+				numberOfTokens++;
 				// int startOffset = offsetAttribute.startOffset();
 				// int endOffset = offsetAttribute.endOffset();
 				String term = charTermAttribute.toString().toLowerCase();
@@ -56,6 +60,7 @@ public final class ErsiDutchAnalyzer extends Analyzer {
 					buf.append(term).append(" ");
 				}
 			}
+			//LOG.debug("Number of tokens: " + numberOfTokens);
 			return new WhitespaceTokenizer(Version.LUCENE_36, new StringReader(
 					buf.toString()));
 		} catch (IOException e1) {
@@ -63,6 +68,7 @@ public final class ErsiDutchAnalyzer extends Analyzer {
 			e1.printStackTrace();
 		}
 		da.close();
+		
 		return result;
 	}
 }
