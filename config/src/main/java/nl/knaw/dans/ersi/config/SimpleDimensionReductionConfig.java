@@ -5,7 +5,7 @@ import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
-public class SimpleDimensionReduction {
+public class SimpleDimensionReductionConfig {
 	@Element (name="min-word-length")
 	int minWordLength;
 	

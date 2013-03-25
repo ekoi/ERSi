@@ -97,7 +97,7 @@ public class ConfigurationCreator
 		
 		//Data cleaning configuration
 		DataCleansingConfig dcc = new DataCleansingConfig();
-		SimpleDimensionReduction sdr = new SimpleDimensionReduction();
+		SimpleDimensionReductionConfig sdr = new SimpleDimensionReductionConfig();
 		sdr.setMinWordLength(3);
 		List<String> skipWords = new ArrayList<String>();
 		skipWords.add("onderzoeksrapport");
