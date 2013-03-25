@@ -55,6 +55,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 	private static int numberOfNl;
 	private static int numberOfEn;
 	private static int numberOfOther;
+	private static int numbeerOfNlWords;
 
 	private boolean oaiPmhXmlDebug;
 
@@ -83,6 +84,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		LOG.debug("Number of Total NL records: " + numberOfNl);
 		LOG.debug("Number of Total EN records: " + numberOfEn);
 		LOG.debug("Number of Total other records: " + numberOfOther);
+		LOG.debug("Number of Total words (Text in Dutch): " + numbeerOfNlWords);
 	}
 
 	/**
@@ -113,7 +115,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 				OutputFileConfig ofc = outputFileConf.get(lang);
 				if (ofc.getHdfsFilePath() != null) {
 					Path seqDir = new Path(ofc.getHdfsFilePath());
-					String uri = seqDir.getName() + "/" + ofc.getFileName();
+					String uri = ofc.getHdfsFilePath() + "/" + ofc.getFileName() + ".seq";
 					Configuration conf = new Configuration();
 					HadoopUtil.delete(conf, seqDir);
 					FileSystem fs = FileSystem.get(URI.create(uri), conf);
@@ -156,7 +158,9 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 							Text key = new Text();
 							Text value = new Text();
 							key.set(identifier);
-							value.set(text.toString());
+							String extractedText = text.toString();
+							numbeerOfNlWords += extractedText.split(" ").length;
+							value.set(extractedText);
 							write.append(key, value);
 							numberOfNl++;
 						} else if (language.equals(LanguageRecognition.EN)) {
