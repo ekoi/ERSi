@@ -46,6 +46,9 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 			.getLogger(SimpleLocalSourceExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
+	private static int numberOfNl;
+	private static int numberOfEn;
+	private static int numberOfOther;
 
 	private boolean oaiPmhXmlDebug;
 
@@ -69,10 +72,15 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		System.out.println("Records: " + numberOfRecords);
+		System.out.println("NL: " + numberOfNl);
+		System.out.println("EN: " + numberOfEn);
+		System.out.println("Other: " + numberOfOther);
 	}
 
-	private void saveFile(List<Record> records){
+	private void saveFile(List<Record> records) throws LangDetectException{
+		LanguageRecognition dl = new LanguageRecognition();
 		ExtractedOutput extractedOutput = getDataExtractionConfig()
 				.getExtractedOutput();
 		SequenceFile.Writer writer = null;
@@ -86,8 +94,9 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 		for (String lang : set) {
 			OutputFileConfig ofc = outputFileConf.get(lang);
 			if (ofc.getHdfsFilePath() != null) {
+				numberOfRecords++;
 				Path seqDir = new Path(ofc.getHdfsFilePath());
-				String uri = seqDir.getName() + "/" + ofc.getFileName();
+				String uri = ofc.getHdfsFilePath() + "/" + ofc.getFileName() + ".seq";
 				Configuration conf = new Configuration();
 				HadoopUtil.delete(conf, seqDir);
 				FileSystem fs = FileSystem.get(URI.create(uri), conf);
@@ -100,15 +109,23 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 		for (Record record : records) {
 
 			String urn = record.getUrn();
-			String text = record.getDataAbr();
-			if (urn != null && text != null) {
-				System.out.println(urn);
-			Writer write = writers.get(LanguageRecognition.NL);
-			Text key = new Text();
-			Text value = new Text();
-			key.set(urn);
-			value.set(record.getDataAbr());
-			write.append(key, value);
+			String text = record.getDataAbr() + " " + record.getDataNonAbr();
+			if (urn != null && text != null && !text.isEmpty()) {
+				String language = dl.detect(text);
+				if (language.equals(LanguageRecognition.NL)) {	
+					Writer write = writers.get(LanguageRecognition.NL);
+					Text key = new Text();
+					Text value = new Text();
+					key.set(urn);
+					value.set(text);
+					write.append(key, value);
+					numberOfNl++;
+				} else if (language.equals(LanguageRecognition.EN)) {
+					numberOfEn++;
+				} else {
+					numberOfOther++;
+				}
+					
 			}
 		}
 		}catch (IOException e) {
