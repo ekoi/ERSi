@@ -52,11 +52,14 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 			.getLogger(SimpleOaiPmhExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
+	private static int numberOfNl;
+	private static int numberOfEn;
+	private static int numberOfOther;
 
 	private boolean oaiPmhXmlDebug;
 
 	public void extract() throws OAIException, IOException, LangDetectException {
-
+		LOG.debug("START");
 		OaiPmhReposConfig oaiPmhReposconfig = getDataExtractionConfig()
 				.getOaiPmhReposConfig();
 		OaiPmhServer server = new OaiPmhServer(oaiPmhReposconfig.getBaseUrl());
@@ -76,7 +79,10 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		}
 
 		saveFile(server, records);
-
+		LOG.debug("Number of Total records: " + numberOfRecords);
+		LOG.debug("Number of Total NL records: " + numberOfNl);
+		LOG.debug("Number of Total EN records: " + numberOfEn);
+		LOG.debug("Number of Total other records: " + numberOfOther);
 	}
 
 	/**
@@ -152,20 +158,27 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 							key.set(identifier);
 							value.set(text.toString());
 							write.append(key, value);
-
+							numberOfNl++;
+						} else if (language.equals(LanguageRecognition.EN)) {
+							numberOfEn++;
+							LOG.debug("pid EN identifier: " + identifier);
+							LOG.debug("pid EN text: " + textToDetect.toString());
+						} else {
+							numberOfOther++;
+							LOG.debug("pid OTHER: " + identifier);
+							LOG.debug("pid OTHER text: " + textToDetect.toString());
 						}
-
 					}
 				}
-			}
-
-			if (records.getResumptionToken() != null) {
-				ResumptionToken rt = records.getResumptionToken();
-			
-					Thread.sleep(3000);
-				records = server.listRecords(rt);
-			} else {
-				more = false;
+				if (records.getResumptionToken() != null) {
+					ResumptionToken rt = records.getResumptionToken();
+					LOG.debug("Number of resuption token: " + numberOfResumption);
+					LOG.debug("Number of records: " + numberOfRecords);
+						Thread.sleep(3000);
+					records = server.listRecords(rt);
+				} else {
+					more = false;
+				}
 			}
 		} catch (IOException e) {
 
