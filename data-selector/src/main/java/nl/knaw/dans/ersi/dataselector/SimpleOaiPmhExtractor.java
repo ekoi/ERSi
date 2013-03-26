@@ -97,6 +97,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 	 */
 	private void saveFile(OaiPmhServer server, RecordsList records)
 			throws LangDetectException, OAIException {
+		  
 		LanguageRecognition dl = new LanguageRecognition();
 		OaiPmhReposConfig oaiPmhReposConfig = getDataExtractionConfig()
 				.getOaiPmhReposConfig();
@@ -137,6 +138,18 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 					Header header = record.getHeader();
 					String identifier = header.getIdentifier();
 					if (element != null) {
+						List<Node> identifiers = element.selectNodes("./dc:identifier");
+						for (Node n : identifiers) {
+							String s = n.getStringValue();
+							if (s != null && !s.isEmpty() ) {
+								if (s.toLowerCase().startsWith("urn:nbn:nl:ui")) {
+									identifier = s;
+									break;
+								}
+							} else {
+								LOG.debug("No URN found");
+							}
+						}
 						StringBuffer text = new StringBuffer();
 						StringBuffer textToDetect = new StringBuffer();
 						List<Field> selectedFields = oaiPmhReposConfig
