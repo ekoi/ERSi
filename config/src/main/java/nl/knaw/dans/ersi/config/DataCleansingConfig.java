@@ -5,7 +5,7 @@ import org.simpleframework.xml.Element;
 public class DataCleansingConfig {
 	
 	@Element(name="simple-dimension-reduction")
-	private SimpleDimensionReduction simpleDimensionReduction;
+	private SimpleDimensionReductionConfig simpleDimensionReduction;
 	
 	@Element
 	int minSupport = 2; //minSupport of the feature to be included
@@ -40,12 +40,12 @@ public class DataCleansingConfig {
 	@Element(name="output-directory")
 	String outputDirectory;
 
-	public SimpleDimensionReduction getSimpleDimensionReduction() {
+	public SimpleDimensionReductionConfig getSimpleDimensionReduction() {
 		return simpleDimensionReduction;
 	}
 
 	public void setSimpleDimensionReduction(
-			SimpleDimensionReduction simpleDimensionReduction) {
+			SimpleDimensionReductionConfig simpleDimensionReduction) {
 		this.simpleDimensionReduction = simpleDimensionReduction;
 	}
 
