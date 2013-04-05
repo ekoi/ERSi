@@ -9,10 +9,7 @@
   	<module>config</module>
     <module>data-selector</module>
     <module>data-preprocessor</module>
-    <module>web-ui</module>
-    <module>ddd</module>
     <module>webui</module>
-    <module>webui-click</module>
   </modules>
   <build>
   	<resources>
