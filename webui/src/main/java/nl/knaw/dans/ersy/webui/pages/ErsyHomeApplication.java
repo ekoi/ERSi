@@ -32,5 +32,6 @@ public class ErsyHomeApplication extends WebApplication
 		mountPage("/pub", PublicationPage.class);
 		mountPage("/contact", ContactPage.class);
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
+		getDebugSettings().setAjaxDebugModeEnabled(true);
 	}
 }

@@ -78,6 +78,7 @@ public class AdminPanelPage extends ErsyBasePage
 				super.onSignInSucceeded();
 				setResponsePage(AdminPanelPage.class);
 			}
+			 
 			});
 		}
 	}
@@ -125,9 +126,11 @@ public class AdminPanelPage extends ErsyBasePage
 				public void onClick()
 				{
 					RolesSession session = (RolesSession)Session.get();
-					User user = RolesApplication.USERS.get(2);
-					session.setUser(user);
-
+					session.signOut();
+					session.invalidateNow();
+//					User user = RolesApplication.USERS.get(2);
+//					session.setUser(user);
+					
 					setResponsePage(new HomePage());
 				}
 			});

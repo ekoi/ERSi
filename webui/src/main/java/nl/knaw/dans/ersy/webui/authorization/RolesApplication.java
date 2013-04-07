@@ -75,6 +75,7 @@ public class RolesApplication extends WebApplication
 		super.init();
 		mountPage("/admin", AdminPanelPage.class);
 		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
+		getDebugSettings().setAjaxDebugModeEnabled(true);
 
 		getSecuritySettings().setAuthorizationStrategy(
 			new RoleAuthorizationStrategy(new UserRolesAuthorizer()));
