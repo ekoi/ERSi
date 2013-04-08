@@ -3,14 +3,21 @@
  */
 package nl.knaw.dans.ersy.webui.secure.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.knaw.dans.ersy.webui.secure.ErsyApplication;
 import nl.knaw.dans.ersy.webui.secure.UserSession;
 import nl.knaw.dans.ersy.webui.service.CookieService;
 import nl.knaw.dans.ersy.webui.service.SessionProvider;
 
+import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 
 /**
  * @author akmi
@@ -45,6 +52,39 @@ public class AdminPanel extends Panel {
                 UserSession.get().invalidate();
             }
         });
+        
+        
+        
+		// create a list of ITab objects used to feed the tabbed panel
+		List<ITab> tabs = new ArrayList<ITab>();
+		tabs.add(new AbstractTab(new Model<String>("Configuration"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabConfigurationPanel(panelId);
+			}
+		});
+
+		tabs.add(new AbstractTab(new Model<String>("Data Cleaning"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabDataCleaningPanel(panelId);
+			}
+		});
+
+		tabs.add(new AbstractTab(new Model<String>("Data Mining"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabDataMiningPanel(panelId);
+			}
+		});
+
+		add(new AjaxTabbedPanel("tabs", tabs));
 	}
 
 }

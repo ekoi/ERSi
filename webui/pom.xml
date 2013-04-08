@@ -27,7 +27,7 @@
      <artifactId>webui</artifactId>
 	<packaging>war</packaging>
 	<!-- TODO project name  -->
-	<name>quickstart</name>
+	<name>webui</name>
 	<!--
 		<organization>
 			<name>company name</name>
@@ -47,6 +47,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<!-- ERSy Module -->
+		<dependency>
+    	<groupId>${project.groupId}</groupId>
+    	<artifactId>config</artifactId>
+    	<version>${project.version}</version>
+    	</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
