@@ -15,36 +15,23 @@
 
 		The value might be either "development" (reloading when templates change) or 
 		"deployment". If no configuration is found, "development" is the default. -->
-
-	<filter>
-		<filter-name>ErsyHomeApplication</filter-name>
-		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
-		<init-param>
-			<param-name>applicationClassName</param-name>
-			<param-value>nl.knaw.dans.ersy.webui.pages.ErsyHomeApplication</param-value>
-		</init-param>
-	</filter>
 	
 	<filter>
-		<filter-name>RolesAuthApplication</filter-name>
+		<filter-name>SecureApplication</filter-name>
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>nl.knaw.dans.ersy.webui.authorization.RolesApplication</param-value>
+			<param-value>nl.knaw.dans.ersy.webui.secure.ErsyApplication</param-value>
 		</init-param>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>ErsyHomeApplication</filter-name>
+		<filter-name>SecureApplication</filter-name>
 		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
+
+    <session-config>
+        <session-timeout>100000</session-timeout>
+    </session-config>
 	
-	<filter-mapping>
-		<filter-name>RolesAuthApplication</filter-name>
-		<url-pattern>/auth/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-	</filter-mapping>
 </web-app>

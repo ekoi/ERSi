@@ -16,6 +16,8 @@
  */
 package nl.knaw.dans.ersy.webui;
 
+import nl.knaw.dans.ersy.webui.secure.UserSession;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -42,12 +44,8 @@ public final class ErsyPageHeader extends Panel
 	 * @param page
 	 *            The example page
 	 */
-	public ErsyPageHeader(String id, String exampleTitle, WebPage page)
+	public ErsyPageHeader(String id, WebPage page)
 	{
 		super(id);
-
-		add(new Label("exampleTitle", exampleTitle));
-
-
 	}
 }

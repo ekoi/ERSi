@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<head>
+    <title>Wicket Examples - sample panel</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+ 
+ Everything outside of the &lt;wicket:panel&gt; tags will be ignored.
+ Might be handy as preview code.
+ 
+ <wicket:panel>
+<br/>
+     <div style="text-align:right;"><span wicket:id="userName"/><div class="f3"><a href="#" wicket:id="logout">Logout</a></div></div>	
+  
+ 
+	 <!--start holder-->
+   <div class="holder_content">
+   	   
+      <section class="group1">
+         <h3>RECOMMENDATION 1</h3>
+        <p>p1</p>
+         <a href="#"><span class="button">Read more</span></a>   
+       </section>
+      <section class="group2">
+         <h3>RECOMMENDATION 2</h3>
+        <p>P2</p>
+         <a href="#"><span class="button">Read more</span></a>   
+       </section>
+      <section class="group3">
+         <h3>RECOMMENDATION 3</h3>
+ 		 <p>p3</p>
+         <a href="#"><span class="button">Read more</span></a>   
+   	</section>
+	</div>
+	<!--end holder-->
+ </wicket:panel>
+
+</body>
+</html>

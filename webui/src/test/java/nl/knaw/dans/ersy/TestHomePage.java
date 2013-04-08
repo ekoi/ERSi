@@ -1,7 +1,7 @@
 package nl.knaw.dans.ersy;
 
 import nl.knaw.dans.ersy.webui.ErsyBasePage;
-import nl.knaw.dans.ersy.webui.pages.ErsyHomeApplication;
+import nl.knaw.dans.ersy.webui.secure.ErsyApplication;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
@@ -17,7 +17,7 @@ public class TestHomePage
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new ErsyHomeApplication());
+		tester = new WicketTester(new ErsyApplication());
 	}
 
 	@Test

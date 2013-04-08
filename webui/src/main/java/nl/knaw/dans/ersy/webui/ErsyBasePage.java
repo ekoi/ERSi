@@ -16,6 +16,8 @@
  */
 package nl.knaw.dans.ersy.webui;
 
+import nl.knaw.dans.ersy.webui.secure.UserSession;
+
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
@@ -53,9 +55,7 @@ public class ErsyBasePage extends WebPage
 	public ErsyBasePage(final PageParameters pageParameters)
 	{
 		super(pageParameters);
-
-		final String packageName = getClass().getPackage().getName();
-		add(new ErsyPageHeader("header", "", this));
+		add(new ErsyPageHeader("header", this));
 	}
 
 
