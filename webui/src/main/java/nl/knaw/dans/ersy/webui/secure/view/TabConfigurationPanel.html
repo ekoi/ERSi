@@ -5,13 +5,13 @@
 ========This is tab-panel 1==========<br/>
 
 <form wicket:id="form">
-<span wicket:id="selectedPid">
+<span wicket:id="selectedPid"/>
 <table>
-	<tr><td>OAI-PMH</td></tr><tr><td></td></tr>
-	<tr><td>base-url</td><td><input type="text" wicket:id="baseUrlField" size="50"/></td></tr>
-	<tr><td>metadata-prefix</td><td><input type="text" wicket:id="baseUrlField" size="50"/></span></td></tr>
+	<tr><td colspan="2">XML Configuration</td></tr>
+	<tr><td colspan="2"><textarea wicket:id="confTextArea" rows="40" cols="122">Input comes here</textarea></td></tr>
 	
-	<tr><td></td><td><input type="submit" value="save" wicket:id="ajax-button"/></td></tr>
+
+	<tr><td></td><td align="right"><input type="submit" value="save" wicket:id="ajax-button"/></td></tr>
 </table>
         </form>
 		
