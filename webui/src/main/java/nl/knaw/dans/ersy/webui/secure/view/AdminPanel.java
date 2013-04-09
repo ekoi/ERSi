@@ -57,6 +57,16 @@ public class AdminPanel extends Panel {
         
 		// create a list of ITab objects used to feed the tabbed panel
 		List<ITab> tabs = new ArrayList<ITab>();
+		
+		tabs.add(new AbstractTab(new Model<String>("Statistic"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabStatisticPanel(panelId);
+			}
+		});
+		
 		tabs.add(new AbstractTab(new Model<String>("Configuration"))
 		{
 			@Override
@@ -75,7 +85,7 @@ public class AdminPanel extends Panel {
 			}
 		});
 
-		tabs.add(new AbstractTab(new Model<String>("Data Mining"))
+		tabs.add(new AbstractTab(new Model<String>("Execute TM Process"))
 		{
 			@Override
 			public Panel getPanel(String panelId)
@@ -83,6 +93,16 @@ public class AdminPanel extends Panel {
 				return new TabDataMiningPanel(panelId);
 			}
 		});
+		
+		tabs.add(new AbstractTab(new Model<String>("TM in Progress"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabProcessInProgressPanel(panelId);
+			}
+		});
+		
 
 		add(new AjaxTabbedPanel("tabs", tabs));
 	}
