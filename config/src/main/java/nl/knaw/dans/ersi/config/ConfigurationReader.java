@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.Format;
 
 /**
  * @author akmi
@@ -34,7 +35,7 @@ public class ConfigurationReader implements Serializable {
 		init();
 	}
 	private void init(){
-		Serializer serializer = new Persister();
+		Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding= \"UTF-8\" ?>"));
 		File source = new File(confFileLocation);
 		try {
 			Configuration configuration = serializer.read(Configuration.class, source);
