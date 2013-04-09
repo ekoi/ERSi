@@ -28,22 +28,27 @@ public class TabConfigurationPanel extends Panel {
 	public TabConfigurationPanel(String id) {
 		super(id);
 		
-		ConfigurationReader cr = new ConfigurationReader("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
+		ConfigurationReader cr = new ConfigurationReader("src/main/resources/configuration.xml");
 		
-		DataExtractionConfig dec = cr.getDataExtractionConfig();
-		String baseUrl = dec.getOaiPmhReposConfig().getBaseUrl();
-		
+		DataExtractionConfig dec = cr.getDataExtractionConfig();		
 		Form<Void> form = new Form<Void>("form");
         add(form);
-
-        final TextField<String> field = new TextField<String>("pid", new Model<String>(baseUrl));
-        form.add(field);
-
+        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
+        form.add(baseUrlField);
+        final TextField<String> metadataPrefixField = new TextField<String>("metadataPrefixField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
+        form.add(metadataPrefixField);
+        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
+        form.add(baseUrlField);
+        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
+        form.add(baseUrlField);
+        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
+        form.add(baseUrlField);
+        
+        
+        //for check, just temporary: remove this line
         final Label selectedPid = new Label("selectedPid", new Model<String>(""));
         selectedPid.setOutputMarkupId(true);
         form.add(selectedPid);
-
-      
         
      // add a button that can be used to submit the form via ajax
         form.add(new AjaxButton("ajax-button", form)
@@ -51,9 +56,11 @@ public class TabConfigurationPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
             {
-            	selectedPid.setDefaultModelObject("TITLE AND DESC ---" + field.getDefaultModelObjectAsString());
-                target.add(selectedPid);
-               
+            	String baserUrl= baseUrlField.getDefaultModelObjectAsString();
+            	String metadataPrefix= metadataPrefixField.getDefaultModelObjectAsString();
+            	
+            	selectedPid.setDefaultModelObject(baserUrl);
+            	target.add(selectedPid);
             }
 
         });
