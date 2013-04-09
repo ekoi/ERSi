@@ -3,6 +3,7 @@
  */
 package nl.knaw.dans.ersi.config;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import org.simpleframework.xml.Serializer;
@@ -17,6 +18,7 @@ public class ConfigurationReader {
 	private String confFileLocation;
 	private DataExtractionConfig  dataExtractionConfig;
 	private DataCleansingConfig dataCleansingConfig;
+	private String xmlAsString;
 	/**
 	 * 
 	 */
@@ -30,6 +32,9 @@ public class ConfigurationReader {
 		File source = new File(confFileLocation);
 		try {
 			Configuration configuration = serializer.read(Configuration.class, source);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			serializer.write(configuration, baos);
+			xmlAsString = baos.toString();
 			dataExtractionConfig = configuration.getDataExtractionConfig();
 			dataCleansingConfig = configuration.getDataCleansingConfig();
 		} catch (Exception e) {
@@ -44,5 +49,9 @@ public class ConfigurationReader {
 	}
 	public DataCleansingConfig getDataCleansingConfig() {
 		return dataCleansingConfig;
+	}
+	
+	public String toString() {
+		return xmlAsString;
 	}
 }
