@@ -37,12 +37,7 @@ public class TabConfigurationPanel extends Panel {
         form.add(baseUrlField);
         final TextField<String> metadataPrefixField = new TextField<String>("metadataPrefixField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
         form.add(metadataPrefixField);
-        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
-        form.add(baseUrlField);
-        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
-        form.add(baseUrlField);
-        final TextField<String> baseUrlField = new TextField<String>("baseUrlField", new Model<String>(dec.getOaiPmhReposConfig().getBaseUrl()));
-        form.add(baseUrlField);
+       
         
         
         //for check, just temporary: remove this line
