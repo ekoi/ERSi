@@ -27,7 +27,7 @@ public class TabConfigurationPanel extends Panel {
 
 	public TabConfigurationPanel(String id) {
 		super(id);
-		final String filePath = "src/main/resources/configuration.xml";
+		final String filePath = "/tmp/ersy/conf/configuration.xml";
 		final ConfigurationReader cr = new ConfigurationReader(filePath);
 			
 		Form<Void> form = new Form<Void>("form");
