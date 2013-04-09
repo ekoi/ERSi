@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 public class ConfigurationCreator 
 {
 	private static Logger LOG = LoggerFactory.getLogger(ConfigurationCreator.class);
+	private String errorMessage;
     public static void main( String[] args )
     {
     	 
@@ -130,8 +131,23 @@ public class ConfigurationCreator
     		serializer.write(c, file);
     		return true;
  		} catch (Exception e) {
+ 			setErrorMessage(e.getMessage());
  			LOG.error(e.getMessage());
  		}
     	return false;
     }
+
+	/**
+	 * @return the errorMessage
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	/**
+	 * @param errorMessage the errorMessage to set
+	 */
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 }
