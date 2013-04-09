@@ -108,7 +108,7 @@ public class ConfigurationCreator
 		dcc.setOutputDirectory("/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/local/output-vector");
 		
 		configuration.setDataCleansingConfig(dcc);
-        File result = new File("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
+        File result = new File("/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/config/src/resources/configuration.xml");
 
         try {
 			serializer.write(configuration, result);
@@ -116,5 +116,22 @@ public class ConfigurationCreator
 			LOG.error(e.getMessage());
 		}
         LOG.debug("Configuration fiel is created. Location: " + result.getAbsolutePath());
+    }
+    
+    public boolean saveStringAsXml(String input, String xmlfile) {
+    	boolean success = false;
+    	Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding= \"UTF-8\" ?>")); 
+    	try {
+    		success = serializer.validate(Configuration.class, input); 
+ 			if (!success)
+ 				return success;
+ 			Configuration c = serializer.read(Configuration.class, input);
+ 			File file = new File(xmlfile);
+    		serializer.write(c, file);
+    		return true;
+ 		} catch (Exception e) {
+ 			LOG.error(e.getMessage());
+ 		}
+    	return false;
     }
 }

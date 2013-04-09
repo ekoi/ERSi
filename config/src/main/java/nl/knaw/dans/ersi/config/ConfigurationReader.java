@@ -19,6 +19,7 @@ public class ConfigurationReader {
 	private DataExtractionConfig  dataExtractionConfig;
 	private DataCleansingConfig dataCleansingConfig;
 	private String xmlAsString;
+	private String lastModificationTimeAsString;
 	/**
 	 * 
 	 */
@@ -32,6 +33,7 @@ public class ConfigurationReader {
 		File source = new File(confFileLocation);
 		try {
 			Configuration configuration = serializer.read(Configuration.class, source);
+			setLastModificationTimeAsString(configuration.getGenerated());
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			serializer.write(configuration, baos);
 			xmlAsString = baos.toString();
@@ -53,5 +55,11 @@ public class ConfigurationReader {
 	
 	public String toString() {
 		return xmlAsString;
+	}
+	public String getLastModificationTimeAsString() {
+		return lastModificationTimeAsString;
+	}
+	public void setLastModificationTimeAsString(String lastModificationTimeAsString) {
+		this.lastModificationTimeAsString = lastModificationTimeAsString;
 	}
 }
