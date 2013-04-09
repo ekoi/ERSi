@@ -25,9 +25,8 @@ public class TabConfigurationPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabConfigurationPanel(String id) {
+	public TabConfigurationPanel(String id, final String filePath) {
 		super(id);
-		final String filePath = "/tmp/ersy/conf/configuration.xml";
 		final ConfigurationReader cr = new ConfigurationReader(filePath);
 			
 		Form<Void> form = new Form<Void>("form");

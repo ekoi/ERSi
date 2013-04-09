@@ -49,9 +49,14 @@
 	<dependencies>
 		<!-- ERSy Module -->
 		<dependency>
-    	<groupId>${project.groupId}</groupId>
-    	<artifactId>config</artifactId>
-    	<version>${project.version}</version>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>config</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>data-selector</artifactId>
+    		<version>${project.version}</version>
     	</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>

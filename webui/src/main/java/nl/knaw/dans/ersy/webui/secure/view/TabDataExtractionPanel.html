@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-<br/>
-========DATA EXTRACTION==========
+Data extraction status: <font color="red"><span wicket:id="status"/></font><br/><br/>
+Extract Data From OAI-PHM Repository
+<form wicket:id="form">
+<table>
+<tr><td>Base URL: </td><td><span wicket:id="baseUrl"/></td></tr>
+<tr><td>Metadata Prefix: </td><td><span wicket:id="metadataPrefix"/></td></tr>
+<tr><td>Sets: </td><td><span wicket:id="sets"/></td></tr>
+<tr><td>OAI-PMH Verb: </td><td><span wicket:id="verb"/></td></tr>
+<tr><td>Selected Fields: </td><td>dc:title, dc:description, dc:subject, dc:coverage</td></tr>
+<tr><td></td><td align="right"><input type="submit" value="extract" wicket:id="ajax-button"/></td></tr>
+</table>
+</form>
 </wicket:panel>
 </html>

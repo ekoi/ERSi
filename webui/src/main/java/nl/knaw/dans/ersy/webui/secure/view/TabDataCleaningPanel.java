@@ -16,7 +16,7 @@ public class TabDataCleaningPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataCleaningPanel(String id) {
+	public TabDataCleaningPanel(String id, final String filePath) {
 		super(id);
         
 	}
