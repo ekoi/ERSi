@@ -27,16 +27,16 @@ public class Configuration {
 	private DataCleansingConfig dataCleansingConfig;
 	
 	public Configuration() {
-	      super();
+	      this("nl", "nl");
 	   }  
 	
 	public Configuration (String language, String country) {
 		this.language = language;
 		this.country = country;
-		init();
+		generateModificationTimeNow();
 	}
-
-	private void init() {
+	
+	public void generateModificationTimeNow() {
 		DateTime dt = new DateTime();
 		Locale locale = new Locale(language, country);
 		DateTimeFormatter fmt = DateTimeFormat.longDateTime();

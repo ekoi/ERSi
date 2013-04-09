@@ -1,6 +1,7 @@
 package nl.knaw.dans.ersi.config;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +17,11 @@ import org.slf4j.LoggerFactory;
  * ConfigurationCreator
  *
  */
-public class ConfigurationCreator 
-{
+public class ConfigurationCreator implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1048255901585559931L;
 	private static Logger LOG = LoggerFactory.getLogger(ConfigurationCreator.class);
 	private String errorMessage;
     public static void main( String[] args )
@@ -121,12 +125,13 @@ public class ConfigurationCreator
     
     public boolean saveStringAsXml(String input, String xmlfile) {
     	boolean success = false;
-    	Serializer serializer = new Persister(new Format("<?xml version=\"1.0\" encoding= \"UTF-8\" ?>")); 
+    	Serializer serializer = new Persister(new Format()); 
     	try {
     		success = serializer.validate(Configuration.class, input); 
  			if (!success)
  				return success;
  			Configuration c = serializer.read(Configuration.class, input);
+ 			c.generateModificationTimeNow();
  			File file = new File(xmlfile);
     		serializer.write(c, file);
     		return true;

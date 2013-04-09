@@ -5,6 +5,7 @@ package nl.knaw.dans.ersi.config;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.Serializable;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -13,8 +14,12 @@ import org.simpleframework.xml.core.Persister;
  * @author akmi
  *
  */
-public class ConfigurationReader {
+public class ConfigurationReader implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7900485746738833517L;
 	private String confFileLocation;
 	private DataExtractionConfig  dataExtractionConfig;
 	private DataCleansingConfig dataCleansingConfig;
