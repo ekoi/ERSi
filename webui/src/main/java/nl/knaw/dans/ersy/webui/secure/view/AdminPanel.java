@@ -58,12 +58,12 @@ public class AdminPanel extends Panel {
 		// create a list of ITab objects used to feed the tabbed panel
 		List<ITab> tabs = new ArrayList<ITab>();
 		
-		tabs.add(new AbstractTab(new Model<String>("Statistic"))
+		tabs.add(new AbstractTab(new Model<String>("Statistics"))
 		{
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabStatisticPanel(panelId);
+				return new TabStatisticsPanel(panelId);
 			}
 		});
 		
@@ -75,7 +75,16 @@ public class AdminPanel extends Panel {
 				return new TabConfigurationPanel(panelId);
 			}
 		});
-
+		
+		tabs.add(new AbstractTab(new Model<String>("Data Extraction"))
+		{
+			@Override
+			public Panel getPanel(String panelId)
+			{
+				return new TabDataExtractionPanel(panelId);
+			}
+		});
+		
 		tabs.add(new AbstractTab(new Model<String>("Data Cleaning"))
 		{
 			@Override
