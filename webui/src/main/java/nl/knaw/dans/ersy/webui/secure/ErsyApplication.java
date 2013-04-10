@@ -4,7 +4,7 @@ import nl.knaw.dans.ersy.webui.pages.ApiPage;
 import nl.knaw.dans.ersy.webui.pages.ContactPage;
 import nl.knaw.dans.ersy.webui.pages.HomePage;
 import nl.knaw.dans.ersy.webui.pages.HowItWorkPage;
-import nl.knaw.dans.ersy.webui.pages.PublicationPage;
+import nl.knaw.dans.ersy.webui.pages.publications.PublicationPage;
 import nl.knaw.dans.ersy.webui.secure.view.AdminPage;
 import nl.knaw.dans.ersy.webui.service.CookieService;
 import nl.knaw.dans.ersy.webui.service.SessionProvider;

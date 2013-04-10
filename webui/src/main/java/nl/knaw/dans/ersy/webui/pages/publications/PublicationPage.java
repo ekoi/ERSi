@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.ersy.webui.pages;
+package nl.knaw.dans.ersy.webui.pages.publications;
 
 import nl.knaw.dans.ersy.webui.ErsyBasePage;
 import nl.knaw.dans.ersy.webui.ErsyPageContent;
@@ -39,7 +39,7 @@ public class PublicationPage extends ErsyBasePage
 	public PublicationPage(final PageParameters pageParameters)
 	{
 		super(pageParameters);
-
+		add(new PublicationPanel("publicationPanel"));
 		
 	}
 
