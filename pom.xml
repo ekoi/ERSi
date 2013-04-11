@@ -84,5 +84,20 @@
 	    <version>2.9.1</version>
     </dependency>
   	
+  	
+  	<!-- Date4J dependency -->
+		<dependency>
+  			<groupId>date4j</groupId>
+  			<artifactId>date4j</artifactId>
+ 			<version>1.2.0</version>
+		</dependency>
+  	
   </dependencies>
+  
+  <repositories>
+  	<repository>
+  		<id>clojars.org</id>
+  		<url>http://clojars.org/repo</url>
+		</repository>
+  </repositories>
 </project>

@@ -5,7 +5,8 @@ package nl.knaw.dans.ersy.webui.secure.view;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
-import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhExtractor;
+import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
+import nl.knaw.dans.ersi.dataselector.util.ExtractionProcessStatus;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -31,11 +32,12 @@ public class TabDataExtractionPanel extends Panel {
 		ConfigurationReader configurationReader = new ConfigurationReader(filePath);
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
 		
-		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
+		String extractorProcessStatus = ExtractionProcessStatus.giveStatus();
 		
-		final Label status = new Label("status", new Model<String>("Not Running"));
+		final Label status = new Label("status", new Model<String>(extractorProcessStatus));
         status.setOutputMarkupId(true);
         add(status);
+        
         
 		
 		Form<Void> form = new Form<Void>("form");
@@ -63,11 +65,25 @@ public class TabDataExtractionPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
             {
-            	
+            	if (!ExtractionProcessStatus.isRunning()) {
+            		try {
+            			DataExtractionExecutor.main();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
+            	baseUrl.setDefaultModelObject("EKO INDARTO");
             	target.add(baseUrl);
-            	
+            	setResponsePage(AdminPage.class);
             }
-
+            
+            @Override
+            public boolean isEnabled() {
+            	return !ExtractionProcessStatus.isRunning();
+            }
+            
+          
         });
         
 	}

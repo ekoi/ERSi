@@ -122,6 +122,8 @@
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		
 	</dependencies>
 	<build>
 		<resources>
@@ -207,5 +209,6 @@
 			<snapshots>
 			</snapshots>
 		</repository>
+		
 	</repositories>
 </project>

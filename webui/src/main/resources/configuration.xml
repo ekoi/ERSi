@@ -1,0 +1,79 @@
+<configuration generated="9 april 2013 13:20:10 CEST">
+   <data-extraction>
+      <OAI-PMH>
+         <base-url>https://easy.dans.knaw.nl/oai</base-url>
+         <metadata-prefix>oai_dc</metadata-prefix>
+         <selected-fields class="java.util.ArrayList">
+            <field>
+               <name>dc:title</name>
+               <detect-lang>true</detect-lang>
+            </field>
+            <field>
+               <name>dc:description</name>
+               <detect-lang>true</detect-lang>
+            </field>
+            <field>
+               <name>dc:subject</name>
+               <detect-lang>false</detect-lang>
+            </field>
+            <field>
+               <name>dc:coverage</name>
+               <detect-lang>false</detect-lang>
+            </field>
+         </selected-fields>
+      </OAI-PMH>
+      <local-source>
+         <file-name>tsd-eko</file-name>
+         <file-path>/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO</file-path>
+         <file-type>txt</file-type>
+         <selected-fields class="java.util.ArrayList">
+            <field>
+               <name>urn</name>
+               <detect-lang>false</detect-lang>
+            </field>
+            <field>
+               <name>data_abr</name>
+               <detect-lang>false</detect-lang>
+            </field>
+         </selected-fields>
+      </local-source>
+      <extracted-output>
+         <file language="en">
+            <description>
+               <file-name>Metadata-in-english</file-name>
+               <txt-file-path>/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/txt</txt-file-path>
+            </description>
+         </file>
+         <file language="nl">
+            <description>
+               <file-name>Metadata-in-dutch</file-name>
+               <txt-file-path>/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/txt</txt-file-path>
+               <hdfs-file-path>/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp</hdfs-file-path>
+            </description>
+         </file>
+      </extracted-output>
+      <report>
+         <name>data-extraction-report</name>
+         <path>/Volumes/Holdtank/Experiments/ERSi/report</path>
+      </report>
+   </data-extraction>
+   <data-cleansing>
+      <simple-dimension-reduction>
+         <min-word-length>3</min-word-length>
+         <skip-word class="java.util.ArrayList">
+            <string>onderzoeksrapport</string>
+         </skip-word>
+      </simple-dimension-reduction>
+      <minSupport>2</minSupport>
+      <minDf>2</minDf>
+      <maxDFPercent>90</maxDFPercent>
+      <maxNGramSize>1</maxNGramSize>
+      <minLLRValue>3.0</minLLRValue>
+      <reduceTasks>1</reduceTasks>
+      <chunkSize>200</chunkSize>
+      <norm>2</norm>
+      <sequentialAccessOutput>true</sequentialAccessOutput>
+      <input-directory>/Volumes/Holdtank/Experiments/ERSi/extracted-files/oai-pmh/hdfs/tmp</input-directory>
+      <output-directory>/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/local/output-vector</output-directory>
+   </data-cleansing>
+</configuration>

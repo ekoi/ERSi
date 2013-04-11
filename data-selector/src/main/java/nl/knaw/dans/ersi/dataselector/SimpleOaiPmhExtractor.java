@@ -13,6 +13,7 @@ import nl.knaw.dans.ersi.config.ExtractedOutput;
 import nl.knaw.dans.ersi.config.Field;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
+import nl.knaw.dans.ersi.dataselector.util.ExtractionProcessStatus;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -61,6 +62,8 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 
 	public void extract() throws OAIException, IOException, LangDetectException {
 		LOG.debug("START");
+		boolean b = ExtractionProcessStatus.writeCurrentStatus();
+		LOG.debug("Status start is : " + b);
 		OaiPmhReposConfig oaiPmhReposconfig = getDataExtractionConfig()
 				.getOaiPmhReposConfig();
 		OaiPmhServer server = new OaiPmhServer(oaiPmhReposconfig.getBaseUrl());
@@ -85,6 +88,10 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		LOG.debug("Number of Total EN records: " + numberOfEn);
 		LOG.debug("Number of Total other records: " + numberOfOther);
 		LOG.debug("Number of Total words (Text in Dutch): " + numbeerOfNlWords);
+		boolean b2 = ExtractionProcessStatus.writeLastStatus();
+		LOG.debug("Extraction status - write last status: " + b2);
+		boolean b3 = ExtractionProcessStatus.writeDoneStatus();
+		LOG.debug("Extraction status - write DONE status: " + b3);
 	}
 
 	/**
@@ -189,6 +196,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 				}
 				if (records.getResumptionToken() != null) {
 					ResumptionToken rt = records.getResumptionToken();
+					System.out.println(rt.getId());
 					LOG.debug("Number of resuption token: " + numberOfResumption);
 					LOG.debug("Number of records: " + numberOfRecords);
 						Thread.sleep(3000);
