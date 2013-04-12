@@ -6,7 +6,7 @@ package nl.knaw.dans.ersy.webui.secure.view;
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
-import nl.knaw.dans.ersi.dataselector.util.ExtractionProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ExtractionProcessStatus;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;

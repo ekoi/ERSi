@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nl.knaw.dans.ersi.dataselector.util;
+package nl.knaw.dans.ersy.process.controller.utils;
 
 import hirondelle.date4j.DateTime;
 
@@ -17,7 +17,7 @@ import java.util.TimeZone;
  * @author akmi
  *
  */
-public class ExtractionProcessStatus {
+public class ProcessStatus {
 
 	private static final String FILE_NAME_CURRENT= "/tmp/ersy/status/data-extraction.current";
 	private static final String FILE_NAME_LAST= "/tmp/ersy/status/data-extraction.last";

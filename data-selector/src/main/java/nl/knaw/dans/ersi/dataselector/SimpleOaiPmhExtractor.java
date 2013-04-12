@@ -13,7 +13,7 @@ import nl.knaw.dans.ersi.config.ExtractedOutput;
 import nl.knaw.dans.ersi.config.Field;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
-import nl.knaw.dans.ersi.dataselector.util.ExtractionProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ExtractionProcessStatus;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
