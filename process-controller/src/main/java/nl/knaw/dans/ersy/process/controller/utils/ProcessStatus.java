@@ -11,41 +11,74 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.TimeZone;
 
 /**
  * @author akmi
  *
  */
-public class ProcessStatus {
+public class ProcessStatus implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8078077586437754670L;
+	final private String fileNameCurrent;
+	final private String fileNameLast;
+	final private String processName;
 
-	private static final String FILE_NAME_CURRENT= "/tmp/ersy/status/data-extraction.current";
-	private static final String FILE_NAME_LAST= "/tmp/ersy/status/data-extraction.last";
-	
-	public static boolean writeCurrentStatus() {
-		return writeStatus(FILE_NAME_CURRENT, false);
+	public enum ProcessName {
+		   DATA_EXTRACTION, DATA_CLEANING, DATA_MINING
+		 }
+
+	public ProcessStatus (ProcessName pn) {
+		switch (pn) {
+		case DATA_EXTRACTION: 
+				fileNameCurrent =  "/tmp/ersy/status/data-extraction.current";
+				fileNameLast =  "/tmp/ersy/status/data-extraction.last";
+				processName = "Data Extraction process";
+			break;
+		
+		case DATA_CLEANING: 
+			fileNameCurrent =  "/tmp/ersy/status/data-cleansing.current";
+			fileNameLast =  "/tmp/ersy/status/data-cleansing.last";
+			processName = "Data Cleaning process";
+			break;
+		default:
+			fileNameCurrent =  "/tmp/ersy/status/data-extraction.current";
+			fileNameLast =  "/tmp/ersy/status/data-extraction.last";
+			processName = "Data Extraction process";
+			break;
+		}
 	}
 	
-	public static boolean writeLastStatus() {
-		return writeStatus(FILE_NAME_LAST, false);
+	public boolean writeCurrentStatus() {
+		return writeStatus(fileNameCurrent, false);
 	}
 	
-	public static boolean writeDoneStatus() {
-		return writeStatus(FILE_NAME_CURRENT, true);
+	public boolean writeLastStatus() {
+		return writeStatus(fileNameLast, false);
 	}
 	
-	public static String giveStatus(){
-		long currTime = readStatus(FILE_NAME_CURRENT);
-		long lastTime = readStatus(FILE_NAME_LAST);
-		String lastProccess = "Last process is finished at " + convertToHumanReadableTime(lastTime);
+	public boolean writeDoneStatus() {
+		return writeStatus(fileNameCurrent, true);
+	}
+	
+	public String giveCurrentStatus(){
+		long currTime = readStatus(fileNameCurrent);
 		if (currTime == 0) {
-			return "No process is running. " + lastProccess;
+			return processName + " is not running.";
 		} 
-		return "Current process is still running. " + lastProccess;
+		return processName + " is running.";
 	}
 	
-	public static boolean isRunning() {
-		return readStatus(FILE_NAME_CURRENT) != 0;
+	public String giveTimeLastProcess() {
+		long lastTime = readStatus(fileNameLast);
+		return "Last " + processName + " is finished at " + convertToHumanReadableTime(lastTime);
+	}
+	public boolean isRunning() {
+		return readStatus(fileNameCurrent) != 0;
 	}
 	/**
 	 * @param args

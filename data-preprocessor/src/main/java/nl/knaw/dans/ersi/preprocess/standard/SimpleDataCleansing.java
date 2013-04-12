@@ -5,6 +5,8 @@ import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -28,7 +30,9 @@ public class SimpleDataCleansing {
 		this.confFileLocation = confFileLocation;
 	}
   public void run() throws IOException, InterruptedException, ClassNotFoundException {
-	
+	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING);
+		boolean b = processStatus.writeCurrentStatus();
+		LOG.debug("Status start is : " + b);
 	ConfigurationReader c = new ConfigurationReader(confFileLocation);
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
 	int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
@@ -85,6 +89,10 @@ public class SimpleDataCleansing {
     }
     reader.close();
     LOG.debug("Number of processing data: " + count);
+    boolean b2 = processStatus.writeLastStatus();
+	LOG.debug("Status last is : " + b2);
+	boolean b3 = processStatus.writeDoneStatus();
+	LOG.debug("Status done is : " + b3);
   }
   
   public static void main(String args[]) throws Exception {

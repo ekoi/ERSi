@@ -7,6 +7,7 @@ import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -33,32 +34,17 @@ public class TabDataExtractionPanel extends Panel {
 		ConfigurationReader configurationReader = new ConfigurationReader(filePath);
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
 		
-		String extractorProcessStatus = ProcessStatus.giveStatus();
+		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
+		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
+		add(new Label("baseUrl", new Model<String>(opc.getBaseUrl())));
+		add(new Label("metadataPrefix", new Model<String>(opc.getMetadataPrefix())));
+		add(new Label("sets", new Model<String>(opc.getSet())));
+		add(new Label("verb", new Model<String>("http://easy.dans.knaw.nl/oai/?verb=ListRecords&metadataPrefix=oai_dc&set=D30000:D37000")));
 		
-		final Label status = new Label("status", new Model<String>(extractorProcessStatus));
-        status.setOutputMarkupId(true);
-        add(status);
-        
-        
 		
 		Form<Void> form = new Form<Void>("form");
         add(form);
-        
-        final Label baseUrl = new Label("baseUrl", new Model<String>(opc.getBaseUrl()));
-        baseUrl.setOutputMarkupId(true);
-        form.add(baseUrl);
-        
-        final Label metadataPrefix = new Label("metadataPrefix", new Model<String>(opc.getMetadataPrefix()));
-        metadataPrefix.setOutputMarkupId(true);
-        form.add(metadataPrefix);
-        
-        final Label sets = new Label("sets", new Model<String>(opc.getSet()));
-        sets.setOutputMarkupId(true);
-        form.add(sets);
-        
-        final Label verb = new Label("verb", new Model<String>("http://easy.dans.knaw.nl/oai/?verb=ListRecords&metadataPrefix=oai_dc&set=D30000:D37000"));
-        verb.setOutputMarkupId(true);
-        form.add(verb);
         
      // add a button that can be used to submit the form via ajax
         form.add(new AjaxButton("ajax-button", form)
@@ -66,7 +52,7 @@ public class TabDataExtractionPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
             {
-            	if (!ProcessStatus.isRunning()) {
+            	if (!ps.isRunning()) {
             		try {
             			DataExtractionExecutor.main();
 					} catch (Exception e) {
@@ -82,7 +68,7 @@ public class TabDataExtractionPanel extends Panel {
             
             @Override
             public boolean isEnabled() {
-            	return !ProcessStatus.isRunning();
+            	return !ps.isRunning();
             }
             
           
