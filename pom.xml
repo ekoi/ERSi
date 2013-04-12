@@ -10,6 +10,7 @@
     <module>data-selector</module>
     <module>data-preprocessor</module>
     <module>webui</module>
+    <module>process-controller</module>
   </modules>
   <build>
   	<resources>
