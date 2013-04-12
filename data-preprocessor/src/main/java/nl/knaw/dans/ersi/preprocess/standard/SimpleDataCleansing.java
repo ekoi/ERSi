@@ -23,9 +23,13 @@ import org.slf4j.LoggerFactory;
 
 public class SimpleDataCleansing {
 	private static Logger LOG = LoggerFactory.getLogger(SimpleDataCleansing.class);
-  public static void run(String configurationFileLocation) throws IOException, InterruptedException, ClassNotFoundException {
+	private String confFileLocation;
+	public SimpleDataCleansing(String confFileLocation) {
+		this.confFileLocation = confFileLocation;
+	}
+  public void run() throws IOException, InterruptedException, ClassNotFoundException {
 	
-	ConfigurationReader c = new ConfigurationReader(configurationFileLocation);
+	ConfigurationReader c = new ConfigurationReader(confFileLocation);
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
 	int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
     int minDf = dcc.getMinDf(); //The minimum document frequency.
