@@ -13,7 +13,7 @@ import nl.knaw.dans.ersi.config.ExtractedOutput;
 import nl.knaw.dans.ersi.config.Field;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
-import nl.knaw.dans.ersy.process.controller.utils.ExtractionProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -62,7 +62,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 
 	public void extract() throws OAIException, IOException, LangDetectException {
 		LOG.debug("START");
-		boolean b = ExtractionProcessStatus.writeCurrentStatus();
+		boolean b = ProcessStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
 		OaiPmhReposConfig oaiPmhReposconfig = getDataExtractionConfig()
 				.getOaiPmhReposConfig();
@@ -88,9 +88,9 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		LOG.debug("Number of Total EN records: " + numberOfEn);
 		LOG.debug("Number of Total other records: " + numberOfOther);
 		LOG.debug("Number of Total words (Text in Dutch): " + numbeerOfNlWords);
-		boolean b2 = ExtractionProcessStatus.writeLastStatus();
+		boolean b2 = ProcessStatus.writeLastStatus();
 		LOG.debug("Extraction status - write last status: " + b2);
-		boolean b3 = ExtractionProcessStatus.writeDoneStatus();
+		boolean b3 = ProcessStatus.writeDoneStatus();
 		LOG.debug("Extraction status - write DONE status: " + b3);
 	}
 

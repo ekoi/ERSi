@@ -6,7 +6,7 @@ package nl.knaw.dans.ersy.webui.secure.view;
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
-import nl.knaw.dans.ersy.process.controller.utils.ExtractionProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -33,7 +33,7 @@ public class TabDataExtractionPanel extends Panel {
 		ConfigurationReader configurationReader = new ConfigurationReader(filePath);
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
 		
-		String extractorProcessStatus = ExtractionProcessStatus.giveStatus();
+		String extractorProcessStatus = ProcessStatus.giveStatus();
 		
 		final Label status = new Label("status", new Model<String>(extractorProcessStatus));
         status.setOutputMarkupId(true);
@@ -66,7 +66,7 @@ public class TabDataExtractionPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form)
             {
-            	if (!ExtractionProcessStatus.isRunning()) {
+            	if (!ProcessStatus.isRunning()) {
             		try {
             			DataExtractionExecutor.main();
 					} catch (Exception e) {
@@ -82,7 +82,7 @@ public class TabDataExtractionPanel extends Panel {
             
             @Override
             public boolean isEnabled() {
-            	return !ExtractionProcessStatus.isRunning();
+            	return !ProcessStatus.isRunning();
             }
             
           

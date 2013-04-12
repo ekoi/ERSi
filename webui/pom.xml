@@ -58,6 +58,11 @@
     		<artifactId>data-selector</artifactId>
     		<version>${project.version}</version>
     	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>process-controller</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>

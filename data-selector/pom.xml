@@ -26,6 +26,12 @@
     	<artifactId>config</artifactId>
     	<version>${project.version}</version>
     </dependency>
+    
+    <dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>process-controller</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
     <!-- OAI-PMH library -->
 	<dependency>
 		<groupId>se.kb</groupId>
