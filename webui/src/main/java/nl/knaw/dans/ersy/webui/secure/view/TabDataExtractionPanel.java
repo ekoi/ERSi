@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author akmi
@@ -73,9 +74,10 @@ public class TabDataExtractionPanel extends Panel {
 						e.printStackTrace();
 					}
             	}
-            	baseUrl.setDefaultModelObject("EKO INDARTO");
-            	target.add(baseUrl);
-            	setResponsePage(AdminPage.class);
+            	//target.add(baseUrl);
+            	PageParameters pageParameters = new PageParameters();
+    			pageParameters.add("selectedTab", 2);
+            	setResponsePage(new AdminPage(pageParameters));
             }
             
             @Override

@@ -30,7 +30,7 @@ public class AdminPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public AdminPanel(String id) {
+	public AdminPanel(String id, int selectedTabe) {
 		super(id);
         String userName = UserSession.get().userLoggedIn() ? UserSession.get().getUser().getLogin() : "Anonymous user";
         Label userNameLabel = new Label("userName", "Hi, " + userName);
@@ -114,8 +114,9 @@ public class AdminPanel extends Panel {
 			}
 		});
 		
-
-		add(new AjaxTabbedPanel("tabs", tabs));
+		AjaxTabbedPanel atp = new AjaxTabbedPanel("tabs", tabs);
+		atp.setSelectedTab(selectedTabe);
+		add(atp);
 	}
 
 }
