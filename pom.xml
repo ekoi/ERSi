@@ -11,6 +11,7 @@
     <module>data-preprocessor</module>
     <module>webui</module>
     <module>process-controller</module>
+    <module>text-mining</module>
   </modules>
   <build>
   	<resources>
