@@ -26,6 +26,10 @@ public class Configuration {
 	@Element(name="data-cleansing")
 	private DataCleansingConfig dataCleansingConfig;
 	
+	@Element(name="clustering")
+	private ClusteringConfig clusteringConfig;
+
+	
 	public Configuration() {
 	      this("nl", "nl");
 	   }  
@@ -65,6 +69,14 @@ public class Configuration {
 	}
 
 	
+	public ClusteringConfig getClusteringConfig() {
+		return clusteringConfig;
+	}
+
+	public void setClusteringConfig(ClusteringConfig clusteringConfig) {
+		this.clusteringConfig = clusteringConfig;
+	}
+
 	public static Configuration Load(String xml) {
 		Serializer serializer = new Persister();
 		try {

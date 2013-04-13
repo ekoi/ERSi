@@ -120,7 +120,36 @@ public class ConfigurationCreator implements Serializable {
 
 		configuration.setDataCleansingConfig(dcc);
 		
-		File result = new File("/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/config/src/resources/configuration.xml");
+		//Clustering configuration
+		ClusteringConfig cc = new ClusteringConfig();
+		configuration.setClusteringConfig(cc);
+		cc.setInputVectorsPath("/tmp/ersy/data-cleansing/oai-pmh/vectors");
+		cc.setOutputPath("/tmp/ersy/clustering-result/vectors");
+		
+		ClusterAlgorithmConfig cac = new ClusterAlgorithmConfig();
+		cc.setClusterAlgorithmConfig(cac);		
+		
+		//canopy
+		CanopyConfig canopyC = new CanopyConfig();
+		canopyC.setDistanceMeasureClassName("org.apache.mahout.common.distance.CosineDistanceMeasure");
+		canopyC.setDistanceMetricT1(0.5);
+		canopyC.setDistanceMetricT2(0.7);
+		canopyC.setClusterClassificationThreshold(0.0);
+		cac.setCanopyConfig(canopyC);
+		
+		//kmeans
+		KMeansConfig kc = new KMeansConfig();
+		kc.setDistanceMeasureClassName("org.apache.mahout.common.distance.CosineDistanceMeasure");
+		kc.setConvergenceDelta(0.01);
+		kc.setMaxIterations(10);
+		kc.setClusterClassificationThreshold(0.0);
+		cac.setkMeansConfig(kc);
+		
+		
+		
+		
+		
+		File result = new File("/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/config/src/resources/configuration2.xml");
 
 		try {
 			serializer.write(configuration, result);
