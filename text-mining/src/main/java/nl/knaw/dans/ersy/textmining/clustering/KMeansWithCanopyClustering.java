@@ -8,10 +8,30 @@ import org.apache.mahout.clustering.canopy.CanopyDriver;
 import org.apache.mahout.clustering.kmeans.KMeansDriver;
 import org.apache.mahout.common.HadoopUtil;
 import org.apache.mahout.common.distance.CosineDistanceMeasure;
-import org.apache.mahout.utils.clustering.ClusterDumper;
 
 public class KMeansWithCanopyClustering {
 
+	/*
+	 
+	 <clustering>
+	 	<cluster-algorithm>
+	 	 	<canopy>
+	 	 		
+	 	 	</canopy>
+	 	 	<kmeans>
+	 	 	
+	 	 	</kmeans>
+	 	</cluster-algorithm>
+	 	<input-vectors-path>
+	 	</input-vectors-path>
+	 	<output-clustering-path>
+	 	</output-clustering-path>
+      <output-directory>/tmp/ersy/data-cleansing/oai-pmh/vectors</output-directory>
+   </data-cleansing>
+	 
+	 
+	 */
+	
 	public static void main(String args[]) throws Exception {
 		
 		long begin = System.currentTimeMillis();
