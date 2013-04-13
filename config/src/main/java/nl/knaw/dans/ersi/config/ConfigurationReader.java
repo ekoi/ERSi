@@ -24,6 +24,7 @@ public class ConfigurationReader implements Serializable {
 	private String confFileLocation;
 	private DataExtractionConfig  dataExtractionConfig;
 	private DataCleansingConfig dataCleansingConfig;
+	private ClusteringConfig clusteringConfig;
 	private String xmlAsString;
 	private String lastModificationTimeAsString;
 	/**
@@ -59,6 +60,12 @@ public class ConfigurationReader implements Serializable {
 		return dataCleansingConfig;
 	}
 	
+	/**
+	 * @return the clusteringConfig
+	 */
+	public ClusteringConfig getClusteringConfig() {
+		return clusteringConfig;
+	}
 	public String toString() {
 		return xmlAsString;
 	}
