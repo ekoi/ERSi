@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration generated="10 april 2013 0:23:52 CEST">
+<configuration generated="13 april 2013 12:07:12 CEST">
    <data-extraction>
       <OAI-PMH>
          <base-url>http://easy.dans.knaw.nl/oai</base-url>
          <metadata-prefix>oai_dc</metadata-prefix>
          <set>D30000:D37000</set>
          <selected-fields class="java.util.ArrayList">
-            <field>
+            <fieldConfig>
                <name>dc:title</name>
                <detect-lang>true</detect-lang>
-            </field>
-            <field>
+            </fieldConfig>
+            <fieldConfig>
                <name>dc:description</name>
                <detect-lang>true</detect-lang>
-            </field>
-            <field>
+            </fieldConfig>
+            <fieldConfig>
                <name>dc:subject</name>
                <detect-lang>false</detect-lang>
-            </field>
-            <field>
+            </fieldConfig>
+            <fieldConfig>
                <name>dc:coverage</name>
                <detect-lang>false</detect-lang>
-            </field>
+            </fieldConfig>
          </selected-fields>
       </OAI-PMH>
       <local-source>
@@ -29,14 +29,14 @@
          <file-path>/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO</file-path>
          <file-type>txt</file-type>
          <selected-fields class="java.util.ArrayList">
-            <field>
+            <fieldConfig>
                <name>urn</name>
                <detect-lang>false</detect-lang>
-            </field>
-            <field>
+            </fieldConfig>
+            <fieldConfig>
                <name>data_abr</name>
                <detect-lang>false</detect-lang>
-            </field>
+            </fieldConfig>
          </selected-fields>
       </local-source>
       <extracted-output>
@@ -72,4 +72,22 @@
       <input-directory>/tmp/ersy/data-extraction/archaeology/nl/hdfs</input-directory>
       <output-directory>/tmp/ersy/data-cleansing/oai-pmh/vectors</output-directory>
    </data-cleansing>
+   <clustering>
+      <cluster-algorithm>
+         <canopy>
+            <distance-measure-class-name>org.apache.mahout.common.distance.CosineDistanceMeasure</distance-measure-class-name>
+            <distance-metric-T1>0.5</distance-metric-T1>
+            <distance-metric-T2>0.7</distance-metric-T2>
+            <cluster-classification-threshold>0.0</cluster-classification-threshold>
+         </canopy>
+         <kmeans>
+            <distance-measure-class-name>org.apache.mahout.common.distance.CosineDistanceMeasure</distance-measure-class-name>
+            <convergence-delta>0.01</convergence-delta>
+            <max-iterations>10</max-iterations>
+            <cluster-classification-threshold>0.0</cluster-classification-threshold>
+         </kmeans>
+      </cluster-algorithm>
+      <input-vectors-path>/tmp/ersy/data-cleansing/oai-pmh/vectors</input-vectors-path>
+      <output-path>/tmp/ersy/clustering-result/vectors</output-path>
+   </clustering>
 </configuration>
