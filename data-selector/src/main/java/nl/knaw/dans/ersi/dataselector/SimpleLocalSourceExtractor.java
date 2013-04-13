@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.knaw.dans.ersi.config.DataExtractionConfig;
-import nl.knaw.dans.ersi.config.ExtractedOutput;
+import nl.knaw.dans.ersi.config.ExtractedOutputConfig;
 import nl.knaw.dans.ersi.config.LocalSourceDataConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
 import nl.knaw.dans.ersi.dataselector.util.ListRecords;
@@ -81,7 +81,7 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 
 	private void saveFile(List<Record> records) throws LangDetectException{
 		LanguageRecognition dl = new LanguageRecognition();
-		ExtractedOutput extractedOutput = getDataExtractionConfig()
+		ExtractedOutputConfig extractedOutput = getDataExtractionConfig()
 				.getExtractedOutput();
 		SequenceFile.Writer writer = null;
 		Map<String, OutputFileConfig> outputFileConf = extractedOutput

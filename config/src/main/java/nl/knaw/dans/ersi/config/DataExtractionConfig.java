@@ -14,16 +14,16 @@ public class DataExtractionConfig {
 	private LocalSourceDataConfig localSource;
 	
 	@Element(name="extracted-output")
-	private ExtractedOutput extractedOutput;
+	private ExtractedOutputConfig extractedOutput;
 	
 	@Element
-	private Report report;
+	private ReportConfig report;
 
-	public Report getReport() {
+	public ReportConfig getReport() {
 		return report;
 	}
 
-	public void setReport(Report report) {
+	public void setReport(ReportConfig report) {
 		this.report = report;
 	}
 
@@ -43,11 +43,11 @@ public class DataExtractionConfig {
 		this.localSource = localSource;
 	}
 
-	public ExtractedOutput getExtractedOutput() {
+	public ExtractedOutputConfig getExtractedOutput() {
 		return extractedOutput;
 	}
 
-	public void setExtractedOutput(ExtractedOutput extractedOutput) {
+	public void setExtractedOutput(ExtractedOutputConfig extractedOutput) {
 		this.extractedOutput = extractedOutput;
 	}
 }

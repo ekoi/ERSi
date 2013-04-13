@@ -42,18 +42,18 @@ public class ConfigurationCreator implements Serializable {
 		oaiPmhRepos.setMetadataPrefix("oai_dc");
 		oaiPmhRepos.setSet("D30000:D37000");
 
-		Field selectedFieldTitle = new Field();
+		FieldConfig selectedFieldTitle = new FieldConfig();
 		selectedFieldTitle.setName("dc:title");
-		Field selectedFieldDesc = new Field();
+		FieldConfig selectedFieldDesc = new FieldConfig();
 		selectedFieldDesc.setName("dc:description");
-		Field selectedFieldSub = new Field();
+		FieldConfig selectedFieldSub = new FieldConfig();
 		selectedFieldSub.setName("dc:subject");
 		selectedFieldSub.setDetectLang(false);
-		Field selectedFieldCov = new Field();
+		FieldConfig selectedFieldCov = new FieldConfig();
 		selectedFieldCov.setName("dc:coverage");
 		selectedFieldCov.setDetectLang(false);
 
-		List<Field> selectedFields = new ArrayList<Field>();
+		List<FieldConfig> selectedFields = new ArrayList<FieldConfig>();
 		selectedFields.add(selectedFieldTitle);
 		selectedFields.add(selectedFieldDesc);
 		selectedFields.add(selectedFieldSub);
@@ -66,14 +66,14 @@ public class ConfigurationCreator implements Serializable {
 		localSource.setFilePath("/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO");
 		localSource.setFileType("txt");
 		
-		Field selectedFieldUrn = new Field();
+		FieldConfig selectedFieldUrn = new FieldConfig();
 		selectedFieldUrn.setDetectLang(false);
 		selectedFieldUrn.setName("urn");
-		Field selectedFieldData = new Field();
+		FieldConfig selectedFieldData = new FieldConfig();
 		selectedFieldData.setDetectLang(false);
 		selectedFieldData.setName("data_abr");
 		
-		List<Field> selectedLocalFields = new ArrayList<Field>();
+		List<FieldConfig> selectedLocalFields = new ArrayList<FieldConfig>();
 		selectedLocalFields.add(selectedFieldUrn);
 		selectedLocalFields.add(selectedFieldData);
 		localSource.setSelectedFields(selectedLocalFields);
@@ -82,7 +82,7 @@ public class ConfigurationCreator implements Serializable {
 		
 		
 		//Extracted output part
-		ExtractedOutput extractedOutput = new ExtractedOutput();
+		ExtractedOutputConfig extractedOutput = new ExtractedOutputConfig();
 		
 		OutputFileConfig outputNl = new OutputFileConfig();
 		outputNl.setFileName("ArchaeologyMetadataInDutch");
@@ -94,7 +94,7 @@ public class ConfigurationCreator implements Serializable {
 		extractedOutput.setOutputFileConfig(map);
 	
 		//Extracted output report part
-		Report report = new Report();
+		ReportConfig report = new ReportConfig();
 		report.setName("DataExtractionReport");
 		report.setPath("/tmp/ersy/data-extraction/report");
 		

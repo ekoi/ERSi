@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.simpleframework.xml.ElementMap;
 
-public class ExtractedOutput {
+public class ExtractedOutputConfig {
 	
 	@ElementMap(entry="file", key="language", value="description", attribute=true, inline=true)
 	private Map<String, OutputFileConfig> outputFileConfig;

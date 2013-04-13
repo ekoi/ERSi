@@ -16,13 +16,13 @@ public class LocalSourceDataConfig {
 	private String fileType;
 
 	@ElementList(name = "selected-fields")
-	private List<Field> selectedFields;
+	private List<FieldConfig> selectedFields;
 
-	public void setSelectedFields(List<Field> selectedFields) {
+	public void setSelectedFields(List<FieldConfig> selectedFields) {
 		this.selectedFields = selectedFields;
 	}
 
-	public List<Field> getSelectedFields() {
+	public List<FieldConfig> getSelectedFields() {
 		return selectedFields;
 	}
 

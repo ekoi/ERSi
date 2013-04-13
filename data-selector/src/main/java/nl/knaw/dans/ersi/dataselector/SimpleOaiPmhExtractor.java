@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.knaw.dans.ersi.config.DataExtractionConfig;
-import nl.knaw.dans.ersi.config.ExtractedOutput;
-import nl.knaw.dans.ersi.config.Field;
+import nl.knaw.dans.ersi.config.ExtractedOutputConfig;
+import nl.knaw.dans.ersi.config.FieldConfig;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
@@ -111,7 +111,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		OaiPmhReposConfig oaiPmhReposConfig = getDataExtractionConfig()
 				.getOaiPmhReposConfig();
 
-		ExtractedOutput extractedOutput = getDataExtractionConfig()
+		ExtractedOutputConfig extractedOutput = getDataExtractionConfig()
 				.getExtractedOutput();
 		SequenceFile.Writer writer = null;
 		Map<String, OutputFileConfig> outputFileConf = extractedOutput
@@ -161,9 +161,9 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 						}
 						StringBuffer text = new StringBuffer();
 						StringBuffer textToDetect = new StringBuffer();
-						List<Field> selectedFields = oaiPmhReposConfig
+						List<FieldConfig> selectedFields = oaiPmhReposConfig
 								.getSelectedFields();
-						for (Field field : selectedFields) {
+						for (FieldConfig field : selectedFields) {
 							List<Node> nodes = element.selectNodes("./"
 									+ field.getName());
 							for (Node node : nodes) {

@@ -16,7 +16,7 @@ public class OaiPmhReposConfig {
 	private String set;
 
 	@ElementList(name = "selected-fields")
-	private List<Field> selectedFields;
+	private List<FieldConfig> selectedFields;
 
 	public String getMetadataPrefix() {
 		return metadataPrefix;
@@ -43,11 +43,11 @@ public class OaiPmhReposConfig {
 		this.baseUrl = baseUrl;
 	}
 
-	public void setSelectedFields(List<Field> selectedFields) {
+	public void setSelectedFields(List<FieldConfig> selectedFields) {
 		this.selectedFields = selectedFields;
 	}
 
-	public List<Field> getSelectedFields() {
+	public List<FieldConfig> getSelectedFields() {
 		return selectedFields;
 	}
 

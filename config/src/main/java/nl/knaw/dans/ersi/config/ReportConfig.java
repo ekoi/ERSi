@@ -2,7 +2,7 @@ package nl.knaw.dans.ersi.config;
 
 import org.simpleframework.xml.Element;
 
-public class Report {
+public class ReportConfig {
 
 	@Element
 	private String name;
