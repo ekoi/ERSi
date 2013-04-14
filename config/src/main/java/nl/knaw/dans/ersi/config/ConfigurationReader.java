@@ -46,6 +46,7 @@ public class ConfigurationReader implements Serializable {
 			xmlAsString = baos.toString();
 			dataExtractionConfig = configuration.getDataExtractionConfig();
 			dataCleansingConfig = configuration.getDataCleansingConfig();
+			clusteringConfig = configuration.getClusteringConfig();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
