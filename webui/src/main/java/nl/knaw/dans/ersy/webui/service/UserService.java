@@ -11,7 +11,7 @@ public class UserService {
     private static List<User> usersInDatabase = Lists.newArrayList(
             new User("John", "john"),
             new User("Akmi", "akmi"),
-            new User("Tom", "tom"),
+            new User("DANS", "dans"),
             new User("Steven", "steven"));
 
 
