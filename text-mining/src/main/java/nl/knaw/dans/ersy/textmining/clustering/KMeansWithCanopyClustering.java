@@ -1,58 +1,56 @@
 package nl.knaw.dans.ersy.textmining.clustering;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import nl.knaw.dans.ersi.config.CanopyConfig;
+import nl.knaw.dans.ersi.config.ClusterAlgorithmConfig;
+import nl.knaw.dans.ersi.config.ClusteringConfig;
+import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.KMeansConfig;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.clustering.canopy.CanopyDriver;
 import org.apache.mahout.clustering.kmeans.KMeansDriver;
 import org.apache.mahout.common.HadoopUtil;
-import org.apache.mahout.common.distance.CosineDistanceMeasure;
+import org.apache.mahout.common.distance.DistanceMeasure;
 
 public class KMeansWithCanopyClustering {
-
-	/*
-	 
-	 <clustering>
-	 	<cluster-algorithm>
-	 	 	<canopy>
-	 	 		
-	 	 	</canopy>
-	 	 	<kmeans>
-	 	 	
-	 	 	</kmeans>
-	 	</cluster-algorithm>
-	 	<input-vectors-path>
-	 	</input-vectors-path>
-	 	<output-clustering-path>
-	 	</output-clustering-path>
-      <output-directory>/tmp/ersy/data-cleansing/oai-pmh/vectors</output-directory>
-   </data-cleansing>
-	 
-	 
-	 */
+	private static ClusteringConfig clusteringConfig;
+	public KMeansWithCanopyClustering(String configFile) {
+		ConfigurationReader confReader = new ConfigurationReader(configFile);
+		clusteringConfig = confReader.getClusteringConfig();
+	}
 	
-	public static void main(String args[]) throws Exception {
+	  public void run() throws IOException, ClassNotFoundException, InterruptedException, InstantiationException, IllegalAccessException  {
 		
 		long begin = System.currentTimeMillis();
 		
-		String inputDir = "/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/oai-pmh/output-vector";
+		ClusterAlgorithmConfig cac = clusteringConfig.getClusterAlgorithmConfig();
+		CanopyConfig cc = cac.getCanopyConfig();
+		KMeansConfig kc = cac.getkMeansConfig();
+		
+		
+		String inputDir = clusteringConfig.getInputVectorsPath();
+		
 
 		Configuration conf = new Configuration();
 		String vectorsFolder = inputDir + "/tfidf-vectors";
 		Path samples = new Path(vectorsFolder + "/part-r-00000");
 
-		Path output = new Path("/Volumes/Holdtank/Experiments/ERSi/clusters-output");
+		Path output = new Path(clusteringConfig.getOutputPath() + "/clusters-output");
 		HadoopUtil.delete(conf, output);
 
 	    Path canopyCentroids = new Path(output, "canopy-centroids");
 	    Path clusterOutput = new Path(output, "clusters");
-		
-		CanopyDriver.run(conf, samples, canopyCentroids, new CosineDistanceMeasure(),
-				0.7, 0.5, false, 0, false);
+	    Class<DistanceMeasure> c =  (Class<DistanceMeasure>) Class.forName(cc.getDistanceMeasureClassName());
+		CanopyDriver.run(conf, samples, canopyCentroids, c.newInstance(),
+				cc.getDistanceMetricT1(), cc.getDistanceMetricT2(), false, cc.getClusterClassificationThreshold(), false);
 
+		Class<DistanceMeasure> kdm =  (Class<DistanceMeasure>) Class.forName(kc.getDistanceMeasureClassName());
 	    KMeansDriver.run(conf, new Path(vectorsFolder), new Path(canopyCentroids, "clusters-0-final"), clusterOutput,
-	    		new CosineDistanceMeasure(), 0.01, 10, true, 0.0, false);
+	    		kdm.newInstance(), kc.getConvergenceDelta(), kc.getMaxIterations(), true, kc.getClusterClassificationThreshold(), false);
 		
 //	    List<List<Cluster>> Clusters = ClusterHelper.readClusters(conf, clusterOutput);
 //		for (Cluster cluster : Clusters.get(Clusters.size() - 1)) {
