@@ -14,6 +14,7 @@ import nl.knaw.dans.ersi.config.KMeansConfig;
 import nl.knaw.dans.ersi.datapreprocessor.utils.DataCleansingExecutor;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
+import nl.knaw.dans.ersy.textmining.clustering.utils.DataClusteringExecutor;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -74,7 +75,7 @@ public class TabDataMiningPanel extends Panel {
             {
             	if (!ps.isRunning()) {
             		try {
-            			DataCleansingExecutor.main();
+            			DataClusteringExecutor.main();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -82,7 +83,7 @@ public class TabDataMiningPanel extends Panel {
             	}
             	//target.add(baseUrl);
             	PageParameters pageParameters = new PageParameters();
-    			pageParameters.add("selectedTab", 3);
+    			pageParameters.add("selectedTab", 4);
             	setResponsePage(new AdminPage(pageParameters));
             }
             

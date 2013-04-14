@@ -12,6 +12,7 @@
     <module>webui</module>
     <module>process-controller</module>
     <module>text-mining</module>
+    <module>orm</module>
   </modules>
   <build>
   	<resources>

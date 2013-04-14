@@ -8,31 +8,14 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>nl.knaw.dans.ersi</groupId>
-  <artifactId>text-mining</artifactId>
+  <artifactId>orm</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>text-mining</name>
+  <name>orm</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
-  	<!-- ERSy Module -->
-		<dependency>
-    		<groupId>${project.groupId}</groupId>
-    		<artifactId>config</artifactId>
-    		<version>${project.version}</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>${project.groupId}</groupId>
-    		<artifactId>process-controller</artifactId>
-    		<version>${project.version}</version>
-    	</dependency>
-    <!-- Mahout -->
-    <dependency>
-    	<groupId>org.apache.mahout</groupId>
-    	<artifactId>mahout-integration</artifactId>
-    	<version>0.7</version>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

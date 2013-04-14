@@ -8,6 +8,8 @@ import nl.knaw.dans.ersi.config.ClusterAlgorithmConfig;
 import nl.knaw.dans.ersi.config.ClusteringConfig;
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.KMeansConfig;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -26,6 +28,8 @@ public class KMeansWithCanopyClustering {
 	  public void run() throws IOException, ClassNotFoundException, InterruptedException, InstantiationException, IllegalAccessException  {
 		
 		long begin = System.currentTimeMillis();
+		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		boolean b = processStatus.writeCurrentStatus();
 		
 		ClusterAlgorithmConfig cac = clusteringConfig.getClusterAlgorithmConfig();
 		CanopyConfig cc = cac.getCanopyConfig();
@@ -69,8 +73,9 @@ public class KMeansWithCanopyClustering {
         	    TimeUnit.MILLISECONDS.toSeconds(diff) - 
         	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
         	);
-	    
+	    boolean b2 = processStatus.writeLastStatus();
+		boolean b3 = processStatus.writeDoneStatus();
 	    System.out.println("Duration: " + s);
-	    System.out.println("=========END=========");
+	    System.out.println(b2+ "=========END of Clustering========="+b3);
 	}
 }
