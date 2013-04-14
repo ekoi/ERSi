@@ -28,9 +28,9 @@ public class KMeansWithCanopyClustering {
 	  public void run() throws IOException, ClassNotFoundException, InterruptedException, InstantiationException, IllegalAccessException  {
 		
 		long begin = System.currentTimeMillis();
-		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_MINING);
 		boolean b = processStatus.writeCurrentStatus();
-		
+		System.out.println("WRITE current status: " + b);
 		ClusterAlgorithmConfig cac = clusteringConfig.getClusterAlgorithmConfig();
 		CanopyConfig cc = cac.getCanopyConfig();
 		KMeansConfig kc = cac.getkMeansConfig();

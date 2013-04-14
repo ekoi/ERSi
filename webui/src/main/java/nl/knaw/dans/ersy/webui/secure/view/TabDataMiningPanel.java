@@ -3,15 +3,11 @@
  */
 package nl.knaw.dans.ersy.webui.secure.view;
 
-import java.util.List;
-
 import nl.knaw.dans.ersi.config.CanopyConfig;
 import nl.knaw.dans.ersi.config.ClusterAlgorithmConfig;
 import nl.knaw.dans.ersi.config.ClusteringConfig;
 import nl.knaw.dans.ersi.config.ConfigurationReader;
-import nl.knaw.dans.ersi.config.DataCleansingConfig;
 import nl.knaw.dans.ersi.config.KMeansConfig;
-import nl.knaw.dans.ersi.datapreprocessor.utils.DataCleansingExecutor;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 import nl.knaw.dans.ersy.textmining.clustering.utils.DataClusteringExecutor;
