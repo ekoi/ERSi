@@ -101,7 +101,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataMiningPanel(panelId);
+				return new TabDataMiningPanel(panelId, filePath);
 			}
 		});
 		

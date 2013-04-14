@@ -3,7 +3,25 @@
  */
 package nl.knaw.dans.ersy.webui.secure.view;
 
+import java.util.List;
+
+import nl.knaw.dans.ersi.config.CanopyConfig;
+import nl.knaw.dans.ersi.config.ClusterAlgorithmConfig;
+import nl.knaw.dans.ersi.config.ClusteringConfig;
+import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.DataCleansingConfig;
+import nl.knaw.dans.ersi.config.KMeansConfig;
+import nl.knaw.dans.ersi.datapreprocessor.utils.DataCleansingExecutor;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
+import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * @author akmi
@@ -16,8 +34,65 @@ public class TabDataMiningPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataMiningPanel(String id) {
+	public TabDataMiningPanel(String id, String filePath) {
 		super(id);
+		
+		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_MINING);
+		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
+		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
+		
+		ConfigurationReader confReader = new ConfigurationReader(filePath);
+		ClusteringConfig dcc = confReader.getClusteringConfig();
+		ClusterAlgorithmConfig cac = dcc.getClusterAlgorithmConfig();
+		CanopyConfig c = cac.getCanopyConfig();
+		KMeansConfig k = cac.getkMeansConfig();
+		
+		
+		add (new Label("inputPath", new Model<String>(dcc.getInputVectorsPath())));
+		add (new Label("outputPath", new Model<String>(dcc.getOutputPath())));
+		
+		add (new Label("canopyDistanceMeasure", new Model<String>(c.getDistanceMeasureClassName())));
+		add (new Label("canopyDmT1", new Model<Double>(c.getDistanceMetricT1())));
+		add (new Label("canopyDmT2", new Model<Double>(c.getDistanceMetricT2())));
+		add (new Label("canopyTreshold", new Model<Double>(c.getClusterClassificationThreshold())));
+		
+		add (new Label("kmeansDistanceMeasure", new Model<String>(k.getDistanceMeasureClassName())));
+		add (new Label("kmeandConvDelta", new Model<Double>(k.getConvergenceDelta())));
+		add (new Label("kmeansMaxIteration", new Model<Integer>(k.getMaxIterations())));
+		add (new Label("kmeansThreshold", new Model<Double>(k.getClusterClassificationThreshold())));
+//        
+//        
+		
+		Form<Void> form = new Form<Void>("form");
+        add(form);
+		        
+     // add a button that can be used to submit the form via ajax
+        form.add(new AjaxButton("ajax-button", form)
+        {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            {
+            	if (!ps.isRunning()) {
+            		try {
+            			DataCleansingExecutor.main();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
+            	//target.add(baseUrl);
+            	PageParameters pageParameters = new PageParameters();
+    			pageParameters.add("selectedTab", 3);
+            	setResponsePage(new AdminPage(pageParameters));
+            }
+            
+            @Override
+            public boolean isEnabled() {
+            	return !ps.isRunning();
+            }
+            
+          
+        });
         
 	}
 

@@ -45,6 +45,13 @@ public class ProcessStatus implements Serializable{
 			fileNameLast =  "/tmp/ersy/status/data-cleansing.last";
 			processName = "Data Cleaning process";
 			break;
+			
+		case DATA_MINING: 
+			fileNameCurrent =  "/tmp/ersy/status/data-mining.current";
+			fileNameLast =  "/tmp/ersy/status/data-mining.last";
+			processName = "Data Mining process";
+		break;
+		
 		default:
 			fileNameCurrent =  "/tmp/ersy/status/data-extraction.current";
 			fileNameLast =  "/tmp/ersy/status/data-extraction.last";

@@ -68,6 +68,11 @@
     		<artifactId>process-controller</artifactId>
     		<version>${project.version}</version>
     	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>text-mining</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
