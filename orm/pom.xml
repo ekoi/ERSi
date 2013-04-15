@@ -7,15 +7,23 @@
     <artifactId>ERSi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>nl.knaw.dans.ersi</groupId>
   <artifactId>orm</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <name>orm</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
+  	 <dependency>
+      <groupId>cat.quickdb</groupId>
+      <artifactId>QuickDB</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.5</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -23,4 +31,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <repositories>
+  <repository>
+    <id>QuickDB</id>
+    <url>http://quickdb.googlecode.com/hg/mavenRepo</url>
+  </repository>
+</repositories>
 </project>
