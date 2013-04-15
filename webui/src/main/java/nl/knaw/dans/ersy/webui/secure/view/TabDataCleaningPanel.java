@@ -34,6 +34,13 @@ public class TabDataCleaningPanel extends Panel {
 		super(id);
 		
 		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_CLEANING);
+		boolean executeIsAllowed = !ps.isRunning();
+		if (executeIsAllowed) {
+			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+			executeIsAllowed = !psde.isRunning();
+		}
+		final boolean dataCleaningIsAllowed = executeIsAllowed;
+		
 		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
 		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
 		
@@ -78,12 +85,13 @@ public class TabDataCleaningPanel extends Panel {
             
             @Override
             public boolean isEnabled() {
-            	return !ps.isRunning();
+            	return dataCleaningIsAllowed;
             }
-            
-          
         });
         
+        Label executeNotAllowedLable = new Label("executeNotAllowed", new Model<String>("Please wait until data extraction process finish."));
+		executeNotAllowedLable.setVisible(!dataCleaningIsAllowed);
+		form.add (executeNotAllowedLable);
 	}
 
 }

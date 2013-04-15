@@ -35,6 +35,13 @@ public class TabDataExtractionPanel extends Panel {
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
 		
 		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		boolean executeIsAllowed = !ps.isRunning();
+		if (executeIsAllowed) {
+			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_CLEANING);
+			executeIsAllowed = !psde.isRunning();
+		}
+		final boolean dataExtractionIsAllowed = executeIsAllowed;
+		
 		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
 		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
 		add(new Label("baseUrl", new Model<String>(opc.getBaseUrl())));
@@ -68,12 +75,14 @@ public class TabDataExtractionPanel extends Panel {
             
             @Override
             public boolean isEnabled() {
-            	return !ps.isRunning();
+            	return dataExtractionIsAllowed;
             }
             
           
         });
-        
+        Label executeNotAllowedLable = new Label("executeNotAllowed", new Model<String>("Please wait until data cleaning process finish."));
+		executeNotAllowedLable.setVisible(executeIsAllowed && !dataExtractionIsAllowed);
+		form.add (executeNotAllowedLable);
 	}
 
 }
