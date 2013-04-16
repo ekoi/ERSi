@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.knaw.dans.ersy.webui.secure.view;
 
 import java.util.ArrayList;

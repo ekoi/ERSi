@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.knaw.dans.ersy.webui.pages.publications;
 
 import java.util.ArrayList;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.knaw.dans.ersy.webui.pages.publications;
 
 import org.apache.wicket.markup.html.panel.Panel;
