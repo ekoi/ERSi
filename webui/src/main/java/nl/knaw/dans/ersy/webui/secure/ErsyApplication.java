@@ -1,5 +1,6 @@
 package nl.knaw.dans.ersy.webui.secure;
 
+import nl.knaw.dans.ersy.webui.ExceptionPage;
 import nl.knaw.dans.ersy.webui.pages.ApiPage;
 import nl.knaw.dans.ersy.webui.pages.ContactPage;
 import nl.knaw.dans.ersy.webui.pages.HomePage;
@@ -11,9 +12,14 @@ import nl.knaw.dans.ersy.webui.service.SessionProvider;
 import nl.knaw.dans.ersy.webui.service.UserService;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestHandler;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
+import org.apache.wicket.request.cycle.RequestCycle;
 
 public class ErsyApplication extends WebApplication {
 
@@ -21,6 +27,16 @@ public class ErsyApplication extends WebApplication {
     private CookieService cookieService = new CookieService();
     private SessionProvider sessionProvider = new SessionProvider(userService, cookieService);
 
+    public ErsyApplication() {
+    	 // In case of unhandled exception redirect it to a custom page
+		  this.getRequestCycleListeners().add(new AbstractRequestCycleListener() {
+			  @Override
+		      public IRequestHandler onException(RequestCycle cycle, Exception e) {
+				  return new RenderPageRequestHandler(new PageProvider(new ExceptionPage(e)));
+			  }
+		  });
+    }
+    
     @Override
     public Class<HomePage> getHomePage() {
         return HomePage.class;
