@@ -17,6 +17,8 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import nl.knaw.dans.ersi.config.ConfigurationReader;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -34,16 +36,15 @@ public class HumanReadableClusterDumper
 {
     public static void main( String[] args ) throws IOException
     {
+    	ConfigurationReader cr = new ConfigurationReader();
     	Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        ///Users/akmi/zzz-test-20130126-2308/output-vectors/kmeans-output/clusteredPoints
-        ///Volumes/Holdtank/clustering-results/canopy/20130205C-1206/clusters-output/canopy-centroids/clusters-0-final
-        String outputDir = "/Volumes/Holdtank/clustering-results/canopy/20130210All-2137/clusters-output/clusters";
-    	  Path vectorsFolder = new Path(outputDir, "tfidf-vectors");
+        String clusteringResultLocation = cr.getClusteringConfig().getOutputPath() + "/clusters-output/clusters";
+    	Path vectorsFolder = new Path(clusteringResultLocation, "tfidf-vectors");
     	 //Path clusterOutput = new Path(outputDir , "clusters");
         System.out.println( "Hello World!" );
         SequenceFile.Reader reader = new SequenceFile.Reader(fs,
-                new Path(outputDir + "/" + Cluster.CLUSTERED_POINTS_DIR + "/part-m-00000"), conf);
+                new Path(clusteringResultLocation + "/" + Cluster.CLUSTERED_POINTS_DIR + "/part-m-00000"), conf);
             
             IntWritable key = new IntWritable();
             WeightedVectorWritable value = new WeightedVectorWritable();

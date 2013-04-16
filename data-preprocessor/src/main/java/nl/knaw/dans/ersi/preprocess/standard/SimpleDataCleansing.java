@@ -25,15 +25,13 @@ import org.slf4j.LoggerFactory;
 
 public class SimpleDataCleansing {
 	private static Logger LOG = LoggerFactory.getLogger(SimpleDataCleansing.class);
-	private String confFileLocation;
-	public SimpleDataCleansing(String confFileLocation) {
-		this.confFileLocation = confFileLocation;
+	public SimpleDataCleansing() {
 	}
   public void run() throws IOException, InterruptedException, ClassNotFoundException {
 	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
-	ConfigurationReader c = new ConfigurationReader(confFileLocation);
+	ConfigurationReader c = new ConfigurationReader();
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
 	int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
     int minDf = dcc.getMinDf(); //The minimum document frequency.
@@ -96,7 +94,7 @@ public class SimpleDataCleansing {
   }
   
   public static void main(String args[]) throws Exception {
-		ConfigurationReader c = new ConfigurationReader("/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
+		ConfigurationReader c = new ConfigurationReader();
 		DataCleansingConfig dcc = c.getDataCleansingConfig();
 		int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
 	    int minDf = dcc.getMinDf(); //The minimum document frequency.

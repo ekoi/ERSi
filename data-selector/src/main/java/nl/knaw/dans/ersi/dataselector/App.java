@@ -16,8 +16,7 @@ import com.cybozu.labs.langdetect.LangDetectException;
 public class App 
 {
 	public static void main(String[] args) {
-		ConfigurationReader configurationReader = new ConfigurationReader(
-				"/Volumes/Holdtank/Experiments/ERSi/conf/configuration.xml");
+		ConfigurationReader configurationReader = new ConfigurationReader();
 		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
 		
 //		SimpleLocalSourceExtractor seme = new SimpleLocalSourceExtractor(configurationReader.getDataExtractionConfig());

@@ -30,7 +30,7 @@ public class TabDataCleaningPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataCleaningPanel(String id, final String filePath) {
+	public TabDataCleaningPanel(String id) {
 		super(id);
 		
 		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_CLEANING);
@@ -44,7 +44,7 @@ public class TabDataCleaningPanel extends Panel {
 		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
 		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
 		
-		ConfigurationReader confReader = new ConfigurationReader(filePath);
+		ConfigurationReader confReader = new ConfigurationReader();
 		DataCleansingConfig dcc = confReader.getDataCleansingConfig();
 		
 		add (new Label("minWordLength", new Model<Integer>(dcc.getSimpleDimensionReduction().getMinWordLength())));

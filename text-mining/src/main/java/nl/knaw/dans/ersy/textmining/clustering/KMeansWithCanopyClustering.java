@@ -21,7 +21,7 @@ import org.apache.mahout.common.distance.DistanceMeasure;
 public class KMeansWithCanopyClustering {
 	private static ClusteringConfig clusteringConfig;
 	public KMeansWithCanopyClustering(String configFile) {
-		ConfigurationReader confReader = new ConfigurationReader(configFile);
+		ConfigurationReader confReader = new ConfigurationReader();;
 		clusteringConfig = confReader.getClusteringConfig();
 	}
 	

@@ -53,10 +53,6 @@ public class AdminPanel extends Panel {
             }
         });
         
-        
-
-		final String filePath = "/tmp/ersy/conf/configuration.xml";
-        
 		// create a list of ITab objects used to feed the tabbed panel
 		List<ITab> tabs = new ArrayList<ITab>();
 		
@@ -74,7 +70,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabConfigurationPanel(panelId, filePath);
+				return new TabConfigurationPanel(panelId);
 			}
 		});
 		
@@ -83,7 +79,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataExtractionPanel(panelId, filePath);
+				return new TabDataExtractionPanel(panelId);
 			}
 		});
 		
@@ -92,7 +88,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataCleaningPanel(panelId, filePath);
+				return new TabDataCleaningPanel(panelId);
 			}
 		});
 
@@ -101,7 +97,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataMiningPanel(panelId, filePath);
+				return new TabDataMiningPanel(panelId);
 			}
 		});
 		

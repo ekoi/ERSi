@@ -20,7 +20,7 @@ public class DataExtractionExecutor {
     }
 
     private static void test(ExecutorService executor) throws InterruptedException {
-    	ConfigurationReader cr = new ConfigurationReader("/tmp/ersy/conf/configuration.xml");
+    	ConfigurationReader cr = new ConfigurationReader();
 		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(cr.getDataExtractionConfig());
 
 	executor.execute(new Worker(seme));

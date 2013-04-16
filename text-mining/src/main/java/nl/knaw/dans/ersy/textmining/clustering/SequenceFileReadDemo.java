@@ -19,7 +19,7 @@ public class SequenceFileReadDemo {
 				//wordcount/part-r-00000";
 		//String uri = "/Users/akmi/zzz-test2/output-vectors/tokenized-documents/part-m-00000";
 		//String uri = "/Users/akmi/zzz-test-20130126-2308/output-vectors/wordcount/part-r-00000";
-		String uri = "/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/oai-pmh/output-vector/wordcount/part-r-00000";
+		String uri = "/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/oai-pmh/output-vector/frequency.file-0";
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);

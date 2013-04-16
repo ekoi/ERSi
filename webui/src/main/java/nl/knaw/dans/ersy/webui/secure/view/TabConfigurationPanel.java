@@ -25,9 +25,9 @@ public class TabConfigurationPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabConfigurationPanel(String id, final String filePath) {
+	public TabConfigurationPanel(String id) {
 		super(id);
-		final ConfigurationReader cr = new ConfigurationReader(filePath);
+		final ConfigurationReader cr = new ConfigurationReader();
 			
 		Form<Void> form = new Form<Void>("form");
         add(form);
@@ -54,13 +54,13 @@ public class TabConfigurationPanel extends Panel {
             	String xmlConfTextArea= confTextArea.getDefaultModelObjectAsString();
             	
             	ConfigurationCreator cc2 = new ConfigurationCreator();
-            	boolean b = cc2.saveStringAsXml(xmlConfTextArea,filePath);
+            	boolean b = cc2.saveStringAsXml(xmlConfTextArea);
             	errorMessage.setDefaultModelObject("Saved is successfull!");
             	if (!b)
             		errorMessage.setDefaultModelObject(cc2.getErrorMessage());
             	target.add(errorMessage);
             	
-            	ConfigurationReader cr2 =  new ConfigurationReader(filePath);
+            	ConfigurationReader cr2 =  new ConfigurationReader();
             	xmlLastMod.setDefaultModelObject(cr2.getLastModificationTimeAsString());
             	target.add(xmlLastMod);
             	

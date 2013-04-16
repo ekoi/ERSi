@@ -16,7 +16,7 @@ public class DataCleansingExecutor {
     }
 
     private static void test(ExecutorService executor) throws InterruptedException {
-		SimpleDataCleansing sdc = new SimpleDataCleansing("/tmp/ersy/conf/configuration.xml");
+		SimpleDataCleansing sdc = new SimpleDataCleansing();
 
 	executor.execute(new Worker(sdc));
 

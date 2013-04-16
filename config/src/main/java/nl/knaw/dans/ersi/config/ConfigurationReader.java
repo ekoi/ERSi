@@ -6,6 +6,7 @@ package nl.knaw.dans.ersi.config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.Serializable;
+import java.util.Properties;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -27,10 +28,23 @@ public class ConfigurationReader implements Serializable {
 	private ClusteringConfig clusteringConfig;
 	private String xmlAsString;
 	private String lastModificationTimeAsString;
+	
 	/**
 	 * 
 	 */
 	
+	public ConfigurationReader(){
+		this(readErsyHomeFromSystemProperties() + "/conf/configuration.xml");
+	}
+	
+	private static String readErsyHomeFromSystemProperties() {
+		Properties prop = System.getProperties();
+		String ersyHome = (String) prop.get("ERSY_HOME");
+		if (ersyHome != null)
+			return ersyHome;
+		return "/tmp/ersy";
+	}
+
 	public ConfigurationReader(String confFileLocation) {
 		this.confFileLocation = confFileLocation;
 		init();

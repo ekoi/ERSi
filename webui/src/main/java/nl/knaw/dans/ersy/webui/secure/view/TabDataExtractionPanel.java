@@ -28,10 +28,10 @@ public class TabDataExtractionPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataExtractionPanel(String id, final String filePath) {
+	public TabDataExtractionPanel(String id) {
 		super(id);
 		
-		ConfigurationReader configurationReader = new ConfigurationReader(filePath);
+		ConfigurationReader configurationReader = new ConfigurationReader();
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
 		
 		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_EXTRACTION);

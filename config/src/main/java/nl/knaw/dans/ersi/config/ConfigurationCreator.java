@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -25,7 +26,20 @@ public class ConfigurationCreator implements Serializable {
 	private static Logger LOG = LoggerFactory
 			.getLogger(ConfigurationCreator.class);
 	private String errorMessage;
+	private static String configurationXmlFile;
+	
+	public ConfigurationCreator() {
+		configurationXmlFile = readErsyHomeFromSystemProperties() + "/conf/configuration.xml";
+	}
 
+
+	private static String readErsyHomeFromSystemProperties() {
+		Properties prop = System.getProperties();
+		String ersyHome = (String) prop.get("ERSY_HOME");
+		if (ersyHome != null)
+			return ersyHome;
+		return "/tmp/ersy";
+	}
 	public static void main(String[] args) {
 
 		LOG.debug("Create configuration.xml file");
@@ -149,7 +163,7 @@ public class ConfigurationCreator implements Serializable {
 		
 		
 		
-		File result = new File("/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/config/src/resources/configuration2.xml");
+		File result = new File(configurationXmlFile);
 
 		try {
 			serializer.write(configuration, result);
@@ -160,7 +174,7 @@ public class ConfigurationCreator implements Serializable {
 				+ result.getAbsolutePath());
 	}
 
-	public boolean saveStringAsXml(String input, String xmlfile) {
+	public boolean saveStringAsXml(String input) {
 		boolean success = false;
 		Serializer serializer = new Persister(new Format());
 		try {
@@ -169,7 +183,7 @@ public class ConfigurationCreator implements Serializable {
 				return success;
 			Configuration c = serializer.read(Configuration.class, input);
 			c.generateModificationTimeNow();
-			File file = new File(xmlfile);
+			File file = new File(configurationXmlFile);
 			serializer.write(c, file);
 			return true;
 		} catch (Exception e) {
