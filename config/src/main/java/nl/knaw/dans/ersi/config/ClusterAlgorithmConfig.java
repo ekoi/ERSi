@@ -1,9 +1,6 @@
 package nl.knaw.dans.ersi.config;
 
-import java.util.List;
-
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
 
 public class ClusterAlgorithmConfig {
 	@Element (name="canopy")

@@ -4,7 +4,6 @@
 package nl.knaw.dans.ersi.dataselector.util;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 
 /**

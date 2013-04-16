@@ -1,8 +1,6 @@
 package nl.knaw.dans.ersi.datapreprocessor.utils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;

@@ -1,7 +1,5 @@
 package nl.knaw.dans.ersy.webui;
 
-import nl.knaw.dans.ersy.webui.secure.UserSession;
-
 import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;

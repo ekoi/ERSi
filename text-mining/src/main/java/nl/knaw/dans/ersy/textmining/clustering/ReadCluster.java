@@ -5,11 +5,6 @@ import java.util.List;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.mahout.clustering.Cluster;
-import org.apache.mahout.clustering.canopy.CanopyDriver;
-import org.apache.mahout.clustering.kmeans.KMeansDriver;
-import org.apache.mahout.common.HadoopUtil;
-import org.apache.mahout.common.distance.CosineDistanceMeasure;
-import org.apache.mahout.utils.clustering.ClusterDumper;
 
 public class ReadCluster {
 

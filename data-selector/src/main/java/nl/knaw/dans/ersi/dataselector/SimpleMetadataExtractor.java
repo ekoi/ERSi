@@ -4,15 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 
 import se.kb.oai.OAIException;
 import se.kb.oai.pmh.Header;

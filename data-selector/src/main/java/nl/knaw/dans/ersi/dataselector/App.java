@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
-import nl.knaw.dans.ersi.config.DataExtractionConfig;
 import se.kb.oai.OAIException;
 
 import com.cybozu.labs.langdetect.LangDetectException;

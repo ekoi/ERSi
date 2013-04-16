@@ -1,7 +1,6 @@
 package nl.knaw.dans.ersy.webui.pages.publications;
 
 import nl.knaw.dans.ersy.webui.ErsyBasePage;
-import nl.knaw.dans.ersy.webui.ErsyPageContent;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 

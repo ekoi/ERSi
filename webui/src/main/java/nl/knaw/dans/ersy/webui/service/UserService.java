@@ -19,6 +19,7 @@ public class UserService {
 
         for (User user : usersInDatabase) {
             if(user.getPassword().equals(password) & user.getLogin().equals(login)) {
+            	System.out.println("#### " + user.getLogin() + " ####");
                 return user;
             }
         }
