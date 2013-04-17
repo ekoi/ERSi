@@ -1,7 +1,5 @@
 package nl.knaw.dans.ersy.webui;
 
-import javax.servlet.ServletContext;
-
 import nl.knaw.dans.ersy.webui.pages.ApiPage;
 import nl.knaw.dans.ersy.webui.pages.ContactPage;
 import nl.knaw.dans.ersy.webui.pages.HomePage;
@@ -12,20 +10,17 @@ import nl.knaw.dans.ersy.webui.secure.view.AdminPage;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.protocol.http.WebApplication;
 
 /**
  * Navigation panel for the ersy project.
  * 
  * @author Eko Indarto
  */
-public final class ErsyPageHeader extends Panel
-{
+public final class ErsyPageHeader extends Panel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 970185289293886277L;
-
 	/**
 	 * Construct.
 	 * 
@@ -36,34 +31,13 @@ public final class ErsyPageHeader extends Panel
 	 * @param page
 	 *            The example page
 	 */
-	public ErsyPageHeader(String id, WebPage page)
-	{
+	public ErsyPageHeader(String id, WebPage page) {
 		super(id);
-		add(new BookmarkablePageLink<HomePage>("home", HomePage.class));
-		add(new BookmarkablePageLink<AdminPage>("admin", AdminPage.class));
-		add(new BookmarkablePageLink<HowItWorkPage>("how", HowItWorkPage.class));
-		add(new BookmarkablePageLink<ApiPage>("api", ApiPage.class));
-		add(new BookmarkablePageLink<PublicationPage>("pub", PublicationPage.class));
-		add(new BookmarkablePageLink<ContactPage>("contact", ContactPage.class));
+		add(new BookmarkablePageLink<HomePage>("home", HomePage.class).add(new ErsyNavigationLabel("homeLabel", "Home")));
+		add(new BookmarkablePageLink<AdminPage>("admin", AdminPage.class).add(new ErsyNavigationLabel("adminLabel", "Admin")));
+		add(new BookmarkablePageLink<HowItWorkPage>("how", HowItWorkPage.class).add(new ErsyNavigationLabel("howLabel", "How it works")));
+		add(new BookmarkablePageLink<ApiPage>("api", ApiPage.class).add(new ErsyNavigationLabel("apiLabel", "API")));
+		add(new BookmarkablePageLink<PublicationPage>("pub",PublicationPage.class).add(new ErsyNavigationLabel("pubLabel", "Publications")));
+		add(new BookmarkablePageLink<ContactPage>("contact", ContactPage.class).add(new ErsyNavigationLabel("contactLabel", "Contact")));
 	}
-	
-	public static String getRootContext(){
-		 
-		String rootContext = "";
- 
-		WebApplication webApplication = WebApplication.get();
-		if(webApplication!=null){
-			ServletContext servletContext = webApplication.getServletContext();
-			if(servletContext!=null){
-				rootContext = servletContext.getServletContextName();
-			}else{
-				//do nothing
-			}
-		}else{
-			//do nothing
-		}
- 
-		return rootContext;
- 
-}
 }
