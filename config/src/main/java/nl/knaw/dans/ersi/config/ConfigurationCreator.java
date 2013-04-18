@@ -84,9 +84,6 @@ public class ConfigurationCreator implements Serializable {
 		selectedLocalFields.add(selectedFieldData);
 		localSource.setSelectedFields(selectedLocalFields);
 		
-		
-		
-		
 		//Extracted output part
 		ExtractedOutputConfig extractedOutput = new ExtractedOutputConfig();
 		
@@ -150,10 +147,6 @@ public class ConfigurationCreator implements Serializable {
 		kc.setMaxIterations(10);
 		kc.setClusterClassificationThreshold(0.0);
 		cac.setkMeansConfig(kc);
-		
-		
-		
-		
 		
 		File result = new File(configurationXmlFile);
 

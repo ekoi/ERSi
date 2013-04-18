@@ -54,7 +54,7 @@
   
     <profiles>
  <profile>
-  <id>tm</id>
+  <id>ds</id>
   <build>
    <plugins>
     <plugin>

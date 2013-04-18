@@ -31,7 +31,7 @@ public class App
 //			e.printStackTrace();
 //		}
 		
-		System.out.println( "Hello World! ");
+		System.out.println( "Hello World! " + System.getenv("ERSY_HOME"));
         try {
 			DataExtractionExecutor.main();
 		} catch (Exception e) {
