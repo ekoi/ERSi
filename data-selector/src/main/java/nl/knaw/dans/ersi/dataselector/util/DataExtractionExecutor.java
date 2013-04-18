@@ -30,7 +30,7 @@ public class DataExtractionExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	System.out.println("=============EIND END END=======");
+	System.out.println("=============EIND of DataExtractionExecutor =======");
     }
 }
 

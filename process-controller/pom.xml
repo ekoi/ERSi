@@ -16,6 +16,27 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
+  <!-- ERSy Module -->
+		<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>config</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>data-selector</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>data-preprocessor</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>${project.groupId}</groupId>
+    		<artifactId>text-mining</artifactId>
+    		<version>${project.version}</version>
+    	</dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -26,7 +47,7 @@
   
   <profiles>
  <profile>
-  <id>tml</id>
+  <id>tm</id>
   <build>
    <plugins>
     <plugin>
