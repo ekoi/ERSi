@@ -34,15 +34,7 @@ public class ConfigurationReader implements Serializable {
 	 */
 	
 	public ConfigurationReader(){
-		this(readErsyHomeFromSystemProperties() + "/conf/configuration.xml");
-	}
-	
-	private static String readErsyHomeFromSystemProperties() {
-		Properties prop = System.getProperties();
-		String ersyHome = (String) prop.get("ERSY_HOME");
-		if (ersyHome != null)
-			return ersyHome;
-		return "/tmp/ersy";
+		this(Constants.ERSY_HOME + "/conf/configuration.xml");
 	}
 
 	public ConfigurationReader(String confFileLocation) {

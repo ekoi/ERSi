@@ -29,17 +29,9 @@ public class ConfigurationCreator implements Serializable {
 	private static String configurationXmlFile;
 	
 	public ConfigurationCreator() {
-		configurationXmlFile = readErsyHomeFromSystemProperties() + "/conf/configuration.xml";
+		configurationXmlFile = Constants.ERSY_HOME + "/conf/configuration.xml";
 	}
 
-
-	private static String readErsyHomeFromSystemProperties() {
-		Properties prop = System.getProperties();
-		String ersyHome = (String) prop.get("ERSY_HOME");
-		if (ersyHome != null)
-			return ersyHome;
-		return "/tmp/ersy";
-	}
 	public static void main(String[] args) {
 
 		LOG.debug("Create configuration.xml file");

@@ -1,12 +1,7 @@
 package nl.knaw.dans.ersi.dataselector;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
 
-import nl.knaw.dans.ersi.config.ConfigurationReader;
-import se.kb.oai.OAIException;
-
-import com.cybozu.labs.langdetect.LangDetectException;
 
 /**
  * Hello world!
@@ -15,26 +10,33 @@ import com.cybozu.labs.langdetect.LangDetectException;
 public class App 
 {
 	public static void main(String[] args) {
-		ConfigurationReader configurationReader = new ConfigurationReader();
-		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
+//		ConfigurationReader configurationReader = new ConfigurationReader();
+//		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
+//		
+////		SimpleLocalSourceExtractor seme = new SimpleLocalSourceExtractor(configurationReader.getDataExtractionConfig());
+//
+//		try {
+//			seme.extract();
+//		} catch (OAIException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (UnsupportedEncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (LangDetectException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-//		SimpleLocalSourceExtractor seme = new SimpleLocalSourceExtractor(configurationReader.getDataExtractionConfig());
-
-		try {
-			seme.extract();
-		} catch (OAIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (LangDetectException e) {
+		System.out.println( "Hello World! ");
+        try {
+			DataExtractionExecutor.main();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }

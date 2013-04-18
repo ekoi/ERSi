@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.TimeZone;
 
+import nl.knaw.dans.ersi.config.Constants;
+
 /**
  * @author akmi
  *
@@ -33,28 +35,29 @@ public class ProcessStatus implements Serializable{
 		 }
 
 	public ProcessStatus (ProcessName pn) {
+		String ersyHome = Constants.ERSY_HOME;
 		switch (pn) {
 		case DATA_EXTRACTION: 
-				fileNameCurrent =  "/tmp/ersy/status/data-extraction.current";
-				fileNameLast =  "/tmp/ersy/status/data-extraction.last";
+				fileNameCurrent =  ersyHome + ersyHome + "/status/data-extraction.current";
+				fileNameLast =  ersyHome + "/status/data-extraction.last";
 				processName = "Data Extraction process";
 			break;
 		
 		case DATA_CLEANING: 
-			fileNameCurrent =  "/tmp/ersy/status/data-cleansing.current";
-			fileNameLast =  "/tmp/ersy/status/data-cleansing.last";
+			fileNameCurrent =  ersyHome + "/status/data-cleansing.current";
+			fileNameLast =  ersyHome + "/status/data-cleansing.last";
 			processName = "Data Cleaning process";
 			break;
 			
 		case DATA_MINING: 
-			fileNameCurrent =  "/tmp/ersy/status/data-mining.current";
-			fileNameLast =  "/tmp/ersy/status/data-mining.last";
+			fileNameCurrent =  ersyHome + "/status/data-mining.current";
+			fileNameLast =  ersyHome + "/status/data-mining.last";
 			processName = "Data Mining process";
 		break;
 		
 		default:
-			fileNameCurrent =  "/tmp/ersy/status/data-extraction.current";
-			fileNameLast =  "/tmp/ersy/status/data-extraction.last";
+			fileNameCurrent =  ersyHome + "/status/data-extraction.current";
+			fileNameLast =  ersyHome + "/status/data-extraction.last";
 			processName = "Data Extraction process";
 			break;
 		}
