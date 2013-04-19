@@ -50,6 +50,13 @@
     	<version>1.2.2</version>
 	</dependency>
 
+	<!-- PDF library -->
+	<dependency>
+		<groupId>com.itextpdf</groupId>
+		<artifactId>itextpdf</artifactId>
+		<version>5.0.6</version>
+	</dependency>
+
   </dependencies>
   
     <profiles>
@@ -69,6 +76,33 @@
        </goals>
        <configuration>
         <mainClass>nl.knaw.dans.ersi.dataselector.App</mainClass>
+        <arguments>
+         <argument>arg0</argument>
+         <argument>arg1</argument>
+        </arguments>
+       </configuration>
+      </execution>
+     </executions>
+    </plugin>
+   </plugins>
+  </build>
+ </profile>
+ <profile>
+  <id>dsAbr</id>
+  <build>
+   <plugins>
+    <plugin>
+     <groupId>org.codehaus.mojo</groupId>
+     <artifactId>exec-maven-plugin</artifactId>
+     <version>1.1.1</version>
+     <executions>
+      <execution>
+       <phase>test</phase>
+       <goals>
+        <goal>java</goal>
+       </goals>
+       <configuration>
+        <mainClass>nl.knaw.dans.ersi.dataselector.App2</mainClass>
         <arguments>
          <argument>arg0</argument>
          <argument>arg1</argument>

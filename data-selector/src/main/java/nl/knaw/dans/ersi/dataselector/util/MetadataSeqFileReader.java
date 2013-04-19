@@ -14,11 +14,11 @@ import org.apache.hadoop.util.ReflectionUtils;
 public class MetadataSeqFileReader {
 	
 	public static void main(String[] args) throws IOException {
-		String uri = "/Users/akmi/Dropbox/THESIS/Sources/Eclipse/workspace/ERSi/data-selector/seqfiles-from-easy/nlEasy.seq";
+		String uri = "/Users/akmi/ersy_home/data-extraction/archaeology/nl/hdfs/ArchaeologyMetadataInDutch.seq";
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);
-
+        int i=0;
         SequenceFile.Reader reader = null;
         try {
                 reader = new SequenceFile.Reader(fs, path, conf);
@@ -29,13 +29,16 @@ public class MetadataSeqFileReader {
                // long position = reader.getPosition();
                 while (reader.next(key, value)) {
                         //String syncSeen = reader.syncSeen() ? "*" : "";
-                        System.out.println("key: " + key + " value: " +
-                                        value);
+//                        System.out.println("key: " + key + " value: " +
+//                                        value);
+                        System.out.println(key);
                         //position = reader.getPosition(); // beginning of next record
+                        i++;
                 }
         } finally {
                 IOUtils.closeStream(reader);
         }
+        System.out.println(i);
 }
 
 

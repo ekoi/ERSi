@@ -44,13 +44,10 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 
 	private static Logger LOG = LoggerFactory
 			.getLogger(SimpleLocalSourceExtractor.class);
-	private static int numberOfResumption;
 	private static int numberOfRecords;
 	private static int numberOfNl;
 	private static int numberOfEn;
 	private static int numberOfOther;
-
-	private boolean oaiPmhXmlDebug;
 
 	public void extract() throws OAIException, IOException, LangDetectException {
 
