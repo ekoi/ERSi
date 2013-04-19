@@ -20,7 +20,7 @@ import org.apache.mahout.common.distance.DistanceMeasure;
 
 public class KMeansWithCanopyClustering {
 	private static ClusteringConfig clusteringConfig;
-	public KMeansWithCanopyClustering(String configFile) {
+	public KMeansWithCanopyClustering() {
 		ConfigurationReader confReader = new ConfigurationReader();;
 		clusteringConfig = confReader.getClusteringConfig();
 	}

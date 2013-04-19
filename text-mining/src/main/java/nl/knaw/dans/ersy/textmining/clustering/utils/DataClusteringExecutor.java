@@ -16,7 +16,7 @@ public class DataClusteringExecutor {
     }
 
     private static void test(ExecutorService executor) throws InterruptedException {
-		KMeansWithCanopyClustering kwcc = new KMeansWithCanopyClustering("/tmp/ersy/conf/configuration.xml");
+		KMeansWithCanopyClustering kwcc = new KMeansWithCanopyClustering();
 
 	executor.execute(new Worker(kwcc));
 
@@ -38,7 +38,7 @@ class Worker implements Runnable {
     }
 
     public void run() {
-    	System.out.println("*************BEGIN DATA CLEANSING*****************");
+    	System.out.println("*************BEGIN DATA CLUSTERING*****************");
 	
 		try {
 			kwcc.run();
@@ -58,7 +58,7 @@ class Worker implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	System.out.println("#############DATA CLEANSING FINISH####################");
+	System.out.println("#############DATA CLUSTERING FINISH####################");
 	
     }
 }
