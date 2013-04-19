@@ -19,13 +19,14 @@ public class SequenceFileReadDemo {
 				//wordcount/part-r-00000";
 		//String uri = "/Users/akmi/zzz-test2/output-vectors/tokenized-documents/part-m-00000";
 		//String uri = "/Users/akmi/zzz-test-20130126-2308/output-vectors/wordcount/part-r-00000";
-		String uri = "/Volumes/Holdtank/Experiments/ERSi/data-cleansing-result/oai-pmh/output-vector/frequency.file-0";
+		String uri = "/Users/akmi/ersy_home_abr/data-extraction/archaeology/nl/hdfs/ArchaeologyMetadataInABRDutch.seq";
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);
         SequenceFile.Reader reader = null;
         int i=0;
         int n=0;
+        int j=0;
         try {
                 reader = new SequenceFile.Reader(fs, path, conf);
                 Writable key = (Writable) ReflectionUtils.newInstance(
@@ -37,15 +38,26 @@ public class SequenceFileReadDemo {
                         //String syncSeen = reader.syncSeen() ? "*" : "";
                         System.out.println("key: " + key + " value: " +
                                         value);
-                        n+=Integer.parseInt(value.toString());;
+                        if (key.toString().equals("urn:nbn:nl:ui:13-lpce-z2"))
+                        	System.out.println("=====yyyyyyyyyyyy====");
+                        if (value == null || value.toString().trim().equals("")) {
+                        	System.out.println("========="); 
+                        	n++;
+                        } else {
+                        	j++;
+                        }
+                        
+                       // n+=Integer.parseInt(value.toString());;
                         i++;
                         //position = reader.getPosition(); // beginning of next record
                 }
         } finally {
                 IOUtils.closeStream(reader);
         }
-        System.out.println("Number of word: " + i);
-        System.out.println("Number of n: " + n);
+        System.out.println("Number of pid: " + i);
+        System.out.println("Number of pid - non abr: " + n);
+        System.out.println("Number of pid - wel abr: " + j);
+        System.out.println("Total: " + (n + j));
         System.out.println("===END====");
 }
 

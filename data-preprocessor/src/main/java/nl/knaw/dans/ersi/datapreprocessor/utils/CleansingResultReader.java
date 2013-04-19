@@ -134,6 +134,7 @@ public class CleansingResultReader {
 	}
 	
 	public static void main(String[] args) {
+		System.out.println( "Hello World! " + System.getenv("ERSY_HOME"));
 		 ConfigurationReader cr = new ConfigurationReader();
 		 CleansingResultReader crr = new
 		 CleansingResultReader(cr.getDataCleansingConfig());
