@@ -9,13 +9,13 @@ import org.apache.mahout.clustering.Cluster;
 public class ReadCluster {
 
 	public static void main(String args[]) throws Exception {
-		String inputDir = "/Users/akmi/tmp/fullresumptiontoken/outputdata-from-easy";
+		String inputDir = "/Users/akmi/ersy_home_abr/clustering-result/vectors";
 
 		Configuration conf = new Configuration();
 		String vectorsFolder = inputDir + "/tfidf-vectors";
 		Path samples = new Path(vectorsFolder + "/part-r-00000");
 
-		Path output = new Path("/Users/akmi/tmp/fullresumptiontoken/clusters-output");
+		Path output = new Path("/Users/akmi/ersy_home_abr/clustering-result/vectors");
 //		HadoopUtil.delete(conf, output);
 
 	    Path canopyCentroids = new Path(output, "canopy-centroids");
@@ -28,6 +28,7 @@ public class ReadCluster {
 //	    		new CosineDistanceMeasure(), 0.01, 20, true, 0.0, false);
 		
 	    List<List<Cluster>> Clusters = ClusterHelper.readClusters(conf, clusterOutput);
+	    Clusters.size();
 		for (Cluster cluster : Clusters.get(Clusters.size() - 1)) {
 			System.out.println("Cluster id: " + cluster.getId() + " center: "
 					+ cluster.getCenter().asFormatString());

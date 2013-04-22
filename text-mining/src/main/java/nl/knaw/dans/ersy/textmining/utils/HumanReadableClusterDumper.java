@@ -64,9 +64,9 @@ public class HumanReadableClusterDumper
             	
             	NamedVector vector = (NamedVector) value.getVector();
                 String vectorName = vector.getName();
-                //System.out.println("Dataset id: " + vectorName + ", key:" + key.toString());
-                //System.out.println("-----------------------");
-              // System.out.println(key.toString() + " belongs to cluster " + value.toString());
+                System.out.println("Dataset id: " + vectorName + ", key:" + key.toString());
+                System.out.println("-----------------------");
+               System.out.println(key.toString() + " belongs to cluster " + value.toString());
             	String clusterNumber = key.toString();
             	if (!mapOfClusterAndItsDatasets.containsKey(clusterNumber)) {
             		listOfDatasets = new ArrayList<String>();
@@ -130,12 +130,12 @@ public class HumanReadableClusterDumper
             SortedSet<Integer> setOfNumberOfCluster = new TreeSet<Integer>(groupClusterWithTheSameNumberOfDatasets.keySet());
             
             
-            FileWriter fw = new FileWriter("/Users/akmi/20130210All-2137.csv");
+            FileWriter fw = new FileWriter("/Users/akmi/eko-abr.csv");
             PrintWriter out = new PrintWriter(fw);
             
             for (int j : setOfNumberOfCluster) {
-            	//System.out.println("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
-            	//System.out.println(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            	System.out.println("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            	System.out.println(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
             	out.print(j);
             	out.print(",");
             	out.println(groupClusterWithTheSameNumberOfDatasets.get(j).size());
