@@ -37,9 +37,9 @@ public class CreateABRList {
         	} else {
         		System.out.println("+++++++++++++++" + line);
         	}
-        	System.out.println(i++);
+        	
        }
-        System.out.println(list.size());
+        
 	}
 
 	/**

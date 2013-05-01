@@ -19,7 +19,7 @@ public class SequenceFileReadDemo {
 				//wordcount/part-r-00000";
 		//String uri = "/Users/akmi/zzz-test2/output-vectors/tokenized-documents/part-m-00000";
 		//String uri = "/Users/akmi/zzz-test-20130126-2308/output-vectors/wordcount/part-r-00000";
-		String uri = "/Users/akmi/ersy_home_abr/data-extraction/archaeology/nl/hdfs/ArchaeologyMetadataInABRDutch.seq";
+		String uri = "/Users/akmi/ersy_home_abr/data-cleansing/oai-pmh/vectors/tokenized-documents/part-m-00000";
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);
@@ -38,9 +38,7 @@ public class SequenceFileReadDemo {
                         //String syncSeen = reader.syncSeen() ? "*" : "";
                         System.out.println("key: " + key + " value: " +
                                         value);
-                        if (key.toString().equals("urn:nbn:nl:ui:13-lpce-z2"))
-                        	System.out.println("=====yyyyyyyyyyyy====");
-                        if (value == null || value.toString().trim().equals("")) {
+                        if (value == null || value.toString().trim().equals("") ||  value.toString().trim().length() <3) {
                         	System.out.println("========="); 
                         	n++;
                         } else {
