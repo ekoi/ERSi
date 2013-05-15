@@ -10,16 +10,18 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SequenceFileReadDemo {
-	
+	private static Logger LOG = LoggerFactory.getLogger(SequenceFileReadDemo.class);
 	public static void main(String[] args) throws IOException {
-		System.out.println("===BEGIN====");
+		LOG.debug("===BEGIN====");
 		//String uri = "/Users/akmi/tmp/1resuptiontoken/seqdata-from-easy/nlEasy.seq";
 				//wordcount/part-r-00000";
 		//String uri = "/Users/akmi/zzz-test2/output-vectors/tokenized-documents/part-m-00000";
 		//String uri = "/Users/akmi/zzz-test-20130126-2308/output-vectors/wordcount/part-r-00000";
-		String uri = "/Users/akmi/ersy_home_abr/data-cleansing/oai-pmh/vectors/tokenized-documents/part-m-00000";
+		String uri = System.getenv("ERSY_HOME") + "/data-cleansing/oai-pmh/vectors/tokenized-documents/part-m-00000";
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(uri), conf);
         Path path = new Path(uri);
@@ -36,10 +38,10 @@ public class SequenceFileReadDemo {
                 //long position = reader.getPosition();
                 while (reader.next(key, value)) {
                         //String syncSeen = reader.syncSeen() ? "*" : "";
-                        System.out.println("key: " + key + " value: " +
+                        LOG.debug("key: " + key + " value: " +
                                         value);
                         if (value == null || value.toString().trim().equals("") ||  value.toString().trim().length() <3) {
-                        	System.out.println("========="); 
+                        	LOG.debug("========="); 
                         	n++;
                         } else {
                         	j++;
@@ -52,11 +54,11 @@ public class SequenceFileReadDemo {
         } finally {
                 IOUtils.closeStream(reader);
         }
-        System.out.println("Number of pid: " + i);
-        System.out.println("Number of pid - non abr: " + n);
-        System.out.println("Number of pid - wel abr: " + j);
-        System.out.println("Total: " + (n + j));
-        System.out.println("===END====");
+        LOG.debug("Number of pid: " + i);
+        LOG.debug("Number of pid - non abr: " + n);
+        LOG.debug("Number of pid - wel abr: " + j);
+        LOG.debug("Total: " + (n + j));
+        LOG.debug("===END SequenceFileReadDemo====");
 }
 
 

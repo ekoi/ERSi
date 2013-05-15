@@ -8,17 +8,21 @@ import org.apache.mahout.clustering.kmeans.RandomSeedGenerator;
 import org.apache.mahout.common.HadoopUtil;
 import org.apache.mahout.common.distance.CosineDistanceMeasure;
 import org.apache.mahout.common.distance.DistanceMeasure;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class KMeansClustering {
+	private static Logger LOG = LoggerFactory.getLogger(KMeansClustering.class);
 
 	public static void main(String args[]) throws Exception {
-		String inputDir = "/Users/akmi/zzz-test-20130126-2308/output-vectors";
+		LOG.debug("=========START KMeansClustering=========");
+		String inputDir = System.getenv("ERSY_HOME") + "/output-vectors";
 		long begin = System.currentTimeMillis();
 		Configuration conf = new Configuration();
 		String vectorsFolder = inputDir + "/tfidf-vectors";
 		Path samples = new Path(vectorsFolder + "/part-r-00000");
 		for (int i=1000; i<1500; i=i+10) {
-			System.out.println("i: " + i);
+			LOG.debug("i: " + i);
 			long a = System.currentTimeMillis();
 		Path output = new Path("/Volumes/Holdtank/clustering-results/k-means/"+i+"/");
 		HadoopUtil.delete(conf, output);
@@ -37,14 +41,14 @@ public class KMeansClustering {
         	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(d))
         	);
 	    
-	    System.out.println("Duration: " + s);
+	    LOG.debug("Duration: " + s);
 		}
 		
 		
 //		List<List<Cluster>> Clusters = ClusterHelper.readClusters(conf, output);
 //
 //		for (Cluster cluster : Clusters.get(Clusters.size() - 1)) {
-//			System.out.println("Cluster id: " + cluster.getId() + " center: "
+//			LOG.debug("Cluster id: " + cluster.getId() + " center: "
 //					+ cluster.getCenter().asFormatString());
 //		}
 		
@@ -57,7 +61,7 @@ public class KMeansClustering {
         	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
         	);
 	    
-	    System.out.println("Duration: " + s);
-	    System.out.println("=========END=========");
+	    LOG.debug("Duration: " + s);
+	    LOG.debug("=========END of KMeansClustering=========");
 	}
 }

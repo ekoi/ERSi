@@ -27,6 +27,8 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.mahout.clustering.Cluster;
 import org.apache.mahout.clustering.classify.WeightedVectorWritable;
 import org.apache.mahout.math.NamedVector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hello world!
@@ -34,6 +36,7 @@ import org.apache.mahout.math.NamedVector;
  */
 public class HumanReadableClusterDumper 
 {
+	private static Logger LOG = LoggerFactory.getLogger(HumanReadableClusterDumper.class);
     public static void main( String[] args ) throws IOException
     {
     	ConfigurationReader cr = new ConfigurationReader();
@@ -64,11 +67,11 @@ public class HumanReadableClusterDumper
             	
             	NamedVector vector = (NamedVector) value.getVector();
                 String vectorName = vector.getName();
-               System.out.println("Dataset id: " + vectorName + ", key:" + key.toString());
-               System.out.println("key: " + key.toString() + " belongs to cluster " + value.toString());
+               LOG.debug("Dataset id: " + vectorName + ", key:" + key.toString());
+               LOG.debug("key: " + key.toString() + " belongs to cluster " + value.toString());
                String clusterNumber = key.toString();
-           		System.out.println("clusterNumber: " + clusterNumber);
-               System.out.println("-----------------------");
+           		LOG.debug("clusterNumber: " + clusterNumber);
+               LOG.debug("-----------------------");
             	if (!mapOfClusterAndItsDatasets.containsKey(clusterNumber)) {
             		listOfDatasets = new ArrayList<String>();
             		mapOfClusterAndItsDatasets.put(clusterNumber, listOfDatasets);
@@ -92,7 +95,7 @@ public class HumanReadableClusterDumper
 //            Set<String> sss = mapOfClusterAndItsDatasets.keySet();
 //            for (String s1 : sss) {
 //            	List<String> ll = mapOfClusterAndItsDatasets.get(s1);
-//            //System.out.println("Cluseter code " + s1 + " has " + ll.size() + " members. The members are: " + ll );
+//            //LOG.debug("Cluseter code " + s1 + " has " + ll.size() + " members. The members are: " + ll );
 //            	StringBuffer sb = new StringBuffer();
 //            	for (String l : ll) 
 //            		sb.append(l + "#");
@@ -102,31 +105,31 @@ public class HumanReadableClusterDumper
 //            f.close();
             Set<String> clusternumber = mapOfClusterAndItsDatasets.keySet();
             List<Integer> listofdatasetsize = new ArrayList<Integer>();
-            System.out.println("Total cluster: " + clusternumber.size());
+            LOG.debug("Total cluster: " + clusternumber.size());
             for (String s1 : clusternumber) {
             	List<String> datasets = mapOfClusterAndItsDatasets.get(s1);
-            	//System.out.println(s1 + "," + ll.size());
+            	//LOG.debug(s1 + "," + ll.size());
             	listofdatasetsize.add(datasets.size());
             }
-            System.out.println("List of datasets size: " + listofdatasetsize.size());
-            System.out.println(listofdatasetsize);
+            LOG.debug("List of datasets size: " + listofdatasetsize.size());
+            LOG.debug("listofdatasetsize: " + listofdatasetsize);
             Collections.sort(listofdatasetsize);
-            System.out.println(listofdatasetsize);
-            System.out.println("Number of processed data: " + x);
-            System.out.println("Total number of the cluster: " + mapOfClusterAndItsDatasets.size());
+            LOG.debug("listofdatasetsize: " + listofdatasetsize);
+            LOG.debug("Number of processed data: " + x);
+            LOG.debug("Total number of the cluster: " + mapOfClusterAndItsDatasets.size());
             reader.close();
             
             //for example : cluster-343 has 40 datasets
             Map<Integer, Integer> clusterAndItsNumberOfDatasets = new HashMap<Integer, Integer>();
             Set<String> set = mapOfClusterAndItsDatasets.keySet();
             for (String str : set) {
-            //	System.out.println("key: " + str + "\thas Size: " + mapOfClusterAndItsDatasets.get(str).size());
+            //	LOG.debug("key: " + str + "\thas Size: " + mapOfClusterAndItsDatasets.get(str).size());
             	clusterAndItsNumberOfDatasets.put(Integer.parseInt(str), mapOfClusterAndItsDatasets.get(str).size());
 //            	if ( mapOfClusterAndItsDatasets.get(str).size() >= 14 && mapOfClusterAndItsDatasets.get(str).size() <=100)
-//            		System.out.println(mapOfClusterAndItsDatasets.get(str));
+//            		LOG.debug(mapOfClusterAndItsDatasets.get(str));
             	
 //            	if ( mapOfClusterAndItsDatasets.get(str).size() == 2)
-//            		System.out.println(mapOfClusterAndItsDatasets.get(str));
+//            		LOG.debug(mapOfClusterAndItsDatasets.get(str));
             }
             
             Set<Entry<Integer, Integer>> setk = clusterAndItsNumberOfDatasets.entrySet();
@@ -143,7 +146,7 @@ public class HumanReadableClusterDumper
             	//int numberOfClusters = 1;
             	int numberOfDatasetsInACluster = clusterAndItsNumberOfDatasets.get(k);
             	numberOfDatasets += numberOfDatasetsInACluster;
-            	  // System.out.println("Cluster " + k + " has " + numberOfDatasetsInACluster + " documents");
+            	  // LOG.debug("Cluster " + k + " has " + numberOfDatasetsInACluster + " documents");
             	   if (!groupClusterWithTheSameNumberOfDatasets.containsKey(numberOfDatasetsInACluster)) {
             		   xxx = new ArrayList<Integer>();
             		   groupClusterWithTheSameNumberOfDatasets.put(numberOfDatasetsInACluster, xxx);
@@ -152,7 +155,7 @@ public class HumanReadableClusterDumper
             	   }
             	   xxx.add(numberOfDatasetsInACluster);
            	}
-            System.out.println("Number of datasets: " + numberOfDatasets);
+            LOG.debug("Number of datasets: " + numberOfDatasets);
             
             //sorting cluster based on the key.
             SortedSet<Integer> setOfNumberOfCluster = new TreeSet<Integer>(groupClusterWithTheSameNumberOfDatasets.keySet());
@@ -164,8 +167,8 @@ public class HumanReadableClusterDumper
             PrintWriter out = new PrintWriter(fw);
             out.println("Cluster number,Cluster Size");
             for (int j : setOfNumberOfCluster) {
-            //	System.out.println("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
-            	//System.out.println(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            //	LOG.debug("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            	//LOG.debug(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
             	out.print(j);
             	out.print(",");
             	out.println(groupClusterWithTheSameNumberOfDatasets.get(j).size());
@@ -183,7 +186,7 @@ public class HumanReadableClusterDumper
             
  //          Set<Integer> clusterscounter = clustersAndItsCountedNumber.keySet();
 //           for (int i : clusterscounter) {
-//        	   System.out.println("Cluster with number of docs is " + i + " has total: " + clustersAndItsCountedNumber.get(i));
+//        	   LOG.debug("Cluster with number of docs is " + i + " has total: " + clustersAndItsCountedNumber.get(i));
 //           }
           
            
@@ -193,7 +196,7 @@ public class HumanReadableClusterDumper
 //            Map<String, Integer> nnn = MapUtil.sortByValue(clusterAndItsNumbers);
 //            Set<String> sss = nnn.keySet();
 //            for (String ssss : sss) {
-//            System.out.println("Cluster[ " + ssss + "] has " + nnn.get(ssss) + " documents.");
+//            LOG.debug("Cluster[ " + ssss + "] has " + nnn.get(ssss) + " documents.");
 //            }
             
             
@@ -203,8 +206,8 @@ public class HumanReadableClusterDumper
             Map<Integer, List<Integer>> sizeingroup = new HashMap<Integer, List<Integer>>();
             List<Integer> yyyy  = new ArrayList<Integer>();
             for (int j : listofdatasetsize) {
-            //	System.out.println("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
-            	//System.out.println(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            //	LOG.debug("The number of cluster that has " + j + " is " + groupClusterWithTheSameNumberOfDatasets.get(j).size());
+            	//LOG.debug(j);//groupClusterWithTheSameNumberOfDatasets.get(j).size());
             	if (!sizeingroup.containsKey(j)) {
             		yyyy = new ArrayList<Integer>();
             		sizeingroup.put(j, yyyy);
@@ -224,7 +227,7 @@ public class HumanReadableClusterDumper
             //Close the File Writer
             fw1.close();     
           
-            System.out.println(sizeingroup);
+            LOG.debug("sizeingroup: " + sizeingroup);
             Set<Integer> ks = sizeingroup.keySet();
             ArrayList<Integer> list = new ArrayList<Integer>(ks);     
             Collections.sort(list);
@@ -234,7 +237,7 @@ public class HumanReadableClusterDumper
             out3.println("Documents Size, Number of clusters");
             for (int k : list) {
             	List<Integer> l = sizeingroup.get(k);
-            	System.out.println(k + "\t" + l.size() + "\t" + l);
+            	LOG.debug(k + "\t" + l.size() + "\t" + l);
             	out3.println(k + "," + l.size());
             }
             out3.close();

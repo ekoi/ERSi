@@ -14,12 +14,14 @@ import org.apache.mahout.clustering.kmeans.Kluster;
 import org.apache.mahout.common.distance.CosineDistanceMeasure;
 import org.apache.mahout.math.Vector;
 import org.apache.mahout.math.VectorWritable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CanopyClustering {
-  
+	private static Logger LOG = LoggerFactory.getLogger(CanopyClustering.class);
   public static void main(String args[]) throws Exception {
-    
-    String inputDir = "/Users/akmi/tmp/1resuptiontoken/outputdata-from-easy";
+	 
+    String inputDir = System.getenv("ERSY_HOME") + "/outputdata-from-easy";
     
     Configuration conf = new Configuration();
     FileSystem fs = FileSystem.get(conf);
@@ -32,11 +34,11 @@ public class CanopyClustering {
     while (reader.next(key, value)) {
       points.add(value.get());
     }
-    System.out.println(points.size());
+    LOG.debug("points size: " + points.size());
     reader.close();
     List<Canopy> canopies = CanopyClusterer.createCanopies(points, new CosineDistanceMeasure(), 0.8, 0.7);
     List<Kluster> clusters = new ArrayList<Kluster>();
-    System.out.println(canopies.size());
+    LOG.debug("canopies size: " + canopies.size());
     for (Canopy canopy : canopies) {
       clusters.add(new Kluster(canopy.getCenter(), canopy.getId(), new CosineDistanceMeasure()));
     }

@@ -17,8 +17,12 @@ import org.apache.mahout.clustering.canopy.CanopyDriver;
 import org.apache.mahout.clustering.kmeans.KMeansDriver;
 import org.apache.mahout.common.HadoopUtil;
 import org.apache.mahout.common.distance.DistanceMeasure;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class KMeansWithCanopyClustering {
+	private static Logger LOG = LoggerFactory.getLogger(KMeansWithCanopyClustering.class);
+
 	private static ClusteringConfig clusteringConfig;
 	public KMeansWithCanopyClustering() {
 		ConfigurationReader confReader = new ConfigurationReader();;
@@ -30,7 +34,7 @@ public class KMeansWithCanopyClustering {
 		long begin = System.currentTimeMillis();
 		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_MINING);
 		boolean b = processStatus.writeCurrentStatus();
-		System.out.println("WRITE current status: " + b);
+		LOG.debug("WRITE current status: " + b);
 		ClusterAlgorithmConfig cac = clusteringConfig.getClusterAlgorithmConfig();
 		CanopyConfig cc = cac.getCanopyConfig();
 		KMeansConfig kc = cac.getkMeansConfig();
@@ -58,7 +62,7 @@ public class KMeansWithCanopyClustering {
 		
 //	    List<List<Cluster>> Clusters = ClusterHelper.readClusters(conf, clusterOutput);
 //		for (Cluster cluster : Clusters.get(Clusters.size() - 1)) {
-//			System.out.println("Cluster id: " + cluster.getId() + " center: "
+//			LOG.debug("Cluster id: " + cluster.getId() + " center: "
 //					+ cluster.getCenter().asFormatString());
 //		}
 //		
@@ -66,7 +70,7 @@ public class KMeansWithCanopyClustering {
 //	    ClusterDumper clusterDumper = new ClusterDumper(new Path(output,
 //	        "clusters-0-final"), new Path(output, "clusteredPoints"));
 //	    clusterDumper.printClusters(null);
-//	    System.out.println(clusterDumper.getTermDictionary());
+//	    LOG.debug(clusterDumper.getTermDictionary());
 	    long diff = System.currentTimeMillis() - begin;
 	    String s= String.format("%d min, %d sec", 
         	    TimeUnit.MILLISECONDS.toMinutes(diff),
@@ -75,7 +79,7 @@ public class KMeansWithCanopyClustering {
         	);
 	    boolean b2 = processStatus.writeLastStatus();
 		boolean b3 = processStatus.writeDoneStatus();
-	    System.out.println("Duration: " + s);
-	    System.out.println(b2+ "=========END of Clustering========="+b3);
+	    LOG.debug("Duration: " + s);
+	    LOG.debug(b2+ "=========END of Clustering========="+b3);
 	}
 }

@@ -14,14 +14,16 @@ import org.apache.hadoop.io.Text;
 import org.apache.mahout.math.SequentialAccessSparseVector;
 import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReadVector {
-
+	private static Logger LOG = LoggerFactory.getLogger(ReadVector.class);
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("BEGIN");
+		LOG.debug("BEGIN ReadVector");
 		ConfigurationReader cr = new ConfigurationReader();
 		int i = 0;
 		Configuration conf = new Configuration();
@@ -42,12 +44,12 @@ public class ReadVector {
 							text.toString());
 				}
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				LOG.error(e.getMessage());
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOG.error(e.getMessage());
 			}
 			read.close();
-			System.out.println(i);
+			LOG.debug("i: " + i);
 			read = new SequenceFile.Reader(
 					fs,
 					new Path(
@@ -61,16 +63,15 @@ public class ReadVector {
 						.get();
 				// vect= (SequentialAccessSparseVector)namedVector.
 				for (Element e : namedVector) {
-					System.out.println("Token: " + dictionaryMap.get(e.index())
+					LOG.debug("Token: " + dictionaryMap.get(e.index())
 							+ ", TF-IDF weight: " + e.get());
 				}
 			}
 			read.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
-		System.out.println("===END===");
+		LOG.debug("===END ReadVector===");
 
 	}
 

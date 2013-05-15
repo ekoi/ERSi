@@ -4,12 +4,16 @@ import java.io.IOException;
 
 import nl.knaw.dans.ersy.textmining.clustering.utils.DataClusteringExecutor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class DataClusteringExecutorTryOut 
 {
+	private static Logger LOG = LoggerFactory.getLogger(DataClusteringExecutorTryOut.class);
     public static void main( String[] args ) throws IOException
     {
 //    	Configuration conf = new Configuration();
@@ -17,7 +21,7 @@ public class App
 //        String outputDir = "/Users/akmi/zzz-test/clusters-output/";
 //    	  Path vectorsFolder = new Path(outputDir, "tfidf-vectors");
 //    	 Path clusterOutput = new Path(outputDir , "clusters");
-//        System.out.println( "Hello World!" );
+//        LOG.debug( "Hello World!" );
 //        SequenceFile.Reader reader = new SequenceFile.Reader(fs,
 //                new Path(clusterOutput + "/" + Cluster.CLUSTERED_POINTS_DIR + "/part-m-00000"), conf);
 //            
@@ -26,19 +30,17 @@ public class App
 //            while (reader.next(key, value)) {
 //            	NamedVector vector = (NamedVector) value.getVector();
 //                String vectorName = vector.getName();
-//                System.out.println(vectorName + ", " + key.toString());
-//               System.out.println(key.toString() + " belongs to cluster "
+//                LOG.debug(vectorName + ", " + key.toString());
+//               LOG.debug(key.toString() + " belongs to cluster "
 //               + value.toString());
 //            }
 //            reader.close();
             
             
-    	 System.out.println( "Hello World! " + System.getenv("ERSY_HOME"));
          try {
          	DataClusteringExecutor.main();
  		} catch (Exception e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
+ 			LOG.error(e.getMessage());
  		}
     }
 }
