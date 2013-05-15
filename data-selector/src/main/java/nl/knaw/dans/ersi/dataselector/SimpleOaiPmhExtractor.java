@@ -46,12 +46,7 @@ import com.cybozu.labs.langdetect.LangDetectException;
  */
 public class SimpleOaiPmhExtractor extends SimpleExtractor {
 
-	public SimpleOaiPmhExtractor(DataExtractionConfig dataExtractionConfig) {
-		super(dataExtractionConfig);
-	}
-
-	private static Logger LOG = LoggerFactory
-			.getLogger(SimpleOaiPmhExtractor.class);
+	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
 	private static int numberOfNl;
@@ -60,9 +55,14 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 	private static int numbeerOfNlWords;
 
 	private boolean oaiPmhXmlDebug;
+	public SimpleOaiPmhExtractor(DataExtractionConfig dataExtractionConfig) {
+		super(dataExtractionConfig);
+	}
+
+	
 
 	public void extract() throws OAIException, IOException, LangDetectException {
-		LOG.debug("START");
+		LOG.debug("=== START SimpleOaiPmhExtractor ===");
 		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
@@ -198,7 +198,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 				}
 				if (records.getResumptionToken() != null) {
 					ResumptionToken rt = records.getResumptionToken();
-					System.out.println(rt.getId());
+					LOG.debug(rt.getId());
 					LOG.debug("Number of resuption token: " + numberOfResumption);
 					LOG.debug("Number of records: " + numberOfRecords);
 						Thread.sleep(3000);
@@ -211,7 +211,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		} finally {
 			Set<String> keys = writers.keySet();
 			for (String key : keys) {

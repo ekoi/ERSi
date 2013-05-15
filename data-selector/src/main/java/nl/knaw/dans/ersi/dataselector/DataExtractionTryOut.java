@@ -2,13 +2,18 @@ package nl.knaw.dans.ersi.dataselector;
 
 import nl.knaw.dans.ersi.dataselector.util.DataExtractionExecutor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class DataExtractionTryOut 
 {
+	private static Logger LOG = LoggerFactory.getLogger(DataExtractionTryOut.class);
+
 	public static void main(String[] args) {
 //		ConfigurationReader configurationReader = new ConfigurationReader();
 //		SimpleOaiPmhExtractor seme = new SimpleOaiPmhExtractor(configurationReader.getDataExtractionConfig());
@@ -19,24 +24,22 @@ public class App
 //			seme.extract();
 //		} catch (OAIException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			LOG.error(e.getMessage());
 //		} catch (UnsupportedEncodingException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			LOG.error(e.getMessage());
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			LOG.error(e.getMessage());
 //		} catch (LangDetectException e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			LOG.error(e.getMessage());
 //		}
 		
-		System.out.println( "Hello World! " + System.getenv("ERSY_HOME"));
         try {
 			DataExtractionExecutor.main();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
 	}
 }

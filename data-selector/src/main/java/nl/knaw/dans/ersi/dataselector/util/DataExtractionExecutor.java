@@ -7,14 +7,19 @@ import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhExtractor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import se.kb.oai.OAIException;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 
 public class DataExtractionExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(DataExtractionExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	System.out.println("++++++++++++++++++++ START +++++++++++++");
+	LOG.debug("++++++++++++++++++++ START DataExtractionExecutor +++++++++++++");
 	test(executor);
 
     }
@@ -30,12 +35,14 @@ public class DataExtractionExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	System.out.println("=============EIND of DataExtractionExecutor =======");
+	LOG.debug("=============EIND of DataExtractionExecutor =======");
     }
 }
 
 
 class Worker implements Runnable {
+	
+	private static Logger LOG = LoggerFactory.getLogger(Worker.class);
     private SimpleOaiPmhExtractor seme;
 
     public Worker(SimpleOaiPmhExtractor seme) {
@@ -43,20 +50,20 @@ class Worker implements Runnable {
     }
 
     public void run() {
-    	System.out.println("******************************");
+    	LOG.debug("*************START DataExtractionExecutor Worker*****************");
 	try {
 		seme.extract();
 	} catch (OAIException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (LangDetectException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	}
-	System.out.println("#################################");
+	LOG.debug("##############END DataExtractionExecutor Worker###################");
 	
     }
 }

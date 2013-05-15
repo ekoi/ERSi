@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import se.kb.oai.OAIException;
 import se.kb.oai.pmh.Header;
@@ -19,11 +21,10 @@ import se.kb.oai.pmh.ResumptionToken;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 
-/**
- * Hello world!
- * 
- */
+
 public class SimpleMetadataExtractor {
+	
+	private static Logger LOG = LoggerFactory.getLogger(SimpleMetadataExtractor.class);
 	private String oaipmhServerURL;
 	private String outputFileName;
 	private String oaipmhSetValue;
@@ -42,7 +43,7 @@ public class SimpleMetadataExtractor {
 			return false;
 		for (String s : input) {
 			if (s.indexOf("=") == -1 || !s.startsWith("-")){
-				System.out.println(s + " is illegal argument!");
+				LOG.debug(s + " is illegal argument!");
 				break;
 			}
 				
@@ -78,12 +79,11 @@ public class SimpleMetadataExtractor {
 			if (extractedOutputDirectory.exists()) {
 				boolean deleteDirectory = deleteDir(extractedOutputDirectory);
 				if (!deleteDirectory)
-					System.out
-							.println("Cannot delete the existing extracted-output directory.");
+					LOG.debug("Cannot delete the existing extracted-output directory.");
 			}
 			boolean success = extractedOutputDirectory.mkdir();
 			if (!success)
-				System.out.println("Cannot create a directory.");
+				LOG.debug("Cannot create a directory.");
 			outNLFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-nl.txt"));
 			outENFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-en.txt"));
 			outDEFile = new PrintWriter(new FileWriter(extractedOutputDirectory.getAbsolutePath() + "/" + getOutputFileName() + "-de.txt"));
@@ -108,18 +108,18 @@ public class SimpleMetadataExtractor {
 
 				if (records.getResumptionToken() != null) {
 					ResumptionToken rt = records.getResumptionToken();
-					System.out.println("=========== " + numberOfResumption + "  " + rt.getId() + " ===========");
+					LOG.debug("=========== " + numberOfResumption + "  " + rt.getId() + " ===========");
 					try {
 						Thread.sleep(5000);
 
 					} catch (InterruptedException ie) {
-						System.out.println(ie.getMessage());
+						LOG.debug(ie.getMessage());
 					}
 					records = server.listRecords(rt);
 				}
 				else {
 					more = false;
-					System.out.println("******** FINISH  ********");
+					LOG.debug("******** FINISH  ********");
 					String report = "Number of resumption tokens: " + numberOfResumption + "\n";
 					report+= "Number of processed records: " + numberOfRecords + "\n";
 					report+= "Number of NL records: " + numberOfNlRecords + "\n";
@@ -128,7 +128,7 @@ public class SimpleMetadataExtractor {
 					report+= "Number of FR records: " + numberOfFrRecords + "\n";
 					report+= "Number of UN records: " + numberOfUNRecords + "\n";
 					
-					System.out.println(report);
+					LOG.debug(report);
 					
 					outFile.println("************* REPORT **************");
 					outFile.println(report);
@@ -136,11 +136,11 @@ public class SimpleMetadataExtractor {
 			}
 
 		} catch (OAIException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}catch (LangDetectException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		} finally {
 			if (outNLFile != null)
 				outNLFile.close();

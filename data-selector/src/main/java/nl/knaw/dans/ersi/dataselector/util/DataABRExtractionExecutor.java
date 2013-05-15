@@ -7,14 +7,19 @@ import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhWithABRExtractor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import se.kb.oai.OAIException;
 
 import com.cybozu.labs.langdetect.LangDetectException;
 
 public class DataABRExtractionExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(DataABRExtractionExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	System.out.println("++++++++++++++++++++ START +++++++++++++");
+	LOG.debug("++++++++++++++++++++ START DataABRExtractionExecutor +++++++++++++");
 	test(executor);
 
     }
@@ -30,12 +35,13 @@ public class DataABRExtractionExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	System.out.println("=============EIND of DataABRExtractionExecutor =======");
+	LOG.debug("=============EIND of DataABRExtractionExecutor =======");
     }
 }
 
 
 class WorkerABR implements Runnable {
+	private static Logger LOG = LoggerFactory.getLogger(WorkerABR.class);
     private SimpleOaiPmhWithABRExtractor seme;
 
     public WorkerABR(SimpleOaiPmhWithABRExtractor seme) {
@@ -43,20 +49,17 @@ class WorkerABR implements Runnable {
     }
 
     public void run() {
-    	System.out.println("******************************");
+    	LOG.debug("************START WorkerABR *****************");
 	try {
 		seme.extract();
 	} catch (OAIException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (LangDetectException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	}
-	System.out.println("#################################");
+	LOG.debug("############END WorkerABR#####################");
 	
     }
 }

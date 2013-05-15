@@ -46,13 +46,8 @@ import com.cybozu.labs.langdetect.LangDetectException;
  * 
  */
 public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
-
-	public SimpleOaiPmhWithABRExtractor(DataExtractionConfig dataExtractionConfig) {
-		super(dataExtractionConfig);
-	}
-
-	private static Logger LOG = LoggerFactory
-			.getLogger(SimpleOaiPmhWithABRExtractor.class);
+	
+	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhWithABRExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
 	private static int numberOfNl;
@@ -63,6 +58,10 @@ public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
 	private boolean oaiPmhXmlDebug;
 	
 	private List<String> theABRlist;
+
+	public SimpleOaiPmhWithABRExtractor(DataExtractionConfig dataExtractionConfig) {
+		super(dataExtractionConfig);
+	}
 
 	public void extract() throws OAIException, IOException, LangDetectException {
 		LOG.debug("START");
@@ -211,7 +210,7 @@ public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
 				}
 				if (records.getResumptionToken() != null) {
 					ResumptionToken rt = records.getResumptionToken();
-					System.out.println(rt.getId());
+					LOG.debug(rt.getId());
 					LOG.debug("Number of resuption token: " + numberOfResumption);
 					LOG.debug("Number of records: " + numberOfRecords);
 						Thread.sleep(5000);

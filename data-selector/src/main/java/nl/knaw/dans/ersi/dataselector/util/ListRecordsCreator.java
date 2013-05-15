@@ -39,17 +39,17 @@ public class ListRecordsCreator
 			serializer.write(lr, result);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
         
 //        File source = new File("./src/resources/example.xml");
 //
 //        try {
 //			Example example2 = serializer.read(Example.class, source);
-//			System.out.println(example2.getMessage());
+//			LOG.debug(example2.getMessage());
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
-//			e.printStackTrace();
+//			LOG.error(e.getMessage());
 //		}
     }
 }

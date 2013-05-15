@@ -2,12 +2,17 @@ package nl.knaw.dans.ersi.dataselector;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cybozu.labs.langdetect.Detector;
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.cybozu.labs.langdetect.LangDetectException;
 import com.cybozu.labs.langdetect.Language;
 
 public class LanguageRecognition {
+	
+	private static Logger LOG = LoggerFactory.getLogger(LanguageRecognition.class);
 	public static String NL = "nl";
 	public static String EN = "en";
 	public static String FR = "fr";
@@ -29,7 +34,7 @@ public class LanguageRecognition {
 			return detector.detect();
 		} catch (LangDetectException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
         return UN_RECOGNIZED + text;
         
@@ -44,10 +49,9 @@ public class LanguageRecognition {
     	try {
 			LanguageRecognition dr = new LanguageRecognition();
 			String result = dr.detect("Emmer-Compascuum, Herstructurering Runde (Dr.) onderzoeksrapport");
-			System.out.println(result);
+			LOG.debug(result);
     	} catch (LangDetectException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
     }
 

@@ -6,14 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class CreateABRList {
 
+	private static Logger LOG = LoggerFactory.getLogger(CreateABRList.class);
 	/**
 	 * @param args
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		FileReader a = new FileReader("/Users/akmi/abrlist.txt");
+		FileReader a = new FileReader(System.getenv("ERSY_HOME") + "/abrlist.txt");
         BufferedReader br = new BufferedReader(a);
         String line;
         List<String> list = new ArrayList<String>();
@@ -21,7 +25,7 @@ public class CreateABRList {
         while((line = br.readLine()) != null) {
             // do something with line.
         	int index = line.indexOf("...");
-        	//System.out.println(line);
+        	//LOG.debug(line);
         	if (index > 0) {
         		String s = line.substring(0, index);
         		s = s.trim().toLowerCase();
@@ -35,7 +39,7 @@ public class CreateABRList {
         			list.add(s);
         		}
         	} else {
-        		System.out.println("+++++++++++++++" + line);
+        		LOG.debug("+++++++++++++++" + line);
         	}
         	
        }
@@ -62,7 +66,7 @@ public class CreateABRList {
         while((line = br.readLine()) != null) {
             // do something with line.
         	int index = line.indexOf("...");
-        	//System.out.println(line);
+        	//LOG.debug(line);
         	if (index > 0) {
         		String s = line.substring(0, index);
         		s = s.trim().toLowerCase();
@@ -76,11 +80,10 @@ public class CreateABRList {
         			list.add(s);
         		}
         	} else {
-        		System.out.println("+++++++++++++++" + line);
+        		LOG.debug("+++++++++++++++" + line);
         	}
-        	System.out.println(i++);
        }
-        System.out.println(list.size());
+        LOG.debug("size: " + list.size());
         return list;
 	}
 }

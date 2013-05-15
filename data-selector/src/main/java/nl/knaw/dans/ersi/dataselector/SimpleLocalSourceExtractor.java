@@ -37,17 +37,17 @@ import com.cybozu.labs.langdetect.LangDetectException;
  * 
  */
 public class SimpleLocalSourceExtractor extends SimpleExtractor {
+	
+	private static Logger LOG = LoggerFactory.getLogger(SimpleLocalSourceExtractor.class);
+	private static int numberOfRecords;
+	private static int numberOfNl;
+	private static int numberOfEn;
+	private static int numberOfOther;
 
 	public SimpleLocalSourceExtractor(DataExtractionConfig dataExtractionConfig) {
 		super(dataExtractionConfig);
 	}
 
-	private static Logger LOG = LoggerFactory
-			.getLogger(SimpleLocalSourceExtractor.class);
-	private static int numberOfRecords;
-	private static int numberOfNl;
-	private static int numberOfEn;
-	private static int numberOfOther;
 
 	public void extract() throws OAIException, IOException, LangDetectException {
 
@@ -67,13 +67,13 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 			saveFile(records);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(e.getMessage());
 		}
 		
-		System.out.println("Records: " + numberOfRecords);
-		System.out.println("NL: " + numberOfNl);
-		System.out.println("EN: " + numberOfEn);
-		System.out.println("Other: " + numberOfOther);
+		LOG.debug("Records: " + numberOfRecords);
+		LOG.debug("NL: " + numberOfNl);
+		LOG.debug("EN: " + numberOfEn);
+		LOG.debug("Other: " + numberOfOther);
 	}
 
 	private void saveFile(List<Record> records) throws LangDetectException{
