@@ -7,10 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.preprocess.standard.SimpleDataCleansing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DataCleansingExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(DataCleansingExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	System.out.println("++++++++++++++++++++ START +++++++++++++");
+	LOG.debug("++++++++++++++++++++ START DataCleansingExecutor +++++++++++++");
 	test(executor);
 
     }
@@ -25,12 +29,13 @@ public class DataCleansingExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	System.out.println("=============EIND END END=======");
+	LOG.debug("=============EIND DataCleansingExecutor =======");
     }
 }
 
 
 class Worker implements Runnable {
+	private static Logger LOG = LoggerFactory.getLogger(Worker.class);
     private SimpleDataCleansing sdc;
 
     public Worker(SimpleDataCleansing sdc) {
@@ -38,20 +43,17 @@ class Worker implements Runnable {
     }
 
     public void run() {
-    	System.out.println("*************BEGIN DATA CLEANSING*****************");
+    	LOG.debug("*************BEGIN DATA CLEANSING (Worker)*****************");
 	try {
 		sdc.run();
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} 
-	System.out.println("#############DATA CLEANSING FINISH####################");
+	LOG.debug("#############DATA CLEANSING FINISH (Worker) ####################");
 	
     }
 }

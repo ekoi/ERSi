@@ -6,7 +6,6 @@ package nl.knaw.dans.ersi.config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.Serializable;
-import java.util.Properties;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;

@@ -7,10 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.preprocess.standard.AbrDataCleansing;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DataAbrCleansingExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(DataAbrCleansingExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	System.out.println("++++++++++++++++++++ START +++++++++++++");
+	LOG.debug("++++++++++++++++++++ START +++++++++++++");
 	test(executor);
 
     }
@@ -25,33 +29,31 @@ public class DataAbrCleansingExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	System.out.println("=============EIND END END=======");
+	LOG.debug("=============EIND END END=======");
     }
 }
 
 
 class WorkerAbr implements Runnable {
+	private static Logger LOG = LoggerFactory.getLogger(WorkerAbr.class);
     private AbrDataCleansing sdc;
-
+    
     public WorkerAbr(AbrDataCleansing sdc) {
 	this.sdc = sdc;
     }
 
     public void run() {
-    	System.out.println("*************BEGIN DATA CLEANSING*****************");
+    	LOG.debug("*************BEGIN DATA CLEANSING*****************");
 	try {
 		sdc.run();
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		LOG.error(e.getMessage());
 	} 
-	System.out.println("#############DATA CLEANSING FINISH####################");
+	LOG.debug("#############DATA CLEANSING FINISH####################");
 	
     }
 }

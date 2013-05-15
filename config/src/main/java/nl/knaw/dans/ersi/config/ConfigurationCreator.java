@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -23,8 +22,7 @@ public class ConfigurationCreator implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1048255901585559931L;
-	private static Logger LOG = LoggerFactory
-			.getLogger(ConfigurationCreator.class);
+	private static Logger LOG = LoggerFactory.getLogger(ConfigurationCreator.class);
 	private String errorMessage;
 	private static String configurationXmlFile;
 	

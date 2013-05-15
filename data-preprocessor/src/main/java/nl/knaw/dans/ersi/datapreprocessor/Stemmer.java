@@ -12,8 +12,11 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.nl.DutchAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Stemmer{
+	private static Logger LOG = LoggerFactory.getLogger(Stemmer.class);
     public static String Stem(String text){
         StringBuffer result = new StringBuffer();
         if (text!=null && text.trim().length()>0){
@@ -29,7 +32,7 @@ public class Stemmer{
                     result.append(" ");
                 }
             } catch (IOException ioe){
-                System.out.println("Error: "+ioe.getMessage());
+                LOG.error("Error: "+ioe.getMessage());
             }
         }
 
@@ -43,25 +46,25 @@ public class Stemmer{
     	StringBuffer sb = new StringBuffer();
     	List<String> l = getABRList();
     	for (String s : l) {
-    		System.out.println(s + "\t" + Stemmer.Stem(s.trim()));
+    		LOG.debug(s + "\t" + Stemmer.Stem(s.trim()));
     	}
     	for (String s : l) {
     		 String s2= Stemmer.Stem(s);
     		 String[] s3 = s2.split(" ");
     		 for (String s4 : s3)
     			 if (s4.length()>1)
-    			 System.out.println(s4);
+    			 LOG.debug(s4);
 //    		sb.append(s);
 //    		sb.append(" ");
     	}
 //       String s2= Stemmer.Stem(sb.toString());
-//       System.out.println(s2);
-    	System.out.println("===================");
+//       LOG.debug(s2);
+    	LOG.debug("===================");
     	List<String> ls = getStemmedABr();
     	for(String s: ls) {
-    		System.out.println(s);
+    		LOG.debug(s);
     	}
-    	//System.out.println(getStemmedABr().size());
+    	//LOG.debug(getStemmedABr().size());
     }
     /**
 	 * @param list
@@ -83,7 +86,7 @@ public class Stemmer{
             // do something with line.
         	line = line.toLowerCase().trim();
         	int index = line.indexOf("...");
-        	//System.out.println(line);
+        	//LOG.debug(line);
         	if (index > 0) {
         		String s = line.substring(0, index);
         		s = s.trim().toLowerCase();
@@ -97,7 +100,7 @@ public class Stemmer{
         			list.add(s);
         		}
         	} else {
-        		System.out.println("+++++++++++++++" + line);
+        		LOG.debug("+++++++++++++++" + line);
         	}
        }
         return list;
@@ -112,7 +115,7 @@ public class Stemmer{
 
 			for (String s : l) {
 				String s2 = Stemmer.Stem(s).trim();
-				System.out.println(s2);
+				LOG.debug(s2);
 				String[] s3 = s2.split(" ");
 				for (String s4 : s3) {
 					s4 = s4.trim();

@@ -7,10 +7,12 @@ import org.apache.lucene.analysis.nl.DutchAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tartarus.snowball.ext.PorterStemmer;
 
-public class App3 {
-
+public class PorterStemmerTryOut {
+	private static Logger LOG = LoggerFactory.getLogger(PorterStemmerTryOut.class);
 	/**
 	 * @param args
 	 */
@@ -24,14 +26,14 @@ public class App3 {
 		 stem.setCurrent(word);
 		 stem.stem();
 		 String result = stem.getCurrent();
-		 System.out.println(result);
+		 LOG.debug(result);
 		}
 		
 		DutchAnalyzer en_an = new DutchAnalyzer(Version.LUCENE_36);
 		QueryParser parser = new QueryParser(Version.LUCENE_36, "your_field", en_an);
 		String str = "eten drinken slapen";
 		try {
-			System.out.println("result: " + parser.parse(str));
+			LOG.debug("result: " + parser.parse(str));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

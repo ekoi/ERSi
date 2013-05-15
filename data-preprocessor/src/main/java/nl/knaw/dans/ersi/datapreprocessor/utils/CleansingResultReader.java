@@ -22,9 +22,12 @@ import org.apache.hadoop.util.ReflectionUtils;
 import org.apache.mahout.math.SequentialAccessSparseVector;
 import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CleansingResultReader {
 	
+	private static Logger LOG = LoggerFactory.getLogger(CleansingResultReader.class);
 	private final DataCleansingConfig dcc;
 	private Configuration conf = new Configuration();
 	private FileSystem fs;
@@ -47,7 +50,7 @@ public class CleansingResultReader {
 			 Writable key = (Writable) ReflectionUtils.newInstance(read.getKeyClass(), conf);
 			 Writable value = (Writable) ReflectionUtils.newInstance(read.getValueClass(), conf);
 			 while (read.next(key, value)) {
-//                 System.out.println("key: " + key + " value: " + value);
+//                 LOG.debug("key: " + key + " value: " + value);
                  count = Integer.parseInt(value.toString());
                  totalNumberOfWords = totalNumberOfWords + count;
                  wordOccurences.put(key.toString(), new Integer(count));
@@ -88,7 +91,7 @@ public class CleansingResultReader {
 						.get();
 				// vect= (SequentialAccessSparseVector)namedVector.
 				for (Element e : namedVector) {
-					System.out.println("Token: " + dictionaryMap.get(e.index())
+					LOG.debug("Token: " + dictionaryMap.get(e.index())
 							+ ", TF-IDF weight: " + e.get());
 				}
 			}
@@ -134,19 +137,19 @@ public class CleansingResultReader {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println( "Hello World! " + System.getenv("ERSY_HOME"));
+		LOG.debug( "Hello World! " + System.getenv("ERSY_HOME"));
 		 ConfigurationReader cr = new ConfigurationReader();
 		 CleansingResultReader crr = new
 		 CleansingResultReader(cr.getDataCleansingConfig());
 		 
-		 System.out.println("Total numbers of words: " + crr.getTotalNumberOfWords());
-		 System.out.println("Total numbers of different words: " + crr.getNumberOfDifferentWords());
+		 LOG.debug("Total numbers of words: " + crr.getTotalNumberOfWords());
+		 LOG.debug("Total numbers of different words: " + crr.getNumberOfDifferentWords());
 			List<Entry<String, Integer>> l2 = crr.getWordAndItsNumberOccurences();
 			for (int i=0; i<10; i++) {
 				Entry<String, Integer> e = l2.get(i);
 				String key = e.getKey();
 				Integer val = e.getValue() ;
-				System.out.println("key: " + key + "\t value: " + val );
+				LOG.debug("key: " + key + "\t value: " + val );
 			}
 	}
 
