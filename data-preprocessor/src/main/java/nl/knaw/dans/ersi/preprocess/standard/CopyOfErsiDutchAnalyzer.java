@@ -53,7 +53,7 @@ public final class CopyOfErsiDutchAnalyzer extends Analyzer {
 //				// int startOffset = offsetAttribute.startOffset();
 //				// int endOffset = offsetAttribute.endOffset();
 				String term = charTermAttribute.toString().toLowerCase();
-				System.out.println(term);
+				LOG.debug(term);
 //				if (term.length() <= minTernLength)
 //					continue;
 //				if (ignoreWords.contains(term)) {

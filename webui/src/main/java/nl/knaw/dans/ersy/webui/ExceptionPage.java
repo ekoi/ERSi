@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import nl.knaw.dans.ersy.textmining.clustering.ReadVector;
 import nl.knaw.dans.ersy.webui.pages.HomePage;
 
 import org.apache.wicket.markup.html.form.Button;
@@ -12,11 +13,13 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.PropertyModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ExceptionPage extends ErsyBasePage {
 
 	private static final long serialVersionUID = 593717625018028083L;
-
+	private static Logger LOG = LoggerFactory.getLogger(ExceptionPage.class);
 	// My model for the form data
 	FormExceptionProvider formProvider;
 	
@@ -61,10 +64,10 @@ public class ExceptionPage extends ErsyBasePage {
 
 			@Override
 			public void onSubmit() {
-				System.out.println("******************ERROR EXCEPTION PAGE***************************");
-				System.out.println(taComments.getDefaultModelObjectAsString());
-				System.out.println(taAdditional.getDefaultModelObjectAsString());
-				System.out.println("************************EKOINDARTO**********************");
+				LOG.debug("******************ERROR EXCEPTION PAGE***************************");
+				LOG.debug(taComments.getDefaultModelObjectAsString());
+				LOG.debug(taAdditional.getDefaultModelObjectAsString());
+				LOG.debug("************************EKOINDARTO**********************");
 				setResponsePage(HomePage.class);
 			}
 		});

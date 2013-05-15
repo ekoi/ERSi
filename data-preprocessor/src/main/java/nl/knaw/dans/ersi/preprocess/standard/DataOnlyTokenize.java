@@ -81,7 +81,7 @@ public class DataOnlyTokenize {
     int count=0;
     while (reader.next(key, value)) {
     	count++;
-      System.out.println(key.toString() + " = > "
+      LOG.debug(key.toString() + " = > "
                          + value.get().asFormatString());
     }
     reader.close();
@@ -142,12 +142,12 @@ public class DataOnlyTokenize {
 	    int count=0;
 	    while (reader.next(key, value)) {
 	    	count++;
-	      System.out.println(key.toString() + " = > "
+	      LOG.debug(key.toString() + " = > "
 	                         + value.get().asFormatString());
 	    }
 	    reader.close();
-	    System.out.println("==================");
+	    LOG.debug("==================");
 	    LOG.debug("Number of processing data: " + count);
-	    System.out.println("=========END=========");
+	    LOG.debug("=========END DataOnlyTokenize=========");
 	  }
 }

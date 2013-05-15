@@ -15,10 +15,12 @@ import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.WhitespaceTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ErsiWhitespaceAnalyzer extends Analyzer {
 	public static int minTernLength = 1;
-	
+	private static Logger LOG = LoggerFactory.getLogger(ErsiWhitespaceAnalyzer.class);
 	@Override
 	public TokenStream tokenStream(String fieldName, Reader reader) {
 		WhitespaceAnalyzer da = new WhitespaceAnalyzer(Version.LUCENE_36);
@@ -42,15 +44,15 @@ public final class ErsiWhitespaceAnalyzer extends Analyzer {
 				//Matcher m = alphabets.matcher(term);
 				//if (m.matches()) {
 					buf.append(term).append(" ");
-					//System.out.println(buf.toString());
+					//LOG.debug(buf.toString());
 				//}
 			}
 			//LOG.debug("Number of tokens: " + numberOfTokens);
 			return new WhitespaceTokenizer(Version.LUCENE_36, new StringReader(
 					buf.toString()));
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			LOG.error(e.getMessage());
 		}
 		da.close();
 		

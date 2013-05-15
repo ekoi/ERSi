@@ -55,17 +55,17 @@ public final class ErsyStemmedAbrAnalyzer extends Analyzer {
 				if (ignoreWords.contains(term)) {
 					continue;
 				}
-				//System.out.println(term);
+				//LOG.debug(term);
 				//Matcher m = alphabets.matcher(term);
 				//if (m.matches()) {
 				if (stemmedAbr.contains(term.trim())) {
 					buf.append(term).append(" ");
 					numberOfTerm++;
-					//System.out.println(numberOfTerm);
+					//LOG.debug(numberOfTerm);
 				} 
 				//}
 			}
-			System.out.println(">>>>>" + numberOfTerm);
+			LOG.debug(">>>>>" + numberOfTerm);
 			//LOG.debug("Number of tokens: " + numberOfTokens);
 			return new WhitespaceTokenizer(Version.LUCENE_36, new StringReader(
 					buf.toString()));

@@ -58,15 +58,15 @@ public final class ErsiAbrWhitespaceAnalyzer extends Analyzer {
 				//Matcher m = alphabets.matcher(term);
 				//if (m.matches()) {
 					buf.append(term).append(" ");
-					System.out.println(buf.toString());
+					LOG.debug(buf.toString());
 				//}
 			}
 			//LOG.debug("Number of tokens: " + numberOfTokens);
 			return new WhitespaceTokenizer(Version.LUCENE_36, new StringReader(
 					buf.toString()));
-		} catch (IOException e1) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			LOG.error(e.getMessage());
 		}
 		da.close();
 		
