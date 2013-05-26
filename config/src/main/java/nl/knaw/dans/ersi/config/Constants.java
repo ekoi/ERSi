@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 
 public final class Constants {
 
+	private static Logger LOG = LoggerFactory.getLogger(Constants.class);
 	public static final String ERSY_HOME = readErsyHomeFromSystemProperties();
-	private static Logger LOG = LoggerFactory
-			.getLogger(Constants.class);
 	
 	public Constants() {
 		
