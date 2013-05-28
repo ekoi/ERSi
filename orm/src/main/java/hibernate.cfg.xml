@@ -11,7 +11,9 @@
     <property name="connection.pool_size">1</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="show_sql">true</property>
-    <mapping class="nl.knaw.dans.ersy.orm.dao.Cluster" />
-    <mapping class="nl.knaw.dans.ersy.orm.dao.Dataset" />
+    <!--  mapping class="nl.knaw.dans.ersy.orm.dao.Cluster" />
+    <mapping class="nl.knaw.dans.ersy.orm.dao.Dataset" / -->
+    <mapping class="nl.knaw.dans.ersy.orm.dao.MiningProcess" />
+    <mapping class="nl.knaw.dans.ersy.orm.dao.PidRelevancy" />
 </session-factory>
 </hibernate-configuration>
