@@ -16,9 +16,6 @@ public class CanopyConfig {
 	@Element(name="cluster-classification-threshold")
 	private double clusterClassificationThreshold;
 	
-	@Element(name = "enable", required=false)
-	private boolean enable = true;
-	
 	public String getDistanceMeasureClassName() {
 		return distanceMeasureClassName;
 	}
@@ -50,14 +47,6 @@ public class CanopyConfig {
 	public void setClusterClassificationThreshold(
 			double clusterClassificationThreshold) {
 		this.clusterClassificationThreshold = clusterClassificationThreshold;
-	}
-
-	public boolean isEnable() {
-		return enable;
-	}
-
-	public void setEnable(boolean enable) {
-		this.enable = enable;
 	}
 
 	

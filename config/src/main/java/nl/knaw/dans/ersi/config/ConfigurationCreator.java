@@ -146,6 +146,7 @@ public class ConfigurationCreator implements Serializable {
 		kc.setClusterClassificationThreshold(0.0);
 		cac.setkMeansConfig(kc);
 		
+
 		File result = new File(configurationXmlFile);
 
 		try {

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration generated="13 april 2013 10:25:38 CEST">
+   <data-extraction>
+      <OAI-PMH>
+         <base-url>http://easy.dans.knaw.nl/oai</base-url>
+         <metadata-prefix>oai_dc</metadata-prefix>
+         <set>D30000:D37000</set>
+         <selected-fields class="java.util.ArrayList">
+            <fieldConfig>
+               <name>dc:title</name>
+               <detect-lang>true</detect-lang>
+            </fieldConfig>
+            <fieldConfig>
+               <name>dc:description</name>
+               <detect-lang>true</detect-lang>
+            </fieldConfig>
+            <fieldConfig>
+               <name>dc:subject</name>
+               <detect-lang>false</detect-lang>
+            </fieldConfig>
+            <fieldConfig>
+               <name>dc:coverage</name>
+               <detect-lang>false</detect-lang>
+            </fieldConfig>
+         </selected-fields>
+      </OAI-PMH>
+      <local-source>
+         <file-name>tsd-eko</file-name>
+         <file-path>/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO</file-path>
+         <file-type>txt</file-type>
+         <selected-fields class="java.util.ArrayList">
+            <fieldConfig>
+               <name>urn</name>
+               <detect-lang>false</detect-lang>
+            </fieldConfig>
+            <fieldConfig>
+               <name>data_abr</name>
+               <detect-lang>false</detect-lang>
+            </fieldConfig>
+         </selected-fields>
+      </local-source>
+      <extracted-output>
+         <file language="nl">
+            <description>
+               <file-name>ArchaeologyMetadataInDutch</file-name>
+               <txt-file-path>/tmp/ersy/data-extraction/archaeology/nl/txt</txt-file-path>
+               <hdfs-file-path>/tmp/ersy/data-extraction/archaeology/nl/hdfs</hdfs-file-path>
+            </description>
+         </file>
+      </extracted-output>
+      <report>
+         <name>DataExtractionReport</name>
+         <path>/tmp/ersy/data-extraction/report</path>
+      </report>
+   </data-extraction>
+   <data-cleansing>
+      <simple-dimension-reduction>
+         <min-word-length>3</min-word-length>
+         <skip-word class="java.util.ArrayList">
+            <string>onderzoeksrapport</string>
+         </skip-word>
+      </simple-dimension-reduction>
+      <minSupport>2</minSupport>
+      <minDf>2</minDf>
+      <maxDFPercent>90</maxDFPercent>
+      <maxNGramSize>1</maxNGramSize>
+      <minLLRValue>3.0</minLLRValue>
+      <reduceTasks>1</reduceTasks>
+      <chunkSize>200</chunkSize>
+      <norm>2</norm>
+      <sequentialAccessOutput>true</sequentialAccessOutput>
+      <input-directory>/tmp/ersy/data-extraction/archaeology/nl/hdfs</input-directory>
