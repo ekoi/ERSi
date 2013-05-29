@@ -28,7 +28,7 @@ public class ReadVector {
 		 SequenceFile.Reader read;
 		 try {
 		  fs = FileSystem.get(conf);
-		  read = new SequenceFile.Reader(fs, new Path(System.getenv("ERSY_HOME") + "/output-vectors/dictionary.file-0"), conf);
+		  read = new SequenceFile.Reader(fs, new Path(System.getenv("ERSY_HOME") + "/data-cleansing/oai-pmh/vectors/dictionary.file-0"), conf);
 		  IntWritable dicKey = new IntWritable();
 		  Text text = new Text();
 		  HashMap dictionaryMap = new HashMap();
@@ -43,7 +43,7 @@ public class ReadVector {
 		   }
 		   read.close();
 		         
-		   read = new SequenceFile.Reader(fs, new Path(System.getenv("ERSY_HOME") + "/output-vectors/tf-vectors/part-r-00000"), conf);
+		   read = new SequenceFile.Reader(fs, new Path(System.getenv("ERSY_HOME") + "/data-cleansing/oai-pmh/vectors/tf-vectors/part-r-00000"), conf);
 		   Text key = new Text();
 		   VectorWritable value = new VectorWritable();
 		   SequentialAccessSparseVector vect;

@@ -8,9 +8,9 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ersydb</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"></property>
-    <property name="connection.pool_size">1</property>
+    <property name="connection.pool_size">10</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="show_sql">true</property>
+    <property name="show_sql">false</property>
     <!--  mapping class="nl.knaw.dans.ersy.orm.dao.Cluster" />
     <mapping class="nl.knaw.dans.ersy.orm.dao.Dataset" / -->
     <mapping class="nl.knaw.dans.ersy.orm.dao.MiningProcess" />

@@ -6,6 +6,46 @@ DROP SCHEMA IF EXISTS `ersydb` ;
 CREATE SCHEMA IF NOT EXISTS `ersydb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `ersydb` ;
 
+DROP TABLE IF EXISTS ersydb.mining_process ;
+
+CREATE  TABLE IF NOT EXISTS ersydb.mining_process (
+  mpid INT NOT NULL AUTO_INCREMENT ,
+  method_name VARCHAR(50) NULL,
+  execution_date TIMESTAMP,
+  PRIMARY KEY (mpid) )
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS ersydb.pid_relevancy ;
+
+CREATE TABLE pid_relevancy (
+  id INT(20)  NOT NULL AUTO_INCREMENT,
+  mpid INT NOT NULL,
+  pid VARCHAR(250)  NOT NULL,
+  pid_rel VARCHAR(250)  NOT NULL,
+  distance DOUBLE NOT NULL,
+  rating INT NOT NULL DEFAULT 0, 
+  PRIMARY KEY (id),
+  CONSTRAINT UNIQUE (pid, pid_rel),
+  CONSTRAINT FOREIGN KEY (mpid)
+    REFERENCES ersydb.mining_process (mpid)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+CREATE INDEX index_pid ON pid_relevancy(pid);
+CREATE INDEX index_pid_rel ON pid_relevancy(pid_rel);
+
+
+
+
+USE `ersydb` ;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
 -- -----------------------------------------------------
 -- Table `ersydb`.`employee`
 -- -----------------------------------------------------

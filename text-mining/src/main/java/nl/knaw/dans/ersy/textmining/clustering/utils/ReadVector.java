@@ -11,6 +11,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Text;
+import org.apache.mahout.math.NamedVector;
 import org.apache.mahout.math.SequentialAccessSparseVector;
 import org.apache.mahout.math.Vector.Element;
 import org.apache.mahout.math.VectorWritable;
@@ -32,7 +33,7 @@ public class ReadVector {
 		try {
 			fs = FileSystem.get(conf);
 			read = new SequenceFile.Reader(fs,new Path(
-							"/tmp/ersy/data-cleansing/oai-pmh/vectors/dictionary.file-0"),
+							"/Users/akmi/SkyDrive/experiments/ersy_home_abr/data-cleansing/oai-pmh/vectors/dictionary.file-0"),
 					conf);
 			IntWritable dicKey = new IntWritable();
 			Text text = new Text();
@@ -49,20 +50,29 @@ public class ReadVector {
 				LOG.error(e.getMessage());
 			}
 			read.close();
+			System.out.println(dictionaryMap.get(12));
+			System.out.println(dictionaryMap.get(48));
+			System.out.println(dictionaryMap.get(143));
+			System.out.println(dictionaryMap.get(149));
+			System.out.println(dictionaryMap.get(228));
+			System.out.println(dictionaryMap.get(369));
 			LOG.debug("i: " + i);
 			read = new SequenceFile.Reader(
 					fs,
 					new Path(
-							"/tmp/ersy/data-cleansing/oai-pmh/vectors/tf-vectors/part-r-00000"),
+							"/Users/akmi/SkyDrive/experiments/ersy_home_abr/data-cleansing/oai-pmh/vectors/tfidf-vectors/part-r-00000"),
 					conf);
 			Text key = new Text();
 			VectorWritable value = new VectorWritable();
 			SequentialAccessSparseVector vect;
 			while (read.next(key, value)) {
-				SequentialAccessSparseVector namedVector = (SequentialAccessSparseVector) value
+				NamedVector namedVector = (NamedVector) value
 						.get();
+				
+				System.out.println(namedVector.getName() + " \t" + namedVector.toString());
 				// vect= (SequentialAccessSparseVector)namedVector.
 				for (Element e : namedVector) {
+					if (e.get() > 0.0)
 					LOG.debug("Token: " + dictionaryMap.get(e.index())
 							+ ", TF-IDF weight: " + e.get());
 				}
