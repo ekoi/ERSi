@@ -104,5 +104,32 @@
    </plugins>
   </build>
  </profile>
+  <profile>
+  <id>tmExport</id>
+  <build>
+   <plugins>
+    <plugin>
+     <groupId>org.codehaus.mojo</groupId>
+     <artifactId>exec-maven-plugin</artifactId>
+     <version>1.1.1</version>
+     <executions>
+      <execution>
+       <phase>test</phase>
+       <goals>
+        <goal>java</goal>
+       </goals>
+       <configuration>
+        <mainClass>nl.knaw.dans.ersy.textmining.utils.MiningResultExporter</mainClass>
+        <arguments>
+         <argument>STD-ABR-Eko-3</argument>
+         <argument>0.5</argument>
+        </arguments>
+       </configuration>
+      </execution>
+     </executions>
+    </plugin>
+   </plugins>
+  </build>
+ </profile>
  </profiles>
 </project>

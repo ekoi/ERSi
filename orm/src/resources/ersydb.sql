@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS ersydb.mining_process ;
 
 CREATE  TABLE IF NOT EXISTS ersydb.mining_process (
   mpid INT NOT NULL AUTO_INCREMENT ,
-  method_name VARCHAR(50) NULL,
+  method_name VARCHAR(50) NOT NULL UNIQUE,
   execution_date TIMESTAMP,
   PRIMARY KEY (mpid) )
 ENGINE = InnoDB;
@@ -25,7 +25,6 @@ CREATE TABLE pid_relevancy (
   distance DOUBLE NOT NULL,
   rating INT NOT NULL DEFAULT 0, 
   PRIMARY KEY (id),
-  CONSTRAINT UNIQUE (pid, pid_rel),
   CONSTRAINT FOREIGN KEY (mpid)
     REFERENCES ersydb.mining_process (mpid)
     ON DELETE NO ACTION
@@ -83,7 +82,7 @@ DROP TABLE IF EXISTS ersydb.mining_process ;
 
 CREATE  TABLE IF NOT EXISTS ersydb.mining_process (
   mpid INT NOT NULL AUTO_INCREMENT ,
-  method_name VARCHAR(50) NULL,
+  method_name VARCHAR(50) NOT NULL UNIQUE,
   execution_date TIMESTAMP,
   PRIMARY KEY (mpid) )
 ENGINE = InnoDB;
@@ -98,7 +97,6 @@ CREATE TABLE pid_relevancy (
   distance DOUBLE NOT NULL,
   rating INT NOT NULL DEFAULT 0, 
   PRIMARY KEY (id),
-  CONSTRAINT UNIQUE (pid, pid_rel),
   CONSTRAINT FOREIGN KEY (mpid)
     REFERENCES ersydb.mining_process (mpid)
     ON DELETE NO ACTION

@@ -1,6 +1,7 @@
 package nl.knaw.dans.ersy.textmining.utils;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,18 @@ public class MiningResultExporter {
 	private static Logger LOG = LoggerFactory.getLogger(MiningResultExporter.class);
 	public static void main( String[] args ) throws IOException
     {
+		LOG.debug("====START Export mining result to database=====");
+		if (args.length != 2) {
+			LOG.debug("Please specify the arguments. It should be 2 argumemts. args[0] is the process nme. args[1] is minimal distance.");
+			System.exit(0);
+		}
+		double minDistance = 0;
+		try {
+			minDistance = Double.parseDouble(args[1]);
+		} catch (NumberFormatException e) {
+			LOG.debug(e.getMessage());
+			System.exit(100);
+		}	
 		long begin = System.currentTimeMillis();
     	ConfigurationReader cr = new ConfigurationReader();
     	Configuration conf = new Configuration();
@@ -51,6 +64,7 @@ public class MiningResultExporter {
             //vector name is a document (or the key when it is assigned in hadoop
             //value is the ?
            
+            LOG.debug("Extracting vectors....");
             while (reader.next(key, value)) {
             	NamedVector vector = (NamedVector) value.getVector();
                 String vectorName = vector.getName();
@@ -64,20 +78,7 @@ public class MiningResultExporter {
             	}
             	listOfDatasets.add(vector);
             }
-            
-//            List<String> l = new ArrayList<String>();
-//            l.add("a");
-//            l.add("b");
-//            l.add("c");
-//            l.add("d");
-//            for (int i=0; i<4; i++) {
-//            	String s = l.get(i);
-//            	for (int j=i+1; j<4; j++) {
-//            		String ss = l.get(j);
-//            		System.out.println(s+"_"+ ss);
-//            		
-//            	}
-//            }
+         
             
             System.out.println(mapOfClusterAndItsDatasets.size());
             
@@ -86,8 +87,9 @@ public class MiningResultExporter {
             Set<String> cn = mapOfClusterAndItsDatasets.keySet();
         	
         	List<MiningProcess> mps = new ArrayList<MiningProcess>();
-            MiningProcess mp = new MiningProcess("STANDARD-ABR");
-            Set<PidRelevancy> prs = new HashSet<PidRelevancy>(); 
+            MiningProcess mp = new MiningProcess(args[0]);
+            Set<PidRelevancy> prs = new HashSet<PidRelevancy>();
+            LOG.debug("INSERTING data to DB....");
             for (String x : cn) {
             	List<NamedVector> vectors = mapOfClusterAndItsDatasets.get(x);
             	int vl = vectors.size();
@@ -97,7 +99,7 @@ public class MiningResultExporter {
             		for (int j=i+1; j<vl; j++) {
             			NamedVector nvj = vectors.get(j);
             			double distance = nvi.getDistanceSquared(nvj);
-            			if (distance > 0.9) {
+            			if (distance > minDistance) {
 	            			//System.out.println(distance);
 	            			PidRelevancy pidr = new PidRelevancy();
 	            			pidr.setDistance(distance);
@@ -112,8 +114,8 @@ public class MiningResultExporter {
             }
             mp.setPidRelevancies(prs);
             mps.add(mp);
-            System.out.println("MPS SIZE: " + mps.size());
-            System.out.println("Number of rows: " + count);
+            LOG.debug("MPS SIZE: " + mps.size());
+            LOG.debug("Number of rows: " + count);
             Recommendation.store(mps);
             
             long diff = System.currentTimeMillis() - begin;
@@ -125,6 +127,6 @@ public class MiningResultExporter {
             	);
     	    
     	    LOG.debug("Duration: " + s);
-    	    System.out.println("END");
+    	    LOG.debug("====END=====");
     }
 }
