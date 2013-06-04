@@ -93,6 +93,7 @@ public class MiningResultExporter {
             for (String x : cn) {
             	List<NamedVector> vectors = mapOfClusterAndItsDatasets.get(x);
             	int vl = vectors.size();
+            	LOG.debug("vecotr size: " + vl);
             	//System.out.println(vl);
             	for (int i=0; i< vl; i++) {
             		NamedVector nvi = vectors.get(i);
@@ -107,7 +108,8 @@ public class MiningResultExporter {
 	            			pidr.setPid(nvi.getName());
 	            			pidr.setPidRel(nvj.getName());
 	            			prs.add(pidr);
-	            			count++;
+	            			LOG.debug("Insert record: " + nvi.getName());
+	            			LOG.debug("count: " + count++);
             			}
             		}
             	}

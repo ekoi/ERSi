@@ -121,8 +121,8 @@
        <configuration>
         <mainClass>nl.knaw.dans.ersy.textmining.utils.MiningResultExporter</mainClass>
         <arguments>
-         <argument>STD-ABR-Eko-3</argument>
-         <argument>0.5</argument>
+         <argument>STD-ABR-Eko-1</argument>
+         <argument>0.9</argument>
         </arguments>
        </configuration>
       </execution>
