@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
-  <wicket:panel>
-   
-	<div id="panel">
-	
-	<form wicket:id="form">
-            PID: <input type="text" wicket:id="pid" size="50"/>
-            <input type="submit" value="Get recommendation" wicket:id="ajax-button"/><br/><br/>
-            Words:<br/><span wicket:id="selectedPid"></span><br/>
-            
-        </form>
-		
-	
-	    <wicket:child/>
-	    </div>
-	    
-	
-	 <!--start holder-->
-   <div class="holder_content">
-   	   
-      <section class="group1">
-         <h3>RECOMMENDATION 1</h3>
-        <p><span wicket:id="rec1"></span></p>
-         <a href="#"><span class="button">Read more</span></a>   
-       </section>
-      <section class="group2">
-         <h3>RECOMMENDATION 2</h3>
-        <p><span wicket:id="rec2"></span></p>
-         <a href="#"><span class="button">Read more</span></a>   
-       </section>
-      <section class="group3">
-         <h3>RECOMMENDATION 3</h3>
- 		 <p><span wicket:id="rec3"></span></p>
-         <a href="#"><span class="button">Read more</span></a>   
-   	</section>
-	</div>
-	<!--end holder-->
-  
-	
-  </wicket:panel>
+	<wicket:panel>
+
+		<div id="panel">
+			<wicket:child />
+			<div wicket:id="searchPanel"/>
+		</div>
+
+		<!--start holder-->
+		<div class="holder_content">
+			<section class="group1">
+				<h3>RECOMMENDATION 1</h3>
+				<p>
+					<span wicket:id="rec1"></span>
+				</p>
+				<a href="#"><span class="button">Read more</span></a>
+			</section>
+			<section class="group2">
+				<h3>RECOMMENDATION 2</h3>
+				<p>
+					<span wicket:id="rec2"></span>
+				</p>
+				<a href="#"><span class="button">Read more</span></a>
+			</section>
+			<section class="group3">
+				<h3>RECOMMENDATION 3</h3>
+				<p>
+					<span wicket:id="rec3"></span>
+				</p>
+				<a href="#"><span class="button">Read more</span></a>
+			</section>
+		</div>
+		<!--end holder-->
+
+	</wicket:panel>
 </body>
 </html>

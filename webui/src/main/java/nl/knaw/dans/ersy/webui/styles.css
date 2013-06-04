@@ -368,6 +368,31 @@ nav ul li a.current {
 }
 
 /**************************************************
+			SEARCH
+***************************************************/
+.searchPanel {
+	height: 270px;
+	overflow: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.searchResult {
+	color: #000000;
+	border-bottom: 1px solid #00A7D4;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+.searchResult:hover {
+	background-color: #EEEEEE;
+}
+
+.searchResult .title {
+	font-weight: bold;
+}
+
+/**************************************************
 			MISC
 ***************************************************/
 .f1 .f2 a {
