@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
-import nl.knaw.dans.ersy.orm.dao.PidRelevancySimple;
 import nl.knaw.dans.ersy.orm.util.HibernateUtil;
 
 import org.hibernate.HibernateException;
@@ -24,15 +24,16 @@ public class Recommendation {
 	
 	public static void main(String args[]) {
     	
+		System.out.println(getAllMiningProcessMethods());
 		//updateRating(7,true);
-		List<RecommendationPid> reccoms = findRelevancePids("STANDARD-ABR","urn:nbn:nl:ui:13-yla-ywp");
-    	
-	    	System.out.println("***************");
-	    	for (RecommendationPid s: reccoms) {
-	    		System.out.println(s.getPid() + "\t" + s.getDistance() + "\t" + s.getId());
-	    		
-	    	}
-	    	System.out.println("==============================================\n" + reccoms.size());
+//		List<RecommendationPid> reccoms = findRelevancePids("STANDARD-ABR","urn:nbn:nl:ui:13-yla-ywp");
+//    	
+//	    	System.out.println("***************");
+//	    	for (RecommendationPid s: reccoms) {
+//	    		System.out.println(s.getPid() + "\t" + s.getDistance() + "\t" + s.getId());
+//	    		
+//	    	}
+//	    	System.out.println("==============================================\n" + reccoms.size());
     	//updateRating(25, "P-2",false);
 //    	deleteAllTables();
 //		storeTest();
@@ -129,6 +130,30 @@ public class Recommendation {
             session.close();
         }
     }
+    
+  public static List<String> getAllMiningProcessMethods() {
+	  List<String> methodNames = new ArrayList<String>();
+	  
+	  Session session = HibernateUtil.getSessionFactory().openSession();
+      Transaction transaction = null;
+      try {
+           
+          transaction = session.beginTransaction();
+          List miningProcesses = session.createQuery("from MiningProcess").list();
+          for (Iterator iterator = miningProcesses.iterator(); iterator.hasNext();) {
+              MiningProcess mp = (MiningProcess) iterator.next();
+              methodNames.add(mp.getMethodName());
+          }
+          transaction.commit();
+      } catch (HibernateException e) {
+          transaction.rollback();
+          e.printStackTrace();
+      } finally {
+          session.close();
+      }
+	  
+	  return methodNames;
+  }
   
   public static List<RecommendationPid> findRelevancePids(String methodName, String pid) {
 	List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
@@ -166,6 +191,42 @@ public class Recommendation {
     return recs;
 }
 
+  public static List<RecommendationPid> findRelevancePids(Constants.DRM dimensionReductionMethodName, String pid) {
+		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
+		
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction transaction = null;
+	    try {
+	         
+	        transaction = session.beginTransaction();
+	        Query query = session.createQuery("from MiningProcess where methodName= :methodName");
+	        query.setParameter("methodName", dimensionReductionMethodName.toString());
+	        List<MiningProcess> mps = query.list();
+				if (mps != null && !mps.isEmpty() && mps.size() == 1) {
+					int mpid = mps.get(0).getMpid();
+
+					Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc, rating desc");
+					queryPidRel.setParameter("pid", pid);
+					queryPidRel.setParameter("miningProcess", mps.get(0));
+					recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
+					
+					Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc, rating desc");
+					queryPid.setParameter("pid", pid);
+					queryPid.setParameter("miningProcess", mps.get(0));
+					recs.addAll(getPidsFromPidRelevance(queryPid, false));
+					
+				} 
+	      
+	        transaction.commit();
+	    } catch (HibernateException e) {
+	        transaction.rollback();
+	        e.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
+	    return recs;
+	}
+  
 
 /**
  * @param recs
@@ -240,4 +301,5 @@ private static List<RecommendationPid> getPidsFromPidRelevance(Query q, boolean 
         }
     }
     
+   
 }

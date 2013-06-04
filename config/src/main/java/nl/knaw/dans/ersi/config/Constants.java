@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 
 
 public final class Constants {
-
+	public enum DRM {
+		ABR {public String toString(){return "ABR";}}
+	}
 	private static Logger LOG = LoggerFactory.getLogger(Constants.class);
 	public static final String ERSY_HOME = readErsyHomeFromSystemProperties();
 	
