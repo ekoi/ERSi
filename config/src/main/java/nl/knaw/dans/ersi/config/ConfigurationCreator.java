@@ -67,7 +67,7 @@ public class ConfigurationCreator implements Serializable {
 		// Local Setting
 		LocalSourceDataConfig localSource = new LocalSourceDataConfig();
 		localSource.setFileName("tsd-eko");
-		localSource.setFilePath("/Users/akmi/Dropbox/THESIS/Sharing-thesis-project/TODO");
+		localSource.setFilePath(Constants.ERSY_HOME + "/local-source");
 		localSource.setFileType("txt");
 		
 		FieldConfig selectedFieldUrn = new FieldConfig();
@@ -87,8 +87,8 @@ public class ConfigurationCreator implements Serializable {
 		
 		OutputFileConfig outputNl = new OutputFileConfig();
 		outputNl.setFileName("ArchaeologyMetadataInDutch");
-		outputNl.setTxtFilePath("/tmp/ersy/data-extraction/archaeology/nl/txt");
-		outputNl.setHdfsFilePath("/tmp/ersy/data-extraction/archaeology/nl/hdfs");
+		outputNl.setTxtFilePath(Constants.ERSY_HOME + "/data-extraction/archaeology/nl/txt");
+		outputNl.setHdfsFilePath(Constants.ERSY_HOME + "/data-extraction/archaeology/nl/hdfs");
 		
 		Map<String, OutputFileConfig> map = new HashMap<String, OutputFileConfig>();
 		map.put("nl", outputNl);
@@ -97,7 +97,7 @@ public class ConfigurationCreator implements Serializable {
 		//Extracted output report part
 		ReportConfig report = new ReportConfig();
 		report.setName("DataExtractionReport");
-		report.setPath("/tmp/ersy/data-extraction/report");
+		report.setPath(Constants.ERSY_HOME + "/data-extraction/report");
 		
 		dep.setOaiPmhReposConfig(oaiPmhRepos);
 		dep.setLocalSource(localSource);
@@ -116,16 +116,16 @@ public class ConfigurationCreator implements Serializable {
 		sdr.setSkipWord(skipWords);
 		dcc.setSimpleDimensionReduction(sdr);
 
-		dcc.setInputDirectory("/tmp/ersy/data-extraction/archaeology/nl/hdfs");
-		dcc.setOutputDirectory("/tmp/ersy/data-cleansing/oai-pmh/vectors");
+		dcc.setInputDirectory(Constants.ERSY_HOME + "/data-extraction/archaeology/nl/hdfs");
+		dcc.setOutputDirectory(Constants.ERSY_HOME + "/data-cleansing/oai-pmh/vectors");
 
 		configuration.setDataCleansingConfig(dcc);
 		
 		//Clustering configuration
 		ClusteringConfig cc = new ClusteringConfig();
 		configuration.setClusteringConfig(cc);
-		cc.setInputVectorsPath("/tmp/ersy/data-cleansing/oai-pmh/vectors");
-		cc.setOutputPath("/tmp/ersy/clustering-result/vectors");
+		cc.setInputVectorsPath(Constants.ERSY_HOME + "/data-cleansing/oai-pmh/vectors");
+		cc.setOutputPath(Constants.ERSY_HOME + "/clustering-result/vectors");
 		
 		ClusterAlgorithmConfig cac = new ClusterAlgorithmConfig();
 		cc.setClusterAlgorithmConfig(cac);		
