@@ -30,24 +30,6 @@ public class RecommendationFromDual {
 	public static void main(String args[]) {
     	
 		System.out.println(getAllMiningProcessMethods());
-		//updateRating(7,true);
-//		List<RecommendationPid> reccoms = findRelevancePids("STANDARD-ABR","urn:nbn:nl:ui:13-yla-ywp");
-//    	
-//	    	System.out.println("***************");
-//	    	for (RecommendationPid s: reccoms) {
-//	    		System.out.println(s.getPid() + "\t" + s.getDistance() + "\t" + s.getId());
-//	    		
-//	    	}
-//	    	System.out.println("==============================================\n" + reccoms.size());
-    	//updateRating(25, "P-2",false);
-//    	deleteAllTables();
-//		storeTest();
-//		listMiningProcess();
-        //store();
-         
-        //listMiningProcess();
-        //updateMiningProcess("Raghav", "1234567890", "0123456789");
-        //deleteMiningProcess("Raghav", "0123456789");
     }
     
   public static List<String> getAllMiningProcessMethods() {
