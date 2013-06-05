@@ -400,6 +400,7 @@ nav ul li a.current {
 }
 
 .f3 a {
+	float:right;
 	color: red;
 }
 
