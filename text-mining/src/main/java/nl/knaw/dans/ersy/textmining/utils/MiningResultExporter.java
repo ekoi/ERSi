@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersy.orm.Recommendation;
 import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
@@ -30,23 +31,23 @@ public class MiningResultExporter {
 	private static Logger LOG = LoggerFactory.getLogger(MiningResultExporter.class);
 	public static void main( String[] args ) throws IOException
     {
-		LOG.debug("====START Export mining result to database=====");
+		LOG.info("====START Export mining result to database=====");
 		if (args.length != 2) {
-			LOG.debug("Please specify the arguments. It should be 2 argumemts. args[0] is the process nme. args[1] is minimal distance.");
+			LOG.info("Please specify the arguments. It should be 2 argumemts. args[0] is the process nme. args[1] is minimal distance.");
 			System.exit(0);
 		}
 		double minDistance = 0;
 		try {
 			minDistance = Double.parseDouble(args[1]);
 		} catch (NumberFormatException e) {
-			LOG.debug(e.getMessage());
+			LOG.error(e.getMessage());
 			System.exit(100);
 		}	
 		long begin = System.currentTimeMillis();
-    	ConfigurationReader cr = new ConfigurationReader();
+    	ConfigurationReader cr = new ConfigurationReader(Constants.ERSY_HOME);
     	Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        String clusteringResultLocation = cr.getClusteringConfig().getOutputPath() + "/clusters-output/clusters";
+        String clusteringResultLocation = Constants.ERSY_HOME + "/" + cr.getClusteringConfig().getOutputPath() + "/clusters-output/clusters";
     	Path vectorsFolder = new Path(clusteringResultLocation, "tfidf-vectors");
     	 //Path clusterOutput = new Path(outputDir , "clusters");
     	
@@ -64,7 +65,7 @@ public class MiningResultExporter {
             //vector name is a document (or the key when it is assigned in hadoop
             //value is the ?
            
-            LOG.debug("Extracting vectors....");
+            LOG.info("Extracting vectors....");
             while (reader.next(key, value)) {
             	NamedVector vector = (NamedVector) value.getVector();
                 String vectorName = vector.getName();
@@ -116,8 +117,8 @@ public class MiningResultExporter {
             }
             mp.setPidRelevancies(prs);
             mps.add(mp);
-            LOG.debug("MPS SIZE: " + mps.size());
-            LOG.debug("Number of rows: " + count);
+            LOG.info("MPS SIZE: " + mps.size());
+            LOG.info("Number of rows: " + count);
             Recommendation.store(mps);
             
             long diff = System.currentTimeMillis() - begin;
@@ -128,7 +129,7 @@ public class MiningResultExporter {
             	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
             	);
     	    
-    	    LOG.debug("Duration: " + s);
-    	    LOG.debug("====END=====");
+    	    LOG.info("Duration: " + s);
+    	    LOG.info("====END=====");
     }
 }

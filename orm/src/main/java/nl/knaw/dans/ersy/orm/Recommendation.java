@@ -16,12 +16,14 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
  
  
 public class Recommendation {
 	
-	
+	private static Logger LOG = LoggerFactory.getLogger(Recommendation.class);
 	public static void main(String args[]) {
     	
 		System.out.println(getAllMiningProcessMethods());
@@ -85,14 +87,25 @@ public class Recommendation {
 	public static void store(List<MiningProcess> miningProcesses) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
+        int i = 0;
         try {
             transaction = session.beginTransaction();
             for (MiningProcess mp : miningProcesses) {
             	session.save(mp);
             	Set<PidRelevancy> set = mp.getPidRelevancies();
             	for (PidRelevancy pr : set) {
-            		if (pr != null)
+            		if (pr != null) {
+            			i++;
             			session.save(pr);
+            			if(i % 30==0)  
+            			   {      
+            				LOG.info("number of saved records: " + i);
+            			      //30, same as the JDBC batch size  
+            			      //flush a batch and release memory  
+            			      session.flush(); // Line 1  
+            			      session.clear();  
+            			   }  
+            		}
             	}
             }
            
