@@ -241,10 +241,11 @@ header {
 
 .holder_content {
 	position: relative;
-	float: left;
-	width: 100%;
+	float: right;
+	width: 50%;
 	margin-top: 4px;
 	padding-top: 10px;
+	height: 450px;
 }
 	
 .holder_content_separator{
@@ -371,9 +372,11 @@ nav ul li a.current {
 			SEARCH
 ***************************************************/
 .searchPanel {
-	height: 270px;
+	height: 450px;
 	overflow: auto;
 	border-bottom: 1px solid #CCCCCC;
+	float: left;
+	width: 50%;
 }
 
 .searchResult {
@@ -404,6 +407,11 @@ nav ul li a.current {
 	color: red;
 }
 
+a.divlink { 
+     display:block;
+     color:#666666;
+     text-decoration:none;
+}
 /***************************************************
 				   SPECIFIC
 ***************************************************/
