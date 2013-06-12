@@ -1,13 +1,17 @@
 package nl.knaw.dans.ersy.webui.secure.view;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersy.webui.secure.ErsyApplication;
 import nl.knaw.dans.ersy.webui.secure.UserSession;
 import nl.knaw.dans.ersy.webui.service.CookieService;
 import nl.knaw.dans.ersy.webui.service.SessionProvider;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
@@ -26,12 +30,31 @@ public class AdminPanel extends Panel {
 	 * 
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
+	private String ersyHomeDisplay=Constants.ERSY_HOME.replace(Constants.USER_HOME, "");
+	private String ersyConfFile = Constants.ERSY_HOME;
 
 	public AdminPanel(String id, int selectedTabe) {
 		super(id);
+		
         String userName = UserSession.get().userLoggedIn() ? UserSession.get().getUser().getLogin() : "Anonymous user";
-        Label userNameLabel = new Label("userName", "Hi, " + userName);
+        Label userNameLabel = new Label("userName", userName);
         add(userNameLabel);
+        AjaxEditableLabel ael = new AjaxEditableLabel("editableLable"){
+				@Override
+				protected void onSubmit(AjaxRequestTarget target) {
+					// TODO Auto-generated method stub
+					super.onSubmit(target);
+					Collection c = target.getComponents();
+					org.apache.wicket.Component cc = (org.apache.wicket.Component) c.iterator().next();
+					if (cc instanceof AjaxEditableLabel) {
+						Object scd = cc.getDefaultModelObject();
+						ersyHomeDisplay = scd.toString();
+						ersyConfFile = Constants.USER_HOME + ersyHomeDisplay;
+					}
+				}
+        };
+        ael.setDefaultModel(new Model<String>(ersyHomeDisplay));
+        add(ael);
         
         add(new Link<Void>("logout") {
             /**
@@ -58,7 +81,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabStatisticsPanel(panelId);
+				return new TabStatisticsPanel(panelId, ersyConfFile);
 			}
 		});
 		
@@ -67,7 +90,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabConfigurationPanel(panelId);
+				return new TabConfigurationPanel(panelId, ersyConfFile);
 			}
 		});
 		
@@ -76,7 +99,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataExtractionPanel(panelId);
+				return new TabDataExtractionPanel(panelId, ersyConfFile);
 			}
 		});
 		
@@ -85,7 +108,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataCleaningPanel(panelId);
+				return new TabDataCleaningPanel(panelId, ersyConfFile);
 			}
 		});
 
@@ -94,7 +117,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabDataMiningPanel(panelId);
+				return new TabDataMiningPanel(panelId, ersyConfFile);
 			}
 		});
 		
@@ -103,7 +126,7 @@ public class AdminPanel extends Panel {
 			@Override
 			public Panel getPanel(String panelId)
 			{
-				return new TabProcessInProgressPanel(panelId);
+				return new TabProcessInProgressPanel(panelId, ersyConfFile);
 			}
 		});
 		

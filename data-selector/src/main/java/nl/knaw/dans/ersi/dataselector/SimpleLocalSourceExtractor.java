@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.DataExtractionConfig;
 import nl.knaw.dans.ersi.config.ExtractedOutputConfig;
 import nl.knaw.dans.ersi.config.LocalSourceDataConfig;
@@ -44,8 +45,8 @@ public class SimpleLocalSourceExtractor extends SimpleExtractor {
 	private static int numberOfEn;
 	private static int numberOfOther;
 
-	public SimpleLocalSourceExtractor(DataExtractionConfig dataExtractionConfig) {
-		super(dataExtractionConfig);
+	public SimpleLocalSourceExtractor(ConfigurationReader confReader) {
+		super(confReader);
 	}
 
 

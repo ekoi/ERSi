@@ -4,7 +4,7 @@ import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
-import nl.knaw.dans.ersi.datapreprocessor.utils.DataCleansingExecutor;
+import nl.knaw.dans.ersi.datapreprocessor.utils.StandardAbrDataCleansingExecutor;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 
@@ -27,13 +27,13 @@ public class TabDataCleaningPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataCleaningPanel(String id) {
+	public TabDataCleaningPanel(String id, String ersyHome) {
 		super(id);
 		
-		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_CLEANING);
+		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_CLEANING, ersyHome);
 		boolean executeIsAllowed = !ps.isRunning();
 		if (executeIsAllowed) {
-			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_EXTRACTION, ersyHome);
 			executeIsAllowed = !psde.isRunning();
 		}
 		final boolean dataCleaningIsAllowed = executeIsAllowed;
@@ -41,7 +41,7 @@ public class TabDataCleaningPanel extends Panel {
 		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
 		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
 		
-		ConfigurationReader confReader = new ConfigurationReader();
+		ConfigurationReader confReader = new ConfigurationReader(ersyHome);
 		DataCleansingConfig dcc = confReader.getDataCleansingConfig();
 		
 		add (new Label("minWordLength", new Model<Integer>(dcc.getSimpleDimensionReduction().getMinWordLength())));
@@ -68,7 +68,7 @@ public class TabDataCleaningPanel extends Panel {
             {
             	if (!ps.isRunning()) {
             		try {
-            			DataCleansingExecutor.main();
+            			StandardAbrDataCleansingExecutor.main();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

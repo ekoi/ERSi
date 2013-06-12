@@ -22,9 +22,9 @@ public class TabConfigurationPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabConfigurationPanel(String id) {
+	public TabConfigurationPanel(String id, final String ersyHome) {
 		super(id);
-		final ConfigurationReader cr = new ConfigurationReader();
+		final ConfigurationReader cr = new ConfigurationReader(ersyHome);
 			
 		Form<Void> form = new Form<Void>("form");
         add(form);
@@ -50,7 +50,7 @@ public class TabConfigurationPanel extends Panel {
             	
             	String xmlConfTextArea= confTextArea.getDefaultModelObjectAsString();
             	
-            	ConfigurationCreator cc2 = new ConfigurationCreator();
+            	ConfigurationCreator cc2 = new ConfigurationCreator(ersyHome);
             	boolean b = cc2.saveStringAsXml(xmlConfTextArea);
             	errorMessage.setDefaultModelObject("Saved is successfull!");
             	if (!b)

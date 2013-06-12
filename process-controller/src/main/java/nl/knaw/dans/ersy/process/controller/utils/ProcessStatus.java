@@ -7,6 +7,7 @@ import hirondelle.date4j.DateTime;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,11 +35,10 @@ public class ProcessStatus implements Serializable{
 		   DATA_EXTRACTION, DATA_CLEANING, DATA_MINING
 		 }
 
-	public ProcessStatus (ProcessName pn) {
-		String ersyHome = Constants.ERSY_HOME;
+	public ProcessStatus (ProcessName pn, String ersyHome) {
 		switch (pn) {
 		case DATA_EXTRACTION: 
-				fileNameCurrent =  ersyHome + ersyHome + "/status/data-extraction.current";
+				fileNameCurrent =  ersyHome + "/status/data-extraction.current";
 				fileNameLast =  ersyHome + "/status/data-extraction.last";
 				processName = "Data Extraction process";
 			break;
@@ -96,6 +96,7 @@ public class ProcessStatus implements Serializable{
 	private static boolean writeStatus(final String fileName, boolean done) {
 
         try {
+        	createFile(fileName);
             // Assume default encoding.
             FileWriter fileWriter = new FileWriter(fileName);
 
@@ -116,6 +117,25 @@ public class ProcessStatus implements Serializable{
         
         }
         return false;
+	}
+	
+	public void writeReport(final String fileName, final String text) {
+
+        try {
+        	createFile(fileName);
+            // Assume default encoding.
+            FileWriter fileWriter = new FileWriter(fileName);
+
+            // Always wrap FileWriter in BufferedWriter.
+            BufferedWriter bufferedWriter =
+                new BufferedWriter(fileWriter);
+
+            	bufferedWriter.write(text);
+            bufferedWriter.close();
+        }
+        catch(IOException ex) {
+        
+        }
 	}
 
 	private static long readStatus(final String fileName) {
@@ -154,5 +174,17 @@ public class ProcessStatus implements Serializable{
 	private static String convertToHumanReadableTime(long millis) {
 		DateTime fromMilliseconds = DateTime.forInstant(millis,  TimeZone.getTimeZone("Europe/Amsterdam"));
 		return fromMilliseconds.format("DD-MM-YYYY hh:mm:ss");
+	}
+	
+	/**
+	 * @param fileName
+	 * @throws IOException
+	 */
+	private static void createFile(String fileName) throws IOException {
+		File file = new File(fileName);
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+		}
 	}
 }

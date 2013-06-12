@@ -1,6 +1,6 @@
 package nl.knaw.dans.ersi.datapreprocessor;
 
-import nl.knaw.dans.ersi.datapreprocessor.utils.DataAbrCleansingExecutor;
+import nl.knaw.dans.ersi.datapreprocessor.utils.AbrDataCleansingExecutor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class ABRCleansingTryOut
     public static void main( String[] args )
     {
         try {
-        	DataAbrCleansingExecutor.main();
+        	AbrDataCleansingExecutor.main();
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 		}

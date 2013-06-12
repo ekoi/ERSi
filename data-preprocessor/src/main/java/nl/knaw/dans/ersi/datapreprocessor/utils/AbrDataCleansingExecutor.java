@@ -10,11 +10,11 @@ import nl.knaw.dans.ersi.preprocess.standard.AbrDataCleansing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataAbrCleansingExecutor {
-	private static Logger LOG = LoggerFactory.getLogger(DataAbrCleansingExecutor.class);
+public class AbrDataCleansingExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(AbrDataCleansingExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	LOG.debug("++++++++++++++++++++ START +++++++++++++");
+	LOG.info("++++++++++++++++++++ START +++++++++++++");
 	test(executor);
 
     }
@@ -29,7 +29,7 @@ public class DataAbrCleansingExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	LOG.debug("=============EIND END END=======");
+	LOG.info("=============EIND END END=======");
     }
 }
 
@@ -43,7 +43,7 @@ class WorkerAbr implements Runnable {
     }
 
     public void run() {
-    	LOG.debug("*************BEGIN DATA CLEANSING*****************");
+    	LOG.info("*************BEGIN DATA CLEANSING*****************");
 	try {
 		sdc.run();
 	} catch (IOException e) {

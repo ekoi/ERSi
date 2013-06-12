@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
-import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhWithABRExtractor;
+import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhOnlyABRExtractor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class DataABRExtractionExecutor {
 
     private static void test(ExecutorService executor) throws InterruptedException {
     	ConfigurationReader cr = new ConfigurationReader();
-		SimpleOaiPmhWithABRExtractor seme = new SimpleOaiPmhWithABRExtractor(cr.getDataExtractionConfig());
+		SimpleOaiPmhOnlyABRExtractor seme = new SimpleOaiPmhOnlyABRExtractor(cr);
 
 	executor.execute(new WorkerABR(seme));
 
@@ -42,9 +42,9 @@ public class DataABRExtractionExecutor {
 
 class WorkerABR implements Runnable {
 	private static Logger LOG = LoggerFactory.getLogger(WorkerABR.class);
-    private SimpleOaiPmhWithABRExtractor seme;
+    private SimpleOaiPmhOnlyABRExtractor seme;
 
-    public WorkerABR(SimpleOaiPmhWithABRExtractor seme) {
+    public WorkerABR(SimpleOaiPmhOnlyABRExtractor seme) {
 	this.seme = seme;
     }
 

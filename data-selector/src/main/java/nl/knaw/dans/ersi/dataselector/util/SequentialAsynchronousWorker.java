@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhWithABRExtractor;
+import nl.knaw.dans.ersi.dataselector.SimpleOaiPmhOnlyABRExtractor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

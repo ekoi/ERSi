@@ -28,14 +28,14 @@ public class TabDataMiningPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataMiningPanel(String id) {
+	public TabDataMiningPanel(String id, String ersyHome) {
 		super(id);
 		
-		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_MINING);
+		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_MINING, ersyHome);
 		
 		boolean executeIsAllowed = !ps.isRunning();
 		if (executeIsAllowed) {
-			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_CLEANING);
+			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_CLEANING, ersyHome);
 			executeIsAllowed = !psde.isRunning();
 		}
 		final boolean dataMiningIsAllowed = executeIsAllowed;
@@ -43,7 +43,7 @@ public class TabDataMiningPanel extends Panel {
 		add (new Label("currentStatus", new Model<String>(ps.giveCurrentStatus())));
 		add (new Label("lastStatus", new Model<String>(ps.giveTimeLastProcess())));
 		
-		ConfigurationReader confReader = new ConfigurationReader();
+		ConfigurationReader confReader = new ConfigurationReader(ersyHome);
 		ClusteringConfig dcc = confReader.getClusteringConfig();
 		ClusterAlgorithmConfig cac = dcc.getClusterAlgorithmConfig();
 		CanopyConfig c = cac.getCanopyConfig();

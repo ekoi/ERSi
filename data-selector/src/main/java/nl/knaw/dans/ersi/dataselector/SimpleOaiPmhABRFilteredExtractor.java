@@ -12,10 +12,13 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
+import nl.knaw.dans.ersi.config.DataExtractionConfig;
 import nl.knaw.dans.ersi.config.ExtractedOutputConfig;
 import nl.knaw.dans.ersi.config.FieldConfig;
 import nl.knaw.dans.ersi.config.OaiPmhReposConfig;
 import nl.knaw.dans.ersi.config.OutputFileConfig;
+import nl.knaw.dans.ersi.dataselector.util.CreateABRList;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
 
@@ -47,9 +50,9 @@ import com.cybozu.labs.langdetect.LangDetectException;
  * Request the metadata from easy, extracted and convert to sequence file
  * 
  */
-public class SimpleOaiPmhExtractor extends SimpleExtractor {
-
-	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhExtractor.class);
+public class SimpleOaiPmhABRFilteredExtractor extends SimpleExtractor {
+	
+	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhABRFilteredExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
 	private static int numberOfNl;
@@ -58,16 +61,17 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 	private static int numbeerOfNlWords;
 
 	private boolean oaiPmhXmlDebug;
-	public SimpleOaiPmhExtractor(ConfigurationReader cr) {
-		super(cr);
+	
+	private List<String> theABRlist;
+
+	public SimpleOaiPmhABRFilteredExtractor(ConfigurationReader getConfReaderg) {
+		super(getConfReaderg);
 	}
 
-	
-
 	public void extract() throws OAIException, IOException, LangDetectException {
-		String sssss = getReportConfig().getPath() + "/" + getReportConfig().getName();
-		LOG.info("=== START SimpleOaiPmhExtractor ===" + sssss);
-		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION, getConfReader().getErsyHome());
+		LOG.info("=== START SimpleOaiPmhABRFilteredExtractor ===");
+		theABRlist = CreateABRList.getABRList();
+		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
 		OaiPmhReposConfig oaiPmhReposconfig = getDataExtractionConfig()
@@ -100,6 +104,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 		sb.append("<tr><td>Datasets in Other:</td><td>" + formatter.format(numberOfOther) + "</td></tr>");
 		sb.append("<tr><td>Total Words in Dutch Datasets:</td><td>" + formatter.format(numbeerOfNlWords) + "</td></tr>");
 		sb.append("</table>");
+		
 		processStatus.writeReport(getConfReader().getErsyHome() + "/" + getReportConfig().getPath() + "/" + getReportConfig().getName(), sb.toString());
 		LOG.debug("Number of Total records: " + numberOfRecords);
 		LOG.debug("Number of Total NL records: " + numberOfNl);
@@ -141,7 +146,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 				OutputFileConfig ofc = outputFileConf.get(lang);
 				if (ofc.getHdfsFilePath() != null) {
 					Path seqDir = new Path(ofc.getHdfsFilePath());
-					String uri = getConfReader().getErsyHome() + "/" + ofc.getHdfsFilePath() + "/" + ofc.getFileName() + ".seq";
+					String uri = ofc.getHdfsFilePath() + "/" + ofc.getFileName() + ".seq";
 					Configuration conf = new Configuration();
 					HadoopUtil.delete(conf, seqDir);
 					FileSystem fs = FileSystem.get(URI.create(uri), conf);
@@ -196,9 +201,20 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 							Text key = new Text();
 							Text value = new Text();
 							key.set(identifier);
-							String extractedText = text.toString();
+							String extractedText = text.toString().toLowerCase();
 							numbeerOfNlWords += extractedText.split(" ").length;
-							value.set(extractedText);
+							String[] ss = extractedText.split(" ");
+							StringBuffer extractedTextABR = new StringBuffer();
+							for (String sss : ss) {
+								if (theABRlist.contains(sss)) {
+									extractedTextABR.append(sss);
+								} else {
+									extractedTextABR.append(sss);
+								}
+								extractedTextABR.append(" ");
+							}
+							
+							value.set(extractedTextABR.toString());
 							write.append(key, value);
 							numberOfNl++;
 						} else if (language.equals(LanguageRecognition.EN)) {
@@ -217,7 +233,7 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 					LOG.debug(rt.getId());
 					LOG.info("Number of resuption token: " + numberOfResumption);
 					LOG.info("Number of records: " + numberOfRecords);
-						Thread.sleep(3000);
+						Thread.sleep(5000);
 					records = server.listRecords(rt);
 				} else {
 					more = false;
@@ -227,9 +243,8 @@ public class SimpleOaiPmhExtractor extends SimpleExtractor {
 
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			LOG.error(e.getMessage());
-		} 
-		finally {
+			e.printStackTrace();
+		} finally {
 			Set<String> keys = writers.keySet();
 			for (String key : keys) {
 				SequenceFile.Writer w = writers.get(key);

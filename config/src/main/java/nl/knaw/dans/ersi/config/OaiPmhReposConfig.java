@@ -17,6 +17,12 @@ public class OaiPmhReposConfig {
 
 	@ElementList(name = "selected-fields")
 	private List<FieldConfig> selectedFields;
+	
+	@Element(name="filter-class-name", required = false)
+	private String filterClassName;
+	
+	@Element(name="words-list-name", required = false)
+	private String wordsListName;
 
 	public String getMetadataPrefix() {
 		return metadataPrefix;
@@ -49,6 +55,22 @@ public class OaiPmhReposConfig {
 
 	public List<FieldConfig> getSelectedFields() {
 		return selectedFields;
+	}
+
+	public String getFilterClassName() {
+		return filterClassName;
+	}
+
+	public void setFilterClassName(String filterClassName) {
+		this.filterClassName = filterClassName;
+	}
+
+	public String getWordsListName() {
+		return wordsListName;
+	}
+
+	public void setWordsListName(String wordsListName) {
+		this.wordsListName = wordsListName;
 	}
 
 }

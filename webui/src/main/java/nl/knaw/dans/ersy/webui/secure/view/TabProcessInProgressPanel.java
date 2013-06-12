@@ -13,7 +13,7 @@ public class TabProcessInProgressPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabProcessInProgressPanel(String id) {
+	public TabProcessInProgressPanel(String id, String ersyHome) {
 		super(id);
         
 	}

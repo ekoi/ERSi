@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
@@ -28,10 +29,10 @@ public class AbrDataCleansing {
 	public AbrDataCleansing() {
 	}
   public void run() throws IOException, InterruptedException, ClassNotFoundException {
-	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING);
+	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
-	ConfigurationReader c = new ConfigurationReader();
+	ConfigurationReader c = new ConfigurationReader(Constants.ERSY_HOME);
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
 	int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
     int minDf = dcc.getMinDf(); //The minimum document frequency.
@@ -149,8 +150,8 @@ public class AbrDataCleansing {
 	                         + value.get().asFormatString());
 	    }
 	    reader.close();
-	    LOG.debug("==================");
-	    LOG.debug("Number of processing data: " + count);
-	    LOG.debug("=========END=========");
+	    LOG.info("==================");
+	    LOG.info("Number of processing data: " + count);
+	    LOG.info("=========END=========");
 	  }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
@@ -29,7 +30,7 @@ public class DataOnlyTokenize {
 	public DataOnlyTokenize() {
 	}
   public void run() throws IOException, InterruptedException, ClassNotFoundException {
-	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING);
+	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
 	ConfigurationReader c = new ConfigurationReader();

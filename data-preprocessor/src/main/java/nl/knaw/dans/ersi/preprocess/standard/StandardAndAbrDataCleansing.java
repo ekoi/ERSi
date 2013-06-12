@@ -1,9 +1,11 @@
 package nl.knaw.dans.ersi.preprocess.standard;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersi.config.DataCleansingConfig;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
@@ -28,10 +30,10 @@ public class StandardAndAbrDataCleansing {
 	public StandardAndAbrDataCleansing() {
 	}
   public void run() throws IOException, InterruptedException, ClassNotFoundException {
-	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING);
+	  ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_CLEANING, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
-	ConfigurationReader c = new ConfigurationReader();
+	ConfigurationReader c = new ConfigurationReader(Constants.ERSY_HOME);
 	DataCleansingConfig dcc = c.getDataCleansingConfig();
 	int minSupport = dcc.getMinSupport(); //minSupport of the feature to be included
     int minDf = dcc.getMinDf(); //The minimum document frequency.
@@ -43,12 +45,26 @@ public class StandardAndAbrDataCleansing {
     int norm = dcc.getNorm();
     boolean sequentialAccessOutput = dcc.isSequentialAccessOutput();
     
+    boolean ok = true;
+    
     String inputDir = dcc.getInputDirectory();
+    File fi = new File(inputDir);
+    if (!fi.exists()) {
+    	LOG.error("===ERROR====" + inputDir + " doesn't exist");
+    	ok = false;
+    }
 
     Configuration conf = new Configuration();
     FileSystem fs = FileSystem.get(conf);
  
     String outputDir = dcc.getOutputDirectory();
+    File f = new File(outputDir);
+    if (ok && !f.exists()) {
+    	LOG.error("===ERROR====" + outputDir + " doesn't exist");
+    	ok = false;
+    }
+    
+    if (ok) {
     HadoopUtil.delete(conf, new Path(outputDir));
     Path tokenizedPath = new Path(outputDir,
         DocumentProcessor.TOKENIZED_DOCUMENT_OUTPUT_FOLDER);
@@ -89,6 +105,7 @@ public class StandardAndAbrDataCleansing {
 	LOG.debug("Status last is : " + b2);
 	boolean b3 = processStatus.writeDoneStatus();
 	LOG.debug("Status done is : " + b3);
+    } 
   }
   
   public static void main(String args[]) throws Exception {

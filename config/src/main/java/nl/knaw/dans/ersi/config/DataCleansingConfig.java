@@ -122,7 +122,7 @@ public class DataCleansingConfig {
 	}
 
 	public String getInputDirectory() {
-		return inputDirectory;
+		return Constants.ERSY_HOME + "/" + inputDirectory;
 	}
 
 	public void setInputDirectory(String inputDirectory) {
@@ -130,7 +130,7 @@ public class DataCleansingConfig {
 	}
 
 	public String getOutputDirectory() {
-		return outputDirectory;
+		return Constants.ERSY_HOME + "/" + outputDirectory;
 	}
 
 	public void setOutputDirectory(String outputDirectory) {

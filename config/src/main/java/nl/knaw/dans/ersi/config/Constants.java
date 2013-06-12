@@ -9,17 +9,19 @@ public final class Constants {
 		ABR {public String toString(){return "ABR";}}
 	}
 	private static Logger LOG = LoggerFactory.getLogger(Constants.class);
+	public static final String USER_HOME = System.getProperty( "user.home" );
 	public static final String ERSY_HOME = readErsyHomeFromSystemProperties();
+	
 	
 	public Constants() {
 		
 	}
 	private static String readErsyHomeFromSystemProperties() {
-		String ersyHome = System.getenv("ERSY_HOME");
+		String ersyHome =  System.getenv("ERSY_HOME");
 		LOG.debug("=======ERSY_HOME=======: " + ersyHome);
 		if (ersyHome != null)
 			return ersyHome;
-		return "/home/ekoi/ersy_home";
+		return USER_HOME + "/ersy_home";
 	}
 
 }

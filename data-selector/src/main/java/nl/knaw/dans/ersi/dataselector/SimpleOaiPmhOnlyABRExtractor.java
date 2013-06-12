@@ -3,11 +3,16 @@ package nl.knaw.dans.ersi.dataselector;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersi.config.DataExtractionConfig;
 import nl.knaw.dans.ersi.config.ExtractedOutputConfig;
 import nl.knaw.dans.ersi.config.FieldConfig;
@@ -45,9 +50,9 @@ import com.cybozu.labs.langdetect.LangDetectException;
  * Request the metadata from easy, extracted and convert to sequence file
  * 
  */
-public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
+public class SimpleOaiPmhOnlyABRExtractor extends SimpleExtractor {
 	
-	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhWithABRExtractor.class);
+	private static Logger LOG = LoggerFactory.getLogger(SimpleOaiPmhOnlyABRExtractor.class);
 	private static int numberOfResumption;
 	private static int numberOfRecords;
 	private static int numberOfNl;
@@ -59,14 +64,14 @@ public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
 	
 	private List<String> theABRlist;
 
-	public SimpleOaiPmhWithABRExtractor(DataExtractionConfig dataExtractionConfig) {
-		super(dataExtractionConfig);
+	public SimpleOaiPmhOnlyABRExtractor(ConfigurationReader getConfReaderg) {
+		super(getConfReaderg);
 	}
 
 	public void extract() throws OAIException, IOException, LangDetectException {
-		LOG.debug("START");
+		LOG.info("=== START ===");
 		theABRlist = CreateABRList.getABRList();
-		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_EXTRACTION, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
 		LOG.debug("Status start is : " + b);
 		OaiPmhReposConfig oaiPmhReposconfig = getDataExtractionConfig()
@@ -88,6 +93,19 @@ public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
 		}
 
 		saveFile(server, records);
+		
+		NumberFormat formatter = new DecimalFormat("#,###");
+		formatter = NumberFormat.getInstance(new Locale("nl"));
+		StringBuffer sb = new StringBuffer("<table>");
+		sb.append("<tr><td>Last extration date:</td><td>" + processStatus.giveTimeLastProcess().replace("Last Data Extraction process is finished at ", "") + "</td></tr>");
+		sb.append("<tr><td>Archaeology datasets:</td><td>" + formatter.format(numberOfRecords) + "</td></tr>");
+		sb.append("<tr><td>Datasets in Dutch:</td><td>" + formatter.format(numberOfNl) + "</td></tr>");
+		sb.append("<tr><td>Datasets in English:</td><td>" + formatter.format(numberOfEn) + "</td></tr>");
+		sb.append("<tr><td>Datasets in Other:</td><td>" + formatter.format(numberOfOther) + "</td></tr>");
+		sb.append("<tr><td>Total Words in Dutch Datasets:</td><td>" + formatter.format(numbeerOfNlWords) + "</td></tr>");
+		sb.append("</table>");
+		
+		processStatus.writeReport(getConfReader().getErsyHome() + "/" + getReportConfig().getPath() + "/" + getReportConfig().getName(), sb.toString());
 		LOG.debug("Number of Total records: " + numberOfRecords);
 		LOG.debug("Number of Total NL records: " + numberOfNl);
 		LOG.debug("Number of Total EN records: " + numberOfEn);
@@ -211,8 +229,8 @@ public class SimpleOaiPmhWithABRExtractor extends SimpleExtractor {
 				if (records.getResumptionToken() != null) {
 					ResumptionToken rt = records.getResumptionToken();
 					LOG.debug(rt.getId());
-					LOG.debug("Number of resuption token: " + numberOfResumption);
-					LOG.debug("Number of records: " + numberOfRecords);
+					LOG.info("Number of resuption token: " + numberOfResumption);
+					LOG.info("Number of records: " + numberOfRecords);
 						Thread.sleep(5000);
 					records = server.listRecords(rt);
 				} else {

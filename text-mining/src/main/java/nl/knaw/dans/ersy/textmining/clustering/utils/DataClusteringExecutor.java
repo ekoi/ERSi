@@ -14,7 +14,7 @@ public class DataClusteringExecutor {
 	private static Logger LOG = LoggerFactory.getLogger(DataClusteringExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	LOG.debug("++++++++++++++++++++ START DataClusteringExecutor+++++++++++++");
+	LOG.info("++++++++++++++++++++ START DataClusteringExecutor+++++++++++++");
 	test(executor);
 
     }
@@ -29,7 +29,7 @@ public class DataClusteringExecutor {
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	LOG.debug("=============EIND DataClusteringExecutor=======");
+	LOG.info("=============EIND DataClusteringExecutor=======");
     }
 }
 

@@ -51,8 +51,8 @@ public class ErsyApplication extends WebApplication {
         mountPage("/api", ApiPage.class);
         mountPage("/pub", PublicationPage.class);
         mountPage("/contact", ContactPage.class);
-		getDebugSettings().setDevelopmentUtilitiesEnabled(true);
-		getDebugSettings().setAjaxDebugModeEnabled(true);
+		getDebugSettings().setDevelopmentUtilitiesEnabled(false);
+		getDebugSettings().setAjaxDebugModeEnabled(false);
 
     }
 

@@ -21,6 +21,7 @@ public class ConfigurationReader implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7900485746738833517L;
+	private String ersyHome;
 	private String confFileLocation;
 	private DataExtractionConfig  dataExtractionConfig;
 	private DataCleansingConfig dataCleansingConfig;
@@ -36,8 +37,9 @@ public class ConfigurationReader implements Serializable {
 		this(Constants.ERSY_HOME + "/conf/configuration.xml");
 	}
 
-	public ConfigurationReader(String confFileLocation) {
-		this.confFileLocation = confFileLocation;
+	public ConfigurationReader(String ersyHome) {
+		this.ersyHome = ersyHome;
+		confFileLocation = ersyHome + "/conf/configuration.xml";
 		init();
 	}
 	private void init(){
@@ -80,5 +82,13 @@ public class ConfigurationReader implements Serializable {
 	}
 	public void setLastModificationTimeAsString(String lastModificationTimeAsString) {
 		this.lastModificationTimeAsString = lastModificationTimeAsString;
+	}
+
+	public String getErsyHome() {
+		return ersyHome;
+	}
+
+	public void setErsyHome(String ersyHome) {
+		this.ersyHome = ersyHome;
 	}
 }

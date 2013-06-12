@@ -7,6 +7,7 @@ import nl.knaw.dans.ersi.config.CanopyConfig;
 import nl.knaw.dans.ersi.config.ClusterAlgorithmConfig;
 import nl.knaw.dans.ersi.config.ClusteringConfig;
 import nl.knaw.dans.ersi.config.ConfigurationReader;
+import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersi.config.KMeansConfig;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus;
 import nl.knaw.dans.ersy.process.controller.utils.ProcessStatus.ProcessName;
@@ -25,16 +26,16 @@ public class KMeansWithCanopyClustering {
 
 	private static ClusteringConfig clusteringConfig;
 	public KMeansWithCanopyClustering() {
-		ConfigurationReader confReader = new ConfigurationReader();;
+		ConfigurationReader confReader = new ConfigurationReader(Constants.ERSY_HOME);;
 		clusteringConfig = confReader.getClusteringConfig();
 	}
 	
 	  public void run() throws IOException, ClassNotFoundException, InterruptedException, InstantiationException, IllegalAccessException  {
 		
 		long begin = System.currentTimeMillis();
-		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_MINING);
+		ProcessStatus processStatus = new ProcessStatus(ProcessName.DATA_MINING, Constants.ERSY_HOME);
 		boolean b = processStatus.writeCurrentStatus();
-		LOG.debug("WRITE current status: " + b);
+		LOG.info("WRITE current status: " + b);
 		ClusterAlgorithmConfig cac = clusteringConfig.getClusterAlgorithmConfig();
 		CanopyConfig cc = cac.getCanopyConfig();
 		KMeansConfig kc = cac.getkMeansConfig();
@@ -79,7 +80,7 @@ public class KMeansWithCanopyClustering {
         	);
 	    boolean b2 = processStatus.writeLastStatus();
 		boolean b3 = processStatus.writeDoneStatus();
-	    LOG.debug("Duration: " + s);
-	    LOG.debug(b2+ "=========END of Clustering========="+b3);
+	    LOG.info("Duration: " + s);
+	    LOG.info(b2+ "=========END of Clustering========="+b3);
 	}
 }

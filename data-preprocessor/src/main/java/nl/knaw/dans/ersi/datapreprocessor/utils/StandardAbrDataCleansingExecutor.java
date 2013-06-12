@@ -5,45 +5,46 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import nl.knaw.dans.ersi.preprocess.standard.SimpleDataCleansing;
+import nl.knaw.dans.ersi.preprocess.standard.AbrDataCleansing;
+import nl.knaw.dans.ersi.preprocess.standard.StandardAndAbrDataCleansing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DataCleansingExecutor {
-	private static Logger LOG = LoggerFactory.getLogger(DataCleansingExecutor.class);
+public class StandardAbrDataCleansingExecutor {
+	private static Logger LOG = LoggerFactory.getLogger(StandardAbrDataCleansingExecutor.class);
     public static void main() throws Exception {
 	ExecutorService executor = Executors.newFixedThreadPool(1);
-	LOG.info("++++++++++++++++++++ START DataCleansingExecutor +++++++++++++");
+	LOG.info("++++++++++++++++++++ START +++++++++++++");
 	test(executor);
 
     }
 
     private static void test(ExecutorService executor) throws InterruptedException {
-		SimpleDataCleansing sdc = new SimpleDataCleansing();
+    	StandardAndAbrDataCleansing sdc = new StandardAndAbrDataCleansing();
 
-	executor.execute(new Worker(sdc));
+	executor.execute(new WorkerStandardAbr(sdc));
 
 	// reject new tasks
 	executor.shutdown();
 
 	// wait for termination
 	executor.awaitTermination(1, TimeUnit.SECONDS);
-	LOG.info("=============EIND DataCleansingExecutor =======");
+	LOG.info("=============EIND END END=======");
     }
 }
 
 
-class Worker implements Runnable {
-	private static Logger LOG = LoggerFactory.getLogger(Worker.class);
-    private SimpleDataCleansing sdc;
-
-    public Worker(SimpleDataCleansing sdc) {
+class WorkerStandardAbr implements Runnable {
+	private static Logger LOG = LoggerFactory.getLogger(WorkerAbr.class);
+    private StandardAndAbrDataCleansing sdc;
+    
+    public WorkerStandardAbr(StandardAndAbrDataCleansing sdc) {
 	this.sdc = sdc;
     }
 
     public void run() {
-    	LOG.info("*************BEGIN DATA CLEANSING (Worker)*****************");
+    	LOG.info("*************BEGIN DATA CLEANSING*****************");
 	try {
 		sdc.run();
 	} catch (IOException e) {
@@ -53,7 +54,7 @@ class Worker implements Runnable {
 	} catch (ClassNotFoundException e) {
 		LOG.error(e.getMessage());
 	} 
-	LOG.debug("#############DATA CLEANSING FINISH (Worker) ####################");
+	LOG.debug("#############DATA CLEANSING FINISH####################");
 	
     }
 }

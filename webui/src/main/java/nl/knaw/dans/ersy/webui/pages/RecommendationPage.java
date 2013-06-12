@@ -1,13 +1,13 @@
 package nl.knaw.dans.ersy.webui.pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import nl.knaw.dans.ersy.webui.pages.search.RecursivePanel;
 import nl.knaw.dans.ersy.webui.pages.search.SearchPanel;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
@@ -36,20 +36,25 @@ public final class RecommendationPage extends Panel {
 	public RecommendationPage(String id, String exampleTitle, WebPage page) {
 		super(id);
 
-		final Label rec1 = new Label("rec1", new Model<String>(""));
-		rec1.setOutputMarkupId(true);
-		add(rec1);
-
-		final Label rec2 = new Label("rec2", new Model<String>(""));
-		rec2.setOutputMarkupId(true);
-		add(rec2);
-
-		final Label rec3 = new Label("rec3", new Model<String>(""));
-		rec3.setOutputMarkupId(true);
-		add(rec3);
+//		final Label rec1 = new Label("rec1", new Model<String>(""));
+//		rec1.setOutputMarkupId(true);
+//		add(rec1);
+//
+//		final Label rec2 = new Label("rec2", new Model<String>(""));
+//		rec2.setOutputMarkupId(true);
+//		add(rec2);
+//
+//		final Label rec3 = new Label("rec3", new Model<String>(""));
+//		rec3.setOutputMarkupId(true);
+//		add(rec3);
 
 		add(new SearchPanel("searchPanel"));
-
+		List<Object> l1 = new ArrayList<Object>();
+       
+        RecursivePanel rp = new RecursivePanel("panels", l1);
+        rp.setOutputMarkupId(true);
+        add(rp);
+        this.setOutputMarkupId(true);
 	}
 
 }

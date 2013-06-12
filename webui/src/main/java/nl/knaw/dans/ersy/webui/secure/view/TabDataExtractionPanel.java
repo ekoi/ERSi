@@ -25,16 +25,16 @@ public class TabDataExtractionPanel extends Panel {
 	 */
 	private static final long serialVersionUID = -1973574682018245001L;
 
-	public TabDataExtractionPanel(String id) {
+	public TabDataExtractionPanel(String id, final String ersyHome) {
 		super(id);
 		
-		ConfigurationReader configurationReader = new ConfigurationReader();
+		final ConfigurationReader configurationReader = new ConfigurationReader(ersyHome);
 		OaiPmhReposConfig opc = configurationReader.getDataExtractionConfig().getOaiPmhReposConfig();
-		
-		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_EXTRACTION);
+		final String extractionClassName = opc.getFilterClassName();
+		final ProcessStatus ps = new ProcessStatus(ProcessName.DATA_EXTRACTION, ersyHome);
 		boolean executeIsAllowed = !ps.isRunning();
 		if (executeIsAllowed) {
-			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_CLEANING);
+			final ProcessStatus psde = new ProcessStatus(ProcessName.DATA_CLEANING, ersyHome);
 			executeIsAllowed = !psde.isRunning();
 		}
 		final boolean dataExtractionIsAllowed = executeIsAllowed;
@@ -58,7 +58,7 @@ public class TabDataExtractionPanel extends Panel {
             {
             	if (!ps.isRunning()) {
             		try {
-            			DataExtractionExecutor.main();
+            			DataExtractionExecutor.go(ersyHome, extractionClassName);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
