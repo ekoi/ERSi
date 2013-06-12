@@ -45,12 +45,14 @@ public class DataExtractionExecutor {
     
     public static void go(String ersyHome, String extractionClassName) throws Exception {
     	ExecutorService executor = Executors.newFixedThreadPool(1);
-    	LOG.debug("++++++++++++++++++++ START DataExtractionExecutor +++++++++++++");
+    	LOG.info("++++++++++++++++++++ START DataExtractionExecutor +++++++++++++");
     	doWork(executor, ersyHome, extractionClassName);
 
     }
     
     private static void doWork(ExecutorService executor, String ersyHome, String extractionClassName) throws InterruptedException {
+    	LOG.info(ersyHome);
+    	
     	ConfigurationReader cr = new ConfigurationReader(ersyHome );
     	 try {
     		 Constructor<SimpleExtractor> c = (Constructor<SimpleExtractor>) Class.forName(extractionClassName).getConstructor(ConfigurationReader.class);

@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 
 
 /**
@@ -88,7 +89,8 @@ public final class RecursivePanel extends Panel
                 // the
                 // row's actual value to display
                 WebMarkupContainer row = new WebMarkupContainer("row");
-                row.add(new Label("label", modelObject.toString()));
+                SearchHit sh = (SearchHit)modelObject;
+                row.add(new SearchResultPanel("label", new Model<SearchHit>(sh)));
                 listItem.add(row);
             }
         }

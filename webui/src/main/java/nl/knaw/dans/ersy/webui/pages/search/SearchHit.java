@@ -1,15 +1,21 @@
 package nl.knaw.dans.ersy.webui.pages.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class SearchHit {
+public class SearchHit implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9001971158886116179L;
 	private String title;
 	private String storeId;
 	private String creator;
 	private String dateCreated;
+	private String pid;
 	private ArrayList<String> description;
 	private ArrayList<String> identifiers;
 	private ArrayList<String> coverage;
@@ -51,6 +57,11 @@ public class SearchHit {
 	}
 
 	public String getStoreId() {
+		System.out.println(identifiers);
+		for (String s : identifiers) {
+			if (s.startsWith("urn:nbn:"))
+				return s;
+		}
 		return storeId;
 	}
 
@@ -76,6 +87,20 @@ public class SearchHit {
 
 	public String getAccessCategory() {
 		return accessCategory;
+	}
+
+	/**
+	 * @return the pid
+	 */
+	public String getPid() {
+		return pid;
+	}
+
+	/**
+	 * @param pid the pid to set
+	 */
+	public void setPid(String pid) {
+		this.pid = pid;
 	}
 
 }

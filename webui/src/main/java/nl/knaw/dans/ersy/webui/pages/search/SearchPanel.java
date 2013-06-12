@@ -1,13 +1,5 @@
 package nl.knaw.dans.ersy.webui.pages.search;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +7,8 @@ import javax.xml.xpath.XPathExpressionException;
 
 import nl.knaw.dans.ersy.orm.Recommendation;
 import nl.knaw.dans.ersy.orm.RecommendationFromDual;
-import nl.knaw.dans.ersy.orm.RecommendationPid;
 import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
+import nl.knaw.dans.ersy.orm.RecommendationPid;
 import nl.knaw.dans.ersy.webui.pages.RecommendationPage;
 
 import org.apache.wicket.Component;
@@ -54,6 +46,7 @@ public class SearchPanel extends Panel {
 		searchResults.setOutputMarkupId(true);
 		add(searchResults);
 		
+		
 		form.add(new IndicatingAjaxButton("submitSearch", form) {
 			private static final long serialVersionUID = -8657955624468662411L;
 
@@ -70,37 +63,61 @@ public class SearchPanel extends Panel {
 	                        @Override
 	                        public void onClick(AjaxRequestTarget target)
 	                        {
+	                        	String pid = "";
 	                            Page p = this.getPage();
+	                            Component obj = this.get("SearchResultPanel");
+	                            if (obj instanceof SearchResultPanel) {
+	                            	SearchResultPanel srp = (SearchResultPanel)obj;
+	                            	Component so = srp.get("storeId");
+	                            	pid = so.getDefaultModelObjectAsString();
+	                            	
+	                            	
+	                            }
 	                            Component c = p.get(1);
 	                            if (c instanceof RecommendationPage) {
 	                            	RecommendationPage rp = (RecommendationPage)c;
-	                            	Component cl = rp.get("panels");
-	                            	List<RecommendationPid> rl = RecommendationFromDual.findRelevancePids(DRM.STANDARD.toString(), "");
+	                            	Component recommendationPanels = rp.get("recommendationPanels");
+	                            	List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
 	                            	List<Object> l = new ArrayList<Object>();
 	                            	for (RecommendationPid r : rl) {
 	                            		l.add(r.getPid());
 	                            	}
+	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
+	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
+	                            	Component locationRecCheckbox = rp.get("locationRecCheckbox");
+	                            	//boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
+//	                            	try {
+//										ArrayList<SearchHit> hits = SparqlConnector.get().search("");
+//									} catch (XPathExpressionException e) {
+//										// TODO Auto-generated catch block
+//										e.printStackTrace();
+//									}
+	                            	List<Object> recs = new ArrayList<Object>();
+	                            	if (os) {
+	                            		
+	                            		try {
+	                            			for (Object s : l) {
+	                            				ArrayList<SearchHit> hits = EasyRestConnector.get().search((String)s);
+	                            				recs.add(hits);
+	                            			}
+											
+										} catch (XPathExpressionException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+	                            	} else {
+	                            		
+	                            	}
 	                            	
-	                            	try {
-										ArrayList<SearchHit> hits = SparqlConnector.get().search("");
-									} catch (XPathExpressionException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-	                            	
-	                            	rp.remove(cl);
-	                            	rp.addOrReplace(new RecursivePanel("panels", l));
+	                            	rp.remove(recommendationPanels);
+	                            	rp.addOrReplace(new RecursivePanel("recommendationPanels", recs));
 	                            	 target.add(rp);
 	                            }
 	                           
 	                        }
 	                    };
 			            item.add(al);
-			            al.add(new Label("storeId", hit.getStoreId()));
-						al.add(new Label("title", hit.getTitle()));
-						al.add(new Label("creator", hit.getCreator()));
-						al.add(new Label("dateCreated", hit.getDateCreated()));
-						al.add(new Label("description", shorten(head(hit.getDescription()), 150)));
+			            al.add(new SearchResultPanel("SearchResultPanel", new Model<SearchHit>(hit)));
 						searchResults.add(item);
 					}
 					target.add(searchResults.getParent());
@@ -111,13 +128,13 @@ public class SearchPanel extends Panel {
 			
 		});
 	}
-	
-	private static String shorten(String s, int size) {
-		return s.length() > (size - 1) ? s.substring(0, size) + " ..." : s;
-	}
-
-	private static String head(ArrayList<String> list) {
-		return list.size() > 0 ? list.get(0) : "";
-	}
+//	
+//	private static String shorten(String s, int size) {
+//		return s.length() > (size - 1) ? s.substring(0, size) + " ..." : s;
+//	}
+//
+//	private static String head(ArrayList<String> list) {
+//		return list.size() > 0 ? list.get(0) : "";
+//	}
 
 }

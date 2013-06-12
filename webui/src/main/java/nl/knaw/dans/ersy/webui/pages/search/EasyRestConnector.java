@@ -1,6 +1,8 @@
 package nl.knaw.dans.ersy.webui.pages.search;
 
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPath;
@@ -29,8 +31,14 @@ public class EasyRestConnector {
 
 	public ArrayList<SearchHit> search(String q)
 			throws XPathExpressionException {
+		try {
+			q = q.replace(" ", URLEncoder.encode("%", "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<SearchHit> results = new ArrayList<SearchHit>();
-		String xml = getResource("/search?q=" + q + "&limit=99999");
+		String xml = getResource("/search?q=" + q + "&limit=10");
 		xml = xml.replace("&", "&amp;");
 		NodeList hitNodes = (NodeList) xpath.evaluate("//hits/hit",
 				new InputSource(new StringReader(xml)), XPathConstants.NODESET);

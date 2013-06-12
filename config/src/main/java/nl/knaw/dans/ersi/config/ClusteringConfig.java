@@ -23,7 +23,7 @@ public class ClusteringConfig {
 	}
 
 	public String getInputVectorsPath() {
-		return inputVectorsPath;
+		return Constants.ERSY_HOME + "/" + inputVectorsPath;
 	}
 
 	public void setInputVectorsPath(String inputVectorsPath) {
@@ -31,7 +31,7 @@ public class ClusteringConfig {
 	}
 
 	public String getOutputPath() {
-		return outputPath;
+		return Constants.ERSY_HOME + "/" + outputPath;
 	}
 
 	public void setOutputPath(String outputPath) {

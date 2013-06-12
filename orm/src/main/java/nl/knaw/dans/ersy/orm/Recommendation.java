@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import nl.knaw.dans.ersi.config.Constants;
+import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
 import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
 import nl.knaw.dans.ersy.orm.util.HibernateUtil;
@@ -168,7 +169,7 @@ public class Recommendation {
 	  return methodNames;
   }
   
-  public static List<RecommendationPid> findRelevancePids(String methodName, String pid) {
+  public static List<RecommendationPid> findRelevancePids(DRM standard, String pid) {
 	List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
 	
     Session session = HibernateUtil.getSessionFactory().openSession();
@@ -177,19 +178,22 @@ public class Recommendation {
          
         transaction = session.beginTransaction();
         Query query = session.createQuery("from MiningProcess where methodName= :methodName");
-        query.setParameter("methodName", methodName);
+        query.setParameter("methodName", standard.toString());
+        
         List<MiningProcess> mps = query.list();
 			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
 				int mpid = mps.get(0).getMpid();
 
-				Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc, rating desc");
+				Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc");
 				queryPidRel.setParameter("pid", pid);
 				queryPidRel.setParameter("miningProcess", mps.get(0));
+				queryPidRel.setMaxResults(10);
 				recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
 				
-				Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc, rating desc");
+				Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc");
 				queryPid.setParameter("pid", pid);
 				queryPid.setParameter("miningProcess", mps.get(0));
+				queryPid.setMaxResults(10);
 				recs.addAll(getPidsFromPidRelevance(queryPid, false));
 				
 			} 
@@ -201,10 +205,47 @@ public class Recommendation {
     } finally {
         session.close();
     }
+    System.out.println(recs);
     return recs;
 }
 
-  public static List<RecommendationPid> findRelevancePids(Constants.DRM dimensionReductionMethodName, String pid) {
+//  public static List<RecommendationPid> findRelevancePids(Constants.DRM dimensionReductionMethodName, String pid) {
+//		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
+//		
+//	    Session session = HibernateUtil.getSessionFactory().openSession();
+//	    Transaction transaction = null;
+//	    try {
+//	         
+//	        transaction = session.beginTransaction();
+//	        Query query = session.createQuery("from MiningProcess where methodName= :methodName");
+//	        query.setParameter("methodName", dimensionReductionMethodName.toString());
+//	        List<MiningProcess> mps = query.list();
+//				if (mps != null && !mps.isEmpty() && mps.size() == 1) {
+//					int mpid = mps.get(0).getMpid();
+//
+//					Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc, rating desc");
+//					queryPidRel.setParameter("pid", pid);
+//					queryPidRel.setParameter("miningProcess", mps.get(0));
+//					recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
+//					
+//					Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc, rating desc");
+//					queryPid.setParameter("pid", pid);
+//					queryPid.setParameter("miningProcess", mps.get(0));
+//					recs.addAll(getPidsFromPidRelevance(queryPid, false));
+//					
+//				} 
+//	      
+//	        transaction.commit();
+//	    } catch (HibernateException e) {
+//	        transaction.rollback();
+//	        e.printStackTrace();
+//	    } finally {
+//	        session.close();
+//	    }
+//	    return recs;
+//	}
+  
+  public static List<RecommendationPid> findRelevancePids(DRM standard, String pid, double distance) {
 		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
 		
 	    Session session = HibernateUtil.getSessionFactory().openSession();
@@ -213,19 +254,21 @@ public class Recommendation {
 	         
 	        transaction = session.beginTransaction();
 	        Query query = session.createQuery("from MiningProcess where methodName= :methodName");
-	        query.setParameter("methodName", dimensionReductionMethodName.toString());
+	        query.setParameter("methodName", standard.toString());
 	        List<MiningProcess> mps = query.list();
 				if (mps != null && !mps.isEmpty() && mps.size() == 1) {
 					int mpid = mps.get(0).getMpid();
 
-					Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc, rating desc");
+					Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid and p.distance> :distance order by distance desc, rating desc");
 					queryPidRel.setParameter("pid", pid);
 					queryPidRel.setParameter("miningProcess", mps.get(0));
+					queryPidRel.setParameter("distance", distance);
 					recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
 					
-					Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc, rating desc");
+					Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid and p.distance> :distance  order by distance desc, rating desc");
 					queryPid.setParameter("pid", pid);
 					queryPid.setParameter("miningProcess", mps.get(0));
+					queryPid.setParameter("distance", distance);
 					recs.addAll(getPidsFromPidRelevance(queryPid, false));
 					
 				} 
@@ -239,7 +282,6 @@ public class Recommendation {
 	    }
 	    return recs;
 	}
-  
 
 /**
  * @param recs

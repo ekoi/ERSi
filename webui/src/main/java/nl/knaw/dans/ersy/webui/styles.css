@@ -243,9 +243,10 @@ header {
 	position: relative;
 	float: right;
 	width: 50%;
-	margin-top: 4px;
+	margin-top: -60px;
 	padding-top: 10px;
-	height: 450px;
+	height: 610px    !important;
+	overflow: hidden;
 }
 	
 .holder_content_separator{
@@ -372,7 +373,7 @@ nav ul li a.current {
 			SEARCH
 ***************************************************/
 .searchPanel {
-	height: 450px;
+	height: 550px;
 	overflow: auto;
 	border-bottom: 1px solid #CCCCCC;
 	float: left;
