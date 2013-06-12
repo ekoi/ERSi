@@ -47,7 +47,7 @@ public class MiningResultExporter {
     	ConfigurationReader cr = new ConfigurationReader(Constants.ERSY_HOME);
     	Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(conf);
-        String clusteringResultLocation = Constants.ERSY_HOME + "/" + cr.getClusteringConfig().getOutputPath() + "/clusters-output/clusters";
+        String clusteringResultLocation = cr.getClusteringConfig().getOutputPath() + "/clusters-output/clusters";
     	Path vectorsFolder = new Path(clusteringResultLocation, "tfidf-vectors");
     	 //Path clusterOutput = new Path(outputDir , "clusters");
     	
