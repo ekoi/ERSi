@@ -3,7 +3,6 @@ package nl.knaw.dans.ersy.webui.pages.search;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -14,11 +13,15 @@ import org.apache.wicket.model.Model;
  * This example list knows how to display sublists. It expects a list where each element is either a
  * string or another list.
  * 
- * @author Eelco Hillenius
  */
 public final class RecursivePanel extends Panel
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3951206917295739260L;
+
+	/**
      * Constructor.
      * 
      * @param id

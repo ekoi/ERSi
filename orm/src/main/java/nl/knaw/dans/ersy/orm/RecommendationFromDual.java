@@ -1,19 +1,13 @@
 package nl.knaw.dans.ersy.orm;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import nl.knaw.dans.ersi.config.Constants;
-import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
 import nl.knaw.dans.ersy.orm.util.HibernateUtil;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

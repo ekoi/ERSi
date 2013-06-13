@@ -6,7 +6,6 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import nl.knaw.dans.ersy.orm.Recommendation;
-import nl.knaw.dans.ersy.orm.RecommendationFromDual;
 import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
 import nl.knaw.dans.ersy.orm.RecommendationPid;
 import nl.knaw.dans.ersy.webui.pages.RecommendationPage;
@@ -16,14 +15,12 @@ import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
-import org.jfree.util.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

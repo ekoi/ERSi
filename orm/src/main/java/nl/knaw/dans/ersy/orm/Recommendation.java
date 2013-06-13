@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
-import nl.knaw.dans.ersi.config.Constants;
 import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
 import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
@@ -171,7 +171,7 @@ public class Recommendation {
   
   public static List<RecommendationPid> findRelevancePids(DRM standard, String pid) {
 	List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
-	
+	long begin = System.currentTimeMillis();
     Session session = HibernateUtil.getSessionFactory().openSession();
     Transaction transaction = null;
     try {
@@ -182,18 +182,17 @@ public class Recommendation {
         
         List<MiningProcess> mps = query.list();
 			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
-				int mpid = mps.get(0).getMpid();
 
 				Query queryPidRel = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by distance desc");
 				queryPidRel.setParameter("pid", pid);
-				queryPidRel.setParameter("miningProcess", mps.get(0));
-				queryPidRel.setMaxResults(10);
+				queryPidRel.setParameter("miningProcess",  mps.get(0));
+				queryPidRel.setMaxResults(5);
 				recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
 				
-				Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pid order by distance desc");
-				queryPid.setParameter("pid", pid);
-				queryPid.setParameter("miningProcess", mps.get(0));
-				queryPid.setMaxResults(10);
+				Query queryPid = session.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pidRel order by distance desc");
+				queryPid.setParameter("pidRel", pid);
+				queryPid.setParameter("miningProcess",  mps.get(0));
+				queryPid.setMaxResults(5);
 				recs.addAll(getPidsFromPidRelevance(queryPid, false));
 				
 			} 
@@ -202,13 +201,26 @@ public class Recommendation {
     } catch (HibernateException e) {
         transaction.rollback();
         e.printStackTrace();
-    } finally {
+    } catch (Exception e){
+    	e.printStackTrace();
+    }finally {
         session.close();
     }
-    LOG.info("Relevancies pid: " + recs);
+    LOG.info("Relevancies pid size: " + recs.size());
+    LOG.info("Duration: " + convertToHumanReadableDuration((begin)));
     return recs;
 }
-
+  private static String convertToHumanReadableDuration(long begin) {
+	  long diff = System.currentTimeMillis() - begin;
+	    String s= String.format("%d hours. %d min, %d sec", 
+	    		TimeUnit.MILLISECONDS.toHours(diff),
+      	    TimeUnit.MILLISECONDS.toMinutes(diff),
+      	    TimeUnit.MILLISECONDS.toSeconds(diff) - 
+      	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(diff))
+      	);
+		return s;
+	}
+	
 //  public static List<RecommendationPid> findRelevancePids(Constants.DRM dimensionReductionMethodName, String pid) {
 //		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
 //		

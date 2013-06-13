@@ -57,7 +57,6 @@ public class SearchHit implements Serializable{
 	}
 
 	public String getStoreId() {
-		System.out.println(identifiers);
 		for (String s : identifiers) {
 			if (s.startsWith("urn:nbn:"))
 				return s;
