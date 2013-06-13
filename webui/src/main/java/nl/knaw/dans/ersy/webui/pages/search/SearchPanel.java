@@ -23,6 +23,9 @@ import org.apache.wicket.markup.html.list.AbstractItem;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SearchPanel extends Panel {
 
@@ -30,6 +33,7 @@ public class SearchPanel extends Panel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6892480325207277638L;
+	private static Logger LOG = LoggerFactory.getLogger(SearchPanel.class);
 
 	public SearchPanel(String id) {
 		super(id);
@@ -78,6 +82,7 @@ public class SearchPanel extends Panel {
 	                            	RecommendationPage rp = (RecommendationPage)c;
 	                            	Component recommendationPanels = rp.get("recommendationPanels");
 	                            	List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
+	                            	LOG.info("Number of recommendations: " + rl.size());
 	                            	List<Object> l = new ArrayList<Object>();
 	                            	for (RecommendationPid r : rl) {
 	                            		l.add(r.getPid());

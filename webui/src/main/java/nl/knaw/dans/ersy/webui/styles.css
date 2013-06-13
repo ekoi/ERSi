@@ -399,6 +399,18 @@ nav ul li a.current {
 /**************************************************
 			MISC
 ***************************************************/
+#ajaxveil {
+  display: none;
+  position: fixed;
+  color: #00A7D4;
+  margin-top: -115px;
+  width: 200;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1em !importants;
+  margin-left: 350px;
+}
+
 .f1 .f2 a {
   color: #666666;
 }

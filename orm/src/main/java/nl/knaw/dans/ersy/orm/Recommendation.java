@@ -205,7 +205,7 @@ public class Recommendation {
     } finally {
         session.close();
     }
-    System.out.println(recs);
+    LOG.info("Relevancies pid: " + recs);
     return recs;
 }
 
