@@ -78,12 +78,7 @@ public class SearchPanel extends Panel {
 	                            if (c instanceof RecommendationPage) {
 	                            	RecommendationPage rp = (RecommendationPage)c;
 	                            	Component recommendationPanels = rp.get("recommendationPanels");
-	                            	List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
-	                            	LOG.info("Number of recommendations: " + rl.size());
-	                            	List<Object> l = new ArrayList<Object>();
-	                            	for (RecommendationPid r : rl) {
-	                            		l.add(r.getPid());
-	                            	}
+	                            	
 	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
 	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
 	                            	Component locationRecCheckbox = rp.get("locationRecCheckbox");
@@ -94,29 +89,48 @@ public class SearchPanel extends Panel {
 //										// TODO Auto-generated catch block
 //										e.printStackTrace();
 //									}
-	                            	List<Object> recs = new ArrayList<Object>();
+	                            	
+	                            	List<String> pids = new ArrayList<String>();
 	                            	if (os) {
-	                            		
+	                            		List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
+		                            	LOG.info("Number of recommendations: " + rl.size());
+		                            	for (RecommendationPid r : rl) {
+		                            		pids.add(r.getPid().toString());
+		                            	}
+	                            	} else {
 	                            		try {
-	                            			for (Object s : l) {
-	                            				ArrayList<SearchHit> hits = EasyRestConnector.get().search((String)s);
-	                            				recs.add(hits);
-	                            			}
-											
+											pids = SparqlConnector.get().search(pid);
 										} catch (XPathExpressionException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
-	                            	} else {
-	                            		
 	                            	}
-	                            	
+	                            	List<Object> recs = new ArrayList<Object>();
+	                            	recs.add(retrieveRecommendationDatasets(pids));
 	                            	rp.remove(recommendationPanels);
 	                            	rp.addOrReplace(new RecursivePanel("recommendationPanels", recs));
 	                            	 target.add(rp);
 	                            }
 	                           
 	                        }
+
+							/**
+							 * @param recs
+							 * @param pids
+							 * @throws XPathExpressionException
+							 */
+							private List<Object> retrieveRecommendationDatasets(List<String> pids) {
+								List<Object> recs = new ArrayList<Object>();
+								try {
+									if (!pids.isEmpty()) {
+										ArrayList<SearchHit> hits = EasyRestConnector.get().pidsSearch(pids);
+										recs.add(hits);
+									}
+								} catch (XPathExpressionException e) {
+									e.printStackTrace();
+								}
+								return recs;
+							}
 	                    };
 			            item.add(al);
 			            al.add(new SearchResultPanel("SearchResultPanel", new Model<SearchHit>(hit)));

@@ -25,7 +25,9 @@ public final class RecommendationPage extends Panel {
 	 */
 	private static final long serialVersionUID = 970185289293886277L;
 	private AjaxCheckBox stdRecCheckbox;
+	private AjaxCheckBox abrRecCheckbox;
 	private AjaxCheckBox locationRecCheckbox;
+	private AjaxCheckBox graphRecCheckbox;
 
 	/**
 	 * Construct.
@@ -59,11 +61,30 @@ public final class RecommendationPage extends Panel {
             {
 				locationRecCheckbox.setModelObject(!getModelObject());
                 target.add(locationRecCheckbox);
+                abrRecCheckbox.setModelObject(!getModelObject());
+                target.add(abrRecCheckbox);
             }
         }; 
         stdRecCheckbox.setDefaultModelObject(true);
         stdRecCheckbox.setOutputMarkupId(true);
         add(stdRecCheckbox);
+        
+        abrRecCheckbox = new AjaxCheckBox("abrRecCheckbox",
+                new Model<Boolean>()) {
+
+			private static final long serialVersionUID = -385819254193372296L;
+
+			@Override
+            protected void onUpdate(AjaxRequestTarget target)
+            {
+            	stdRecCheckbox.setModelObject(!getModelObject());
+                target.add(stdRecCheckbox);
+                locationRecCheckbox.setModelObject(!getModelObject());
+                target.add(locationRecCheckbox);
+            }
+        }; 
+        abrRecCheckbox.setOutputMarkupId(true);
+        add(abrRecCheckbox);
         
         locationRecCheckbox = new AjaxCheckBox("locationRecCheckbox",
                 new Model<Boolean>()) {
@@ -75,12 +96,27 @@ public final class RecommendationPage extends Panel {
             {
             	stdRecCheckbox.setModelObject(!getModelObject());
                 target.add(stdRecCheckbox);
-                
+                abrRecCheckbox.setModelObject(!getModelObject());
+                target.add(abrRecCheckbox);                
             }
         }; 
         locationRecCheckbox.setOutputMarkupId(true);
         add(locationRecCheckbox);
         
+        graphRecCheckbox = new AjaxCheckBox("graphRecCheckbox",
+                new Model<Boolean>()) {
+
+			private static final long serialVersionUID = -385819254193372296L;
+
+			@Override
+            protected void onUpdate(AjaxRequestTarget target)
+            {
+				graphRecCheckbox.setModelObject(false);
+                target.add(graphRecCheckbox);            
+            }
+        }; 
+        graphRecCheckbox.setOutputMarkupId(true);
+        add(graphRecCheckbox);
 	}
 
 }
