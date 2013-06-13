@@ -81,22 +81,20 @@ public class SearchPanel extends Panel {
 	                            	
 	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
 	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
+	                            	Component abrRecCheckbox = rp.get("abrRecCheckbox");
+	                            	boolean oa = (Boolean) abrRecCheckbox.getDefaultModelObject();
 	                            	Component locationRecCheckbox = rp.get("locationRecCheckbox");
 	                            	boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
-//	                            	try {
-//										ArrayList<SearchHit> hits = SparqlConnector.get().search("");
-//									} catch (XPathExpressionException e) {
-//										// TODO Auto-generated catch block
-//										e.printStackTrace();
-//									}
 	                            	
 	                            	List<String> pids = new ArrayList<String>();
-	                            	if (os) {
+	                            	if (oa) {
 	                            		List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
 		                            	LOG.info("Number of recommendations: " + rl.size());
 		                            	for (RecommendationPid r : rl) {
 		                            		pids.add(r.getPid().toString());
 		                            	}
+	                            	} else if (os) {
+	                            		
 	                            	} else if (ol){
 	                            		try {
 											pids = SparqlConnector.get().search(pid);

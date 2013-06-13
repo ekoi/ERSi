@@ -59,13 +59,11 @@ public final class RecommendationPage extends Panel {
 			@Override
             protected void onUpdate(AjaxRequestTarget target)
             {
-				locationRecCheckbox.setModelObject(!getModelObject());
-                target.add(locationRecCheckbox);
-                abrRecCheckbox.setModelObject(!getModelObject());
-                target.add(abrRecCheckbox);
+				stdRecCheckbox.setModelObject(false);
+                target.add(stdRecCheckbox);        
             }
         }; 
-        stdRecCheckbox.setDefaultModelObject(true);
+        stdRecCheckbox.setDefaultModelObject(false);
         stdRecCheckbox.setOutputMarkupId(true);
         add(stdRecCheckbox);
         
@@ -77,14 +75,15 @@ public final class RecommendationPage extends Panel {
 			@Override
             protected void onUpdate(AjaxRequestTarget target)
             {
-            	stdRecCheckbox.setModelObject(!getModelObject());
-                target.add(stdRecCheckbox);
-                locationRecCheckbox.setModelObject(!getModelObject());
+				boolean b = !getModelObject();
+//            	stdRecCheckbox.setModelObject(b);
+//                target.add(stdRecCheckbox);
+                locationRecCheckbox.setModelObject(b);
                 target.add(locationRecCheckbox);
             }
         }; 
         abrRecCheckbox.setOutputMarkupId(true);
-        abrRecCheckbox.setDefaultModelObject(false);
+        abrRecCheckbox.setDefaultModelObject(true);
         add(abrRecCheckbox);
         
         locationRecCheckbox = new AjaxCheckBox("locationRecCheckbox",
@@ -95,9 +94,10 @@ public final class RecommendationPage extends Panel {
 			@Override
             protected void onUpdate(AjaxRequestTarget target)
             {
-            	stdRecCheckbox.setModelObject(!getModelObject());
-                target.add(stdRecCheckbox);
-                abrRecCheckbox.setModelObject(!getModelObject());
+				boolean b = !getModelObject();
+//            	stdRecCheckbox.setModelObject(b);
+//                target.add(stdRecCheckbox);
+                abrRecCheckbox.setModelObject(b);
                 target.add(abrRecCheckbox);                
             }
         }; 

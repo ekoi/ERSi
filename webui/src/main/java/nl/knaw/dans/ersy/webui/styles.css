@@ -243,7 +243,7 @@ header {
 	position: relative;
 	float: right;
 	width: 50%;
-	margin-top: -60px;
+	margin-top: -65px;
 	padding-top: 10px;
 	height: 70px    !important;
 }
@@ -252,9 +252,10 @@ header {
 	position: relative;
 	float: right;
 	width: 50%;
-	margin-top: 7px;
+	margin-top: 10px;
 	height: 550px    !important;
 	overflow: auto;
+	border-bottom: 1px solid #CCCCCC;
 }
 	
 .holder_content_separator{
@@ -380,6 +381,14 @@ nav ul li a.current {
 /**************************************************
 			SEARCH
 ***************************************************/
+.searchForm {
+	position: relative;
+	float: left;
+	width: 50%;
+	margin-top: -15px;
+	padding-top: 10px;
+	height: 70px    !important;
+}
 .searchPanel {
 	height: 550px;
 	overflow: auto;
@@ -410,14 +419,13 @@ nav ul li a.current {
 ***************************************************/
 #ajaxveil {
   display: none;
-  position: fixed;
   color: #00A7D4;
-  margin-top: -115px;
   width: 200;
   font-weight: bold;
-  text-align: center;
-  font-size: 1em !importants;
-  margin-left: 350px;
+  font-size: 1.2em !important;
+  margin-left: 450px;
+  margin-top: -30px !important;
+  position: fixed;
 }
 
 .f1 .f2 a {
