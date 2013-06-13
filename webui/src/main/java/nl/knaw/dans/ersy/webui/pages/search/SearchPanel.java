@@ -82,7 +82,7 @@ public class SearchPanel extends Panel {
 	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
 	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
 	                            	Component locationRecCheckbox = rp.get("locationRecCheckbox");
-	                            	//boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
+	                            	boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
 //	                            	try {
 //										ArrayList<SearchHit> hits = SparqlConnector.get().search("");
 //									} catch (XPathExpressionException e) {
@@ -97,13 +97,15 @@ public class SearchPanel extends Panel {
 		                            	for (RecommendationPid r : rl) {
 		                            		pids.add(r.getPid().toString());
 		                            	}
-	                            	} else {
+	                            	} else if (ol){
 	                            		try {
 											pids = SparqlConnector.get().search(pid);
 										} catch (XPathExpressionException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}
+	                            	} else {
+	                            		
 	                            	}
 	                            	List<Object> recs = new ArrayList<Object>();
 	                            	recs.add(retrieveRecommendationDatasets(pids));
