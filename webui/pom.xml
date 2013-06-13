@@ -225,6 +225,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>ei</finalName>
 	</build>
 
 	<repositories>
