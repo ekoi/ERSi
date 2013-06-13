@@ -84,6 +84,7 @@ public final class RecommendationPage extends Panel {
             }
         }; 
         abrRecCheckbox.setOutputMarkupId(true);
+        abrRecCheckbox.setDefaultModelObject(false);
         add(abrRecCheckbox);
         
         locationRecCheckbox = new AjaxCheckBox("locationRecCheckbox",
@@ -101,6 +102,7 @@ public final class RecommendationPage extends Panel {
             }
         }; 
         locationRecCheckbox.setOutputMarkupId(true);
+        locationRecCheckbox.setDefaultModelObject(false);
         add(locationRecCheckbox);
         
         graphRecCheckbox = new AjaxCheckBox("graphRecCheckbox",
@@ -116,6 +118,7 @@ public final class RecommendationPage extends Panel {
             }
         }; 
         graphRecCheckbox.setOutputMarkupId(true);
+        graphRecCheckbox.setDefaultModelObject(false);
         add(graphRecCheckbox);
 	}
 
