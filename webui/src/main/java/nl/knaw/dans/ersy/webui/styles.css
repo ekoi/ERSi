@@ -139,53 +139,6 @@ h4 {
 	background-color: transparent;
 	min-height: 100%;
 }
-
-.group1 {
-	float: left;
-	width: 274px;
-	position: relative;
-	background: transparent;
-	padding: 15px;
-	margin-bottom: 10px;
-}
-	
-.group2 {
-	float: left;
-	width: 274px;
-	position: relative;
-	background: transparent;
-	padding: 15px;
-	margin-bottom: 10px;
-	margin-left: 30px;
-}
-	
-.group3 {
-	float: right;
-	width: 274px;
-	position: relative;
-	background: transparent;
-	padding: 15px;
-	}
-
-.group4 {
-	float: left;
-	width: 950px;
-	position: relative;
-	padding: 15px;
-	margin-top: -14px;
-	margin-bottom: 25px;
-	background: transparent;
-	border-top: 1px solid #A3A3A3;
-	-moz-column-count: 3; /* Firefox */
-	-webkit-column-count: 3; /* Safari and Chrome */
-	column-count: 3;	
-	-moz-column-gap: 40px; /* Firefox */
-	-webkit-column-gap: 40px; /* Safari and Chrome */
-	column-gap: 40px;	
-	-moz-column-rule: 1px solid #A3A3A3; /* Firefox */
-	-webkit-column-rule: 1px solid #A3A3A3; /* Safari and Chrome */
-	column-rule: 1px solid #A3A3A3;
-}
 	
 header {
 	position: relative;
