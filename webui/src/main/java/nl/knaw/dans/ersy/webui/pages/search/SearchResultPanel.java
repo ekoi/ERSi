@@ -5,9 +5,13 @@ package nl.knaw.dans.ersy.webui.pages.search;
 
 import java.util.ArrayList;
 
+import nl.knaw.dans.ersy.orm.Recommendation;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author akmi
@@ -19,6 +23,7 @@ public class SearchResultPanel extends Panel {
 	 * 
 	 */
 	private static final long serialVersionUID = -8702476579493755108L;
+	private static Logger LOG = LoggerFactory.getLogger(SearchResultPanel.class);
 
 	public SearchResultPanel(String id, IModel<SearchHit> model) {
 		super(id, model);

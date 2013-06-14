@@ -59,9 +59,14 @@ public class SearchPanel extends Panel {
 					ArrayList<SearchHit> hits = EasyRestConnector.get().search(query);
 					for (SearchHit hit : hits) {
 			            AbstractItem item = new AbstractItem(searchResults.newChildId());
-			            AjaxLink al = new AjaxLink<Void>("c1-link")
+			            AjaxLink<Void> al = new AjaxLink<Void>("c1-link")
 			                    {
-	                        @Override
+	                        /**
+									 * 
+									 */
+									private static final long serialVersionUID = -4091661966857519945L;
+
+							@Override
 	                        public void onClick(AjaxRequestTarget target)
 	                        {
 	                        	String pid = "";
@@ -81,8 +86,10 @@ public class SearchPanel extends Panel {
 	                            	
 	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
 	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
+	                            	
 	                            	Component abrRecCheckbox = rp.get("abrRecCheckbox");
 	                            	boolean oa = (Boolean) abrRecCheckbox.getDefaultModelObject();
+	                            	
 	                            	Component locationRecCheckbox = rp.get("locationRecCheckbox");
 	                            	boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
 	                            	
@@ -96,12 +103,7 @@ public class SearchPanel extends Panel {
 	                            	} else if (os) {
 	                            		
 	                            	} else if (ol){
-	                            		try {
-											pids = SparqlConnector.get().search(pid);
-										} catch (XPathExpressionException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
+										pids = SparqlConnector.get().search(pid);
 	                            	} else {
 	                            		
 	                            	}
