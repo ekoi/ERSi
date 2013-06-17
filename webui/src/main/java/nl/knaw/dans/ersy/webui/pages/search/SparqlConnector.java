@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class SparqlConnector {
 	private static SparqlConnector instance = null;
-	private static final String host = "http://ns3096228.ovh.net:591/sparql";
+	private static final String host = "http://ns3096228.ovh.net:8080/sparql";
 	private static Logger LOG = LoggerFactory.getLogger(SparqlConnector.class);
 
 	private SparqlConnector() {
