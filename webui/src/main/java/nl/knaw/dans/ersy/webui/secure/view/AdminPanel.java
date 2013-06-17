@@ -121,14 +121,14 @@ public class AdminPanel extends Panel {
 			}
 		});
 		
-		tabs.add(new AbstractTab(new Model<String>("TM in Progress"))
+		/*tabs.add(new AbstractTab(new Model<String>("TM in Progress"))
 		{
 			@Override
 			public Panel getPanel(String panelId)
 			{
 				return new TabProcessInProgressPanel(panelId, ersyConfFile);
 			}
-		});
+		});*/
 		
 		AjaxTabbedPanel atp = new AjaxTabbedPanel("tabs", tabs);
 		atp.setSelectedTab(selectedTabe);
