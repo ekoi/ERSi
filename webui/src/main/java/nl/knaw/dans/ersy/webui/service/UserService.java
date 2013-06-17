@@ -15,7 +15,8 @@ public class UserService {
 	private static Logger LOG = LoggerFactory.getLogger(UserService.class);
     private static List<User> usersInDatabase = Lists.newArrayList(
             new User("Akmi", "akmi"),
-            new User("DANS", "dans"));
+            new User("DANS", "dans"),
+            new User("KNAW", "1nst1tut3"));
 
 
     public User findByLoginAndPassword(String login, String password) {
