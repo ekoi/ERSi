@@ -28,6 +28,9 @@ public class SearchHit implements Serializable{
 		NodeList nodes = hitNode.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++)
 			parseNode(nodes.item(i));
+		for (String id : identifiers)
+			if (id.startsWith("urn:"))
+				pid = id;
 	}
 
 	private void parseNode(Node node) {

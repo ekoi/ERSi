@@ -62,12 +62,12 @@ body {
 p {
 	margin-top: 3px;
 }
-	
+
 a, p a {
 	text-decoration: underline;
 	color: white;
 }
-	
+
 a: hover {
    color: white;
 }
@@ -94,7 +94,7 @@ h1 {
 	color: #666666;
 	margin-left: 10px;
 }
-	
+
 h2 {
 	font-size: 15px;
 	line-height: 1.8;
@@ -104,7 +104,7 @@ h2 {
 	margin-bottom: 0px;
 	padding-bottom: 5px;
 }
-	
+
 h3 {
 	font-size: 18px;
 	line-height: 0.9;
@@ -131,7 +131,7 @@ h4 {
 	position: relative;
 	width: 100%;
 }
-	
+
 #container {
 	position: relative;
 	width: 980px;
@@ -139,19 +139,19 @@ h4 {
 	background-color: transparent;
 	min-height: 100%;
 }
-	
+
 header {
 	position: relative;
 	float: left;
 	width: 100%;
 	height: 100px;
 }
-	
-	
+
+
 /***************************************************
 				INTRO
 ***************************************************/	
-	
+
 #intro {
 	width: 980px;
 	position: relative;
@@ -163,7 +163,7 @@ header {
 /***************************************************
 				PANEL
 ***************************************************/	
-	
+
 #panel {
 	width: 980px;
 	position: relative;
@@ -177,7 +177,7 @@ header {
 /***************************************************
 				ARTICLES
 ***************************************************/	
-	
+
 #articles {
 	width: 980px;
 	position: relative;
@@ -209,11 +209,11 @@ header {
 	overflow: auto;
 	border-bottom: 1px solid #CCCCCC;
 }
-	
+
 .holder_content_separator{
 	margin-bottom: 20px;
 }
-	
+
 
 /***************************************************
 			        FOOTER
@@ -301,7 +301,7 @@ nav ul li a.current {
 	margin-top: -10px;
 	margin-bottom: 15px;
 }
-	
+
 .content_menu ul {	
 	margin: 0px;
 	padding: 0px;
@@ -325,7 +325,7 @@ nav ul li a.current {
 	background-repeat: no-repeat;
 	padding-left: 20px;
 }
-	
+
 .content_menu ul li a: hover {
    color: #33CC99;
 }
@@ -364,6 +364,42 @@ nav ul li a.current {
 
 .searchResult .title {
 	font-weight: bold;
+}
+
+.recommendation {
+	display: block;
+	border-bottom: none;
+	color: #666666;
+}
+
+.rating img {
+	padding: 2px;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+
+.upvote {
+	border: 1px solid #FFF;
+}
+
+.downvote {
+	border: 1px solid #FFF;
+}
+
+.upvote:hover {
+	border: 1px solid #36D117;
+}
+
+.downvote:hover {
+	border: 1px solid #F72420;
+}
+
+.votes {
+	font-weight: bold;
+	font-size: 22px;
+	color: #555;
+	vertical-align: middle;
 }
 
 /**************************************************
@@ -430,7 +466,7 @@ a.divlink {
 	text-decoration: none;
 	font: 12px/100% Arial, Helvetica, sans-serif;
 }
-	
+
 .button: hover {
 	background-color: #333333;
 }

@@ -1,12 +1,21 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
-  <ul>
-    <span wicket:id="rows">
-      <li wicket:id="row">
-        <span class="searchResult" style="border-bottom: none; color: #666666; display: block;!important;" wicket:id="label">the label</span>
-      </li>
-      <span wicket:id="nested"/>
-    </span>
-  </ul>
+	<div wicket:id="rows">
+		<ul>
+			<li wicket:id="row" class="searchResult">
+				<span wicket:id="label" class="searchResult recommendation"></span>
+				<div class="rating">
+					<a wicket:id="upvote">
+						<img src="images/upvote.png" class="upvote"/>
+					</a>
+					<span wicket:id="votes" class="votes"></span>
+					<a wicket:id="downvote">
+						<img src="images/downvote.png" class="downvote"/>
+					</a>
+				</div>
+			</li>
+			<span wicket:id="nested"></span>
+		</ul>
+	</div>
 </wicket:panel>
 </html>

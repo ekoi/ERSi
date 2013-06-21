@@ -44,7 +44,7 @@ public final class RecommendationPage extends Panel {
 		add(new SearchPanel("searchPanel"));
 		List<Object> l1 = new ArrayList<Object>();
        
-        RecursivePanel rp = new RecursivePanel("recommendationPanels", l1);
+        RecursivePanel rp = new RecursivePanel("recommendationPanels", l1, "");
         rp.setOutputMarkupId(true);
         add(rp);
         

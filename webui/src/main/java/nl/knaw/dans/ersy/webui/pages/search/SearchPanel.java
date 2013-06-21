@@ -110,7 +110,7 @@ public class SearchPanel extends Panel {
 	                            	List<Object> recs = new ArrayList<Object>();
 	                            	recs.add(retrieveRecommendationDatasets(pids));
 	                            	rp.remove(recommendationPanels);
-	                            	rp.addOrReplace(new RecursivePanel("recommendationPanels", recs));
+	                            	rp.addOrReplace(new RecursivePanel("recommendationPanels", recs, pid));
 	                            	 target.add(rp);
 	                            }
 	                           
