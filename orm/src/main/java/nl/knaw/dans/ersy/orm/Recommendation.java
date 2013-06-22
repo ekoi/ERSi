@@ -188,14 +188,14 @@ public class Recommendation {
 			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
 
 				Query queryPidRel = session
-						.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pid= :pid order by rating desc, distance desc");
+						.createQuery("from PidRelevancy where miningProcess= :miningProcess and pid= :pid order by rating desc, distance desc");
 				queryPidRel.setParameter("pid", pid);
 				queryPidRel.setParameter("miningProcess", mps.get(0));
 				queryPidRel.setMaxResults(5);
 				recs.addAll(getPidsFromPidRelevance(queryPidRel, true));
 
 				Query queryPid = session
-						.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.pidRel= :pidRel order by rating desc, distance desc");
+						.createQuery("from PidRelevancy where miningProcess= :miningProcess and pidRel= :pidRel order by rating desc, distance desc");
 				queryPid.setParameter("pidRel", pid);
 				queryPid.setParameter("miningProcess", mps.get(0));
 				queryPid.setMaxResults(5);

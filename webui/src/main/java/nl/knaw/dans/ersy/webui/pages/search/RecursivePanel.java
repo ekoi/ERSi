@@ -123,7 +123,12 @@ public final class RecursivePanel extends Panel {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
 						Recommendation.updateRating(idModel.getObject(), true);
-						votesModel.setObject(votesModel.getObject() + 1);
+						if (votesModel == null || votesModel.getObject() == null) {
+							votesModel.setObject(1);
+						} else {
+							votesModel.setObject(votesModel.getObject() + 1);
+						}
+						
 						target.add(row);
 					}
 				});
@@ -134,7 +139,11 @@ public final class RecursivePanel extends Panel {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
 						Recommendation.updateRating(idModel.getObject(), false);
-						votesModel.setObject(votesModel.getObject() - 1);
+						if (votesModel == null || votesModel.getObject() == null) {
+							votesModel.setObject(-1);
+						} else {
+							votesModel.setObject(votesModel.getObject() - 1);
+						}
 						target.add(row);
 					}
 				});
