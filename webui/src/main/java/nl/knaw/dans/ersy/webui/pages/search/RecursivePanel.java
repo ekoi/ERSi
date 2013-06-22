@@ -122,11 +122,6 @@ public final class RecursivePanel extends Panel {
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						if (votesModel == null || votesModel.getObject() == null) {
-							votesModel.setObject(1);
-						} else {
-							votesModel.setObject(votesModel.getObject() + 1);
-						}
 						Recommendation.updateRating(idModel.getObject(), true);
 						target.add(row);
 					}
