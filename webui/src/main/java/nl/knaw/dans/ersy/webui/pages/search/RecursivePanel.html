@@ -3,8 +3,9 @@
 	<div wicket:id="rows">
 		<ul>
 			<li wicket:id="row" class="searchResult">
-				<span wicket:id="label" class="searchResult recommendation"></span>
-				<div class="rating">
+				<span wicket:id="searchResultPanel" class="searchResult recommendation"></span>
+				<wicket:enclosure child="wmcVotes"> 
+				<div wicket:id="wmcVotes" class="rating">
 					<a wicket:id="upvote">
 						<img src="images/upvote.png" class="upvote"/>
 					</a>
@@ -13,6 +14,7 @@
 						<img src="images/downvote.png" class="downvote"/>
 					</a>
 				</div>
+				</wicket:enclosure> 
 			</li>
 			<span wicket:id="nested"></span>
 		</ul>

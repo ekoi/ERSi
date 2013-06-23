@@ -3,9 +3,8 @@ package nl.knaw.dans.ersy.webui.pages.search;
 import java.util.List;
 
 import nl.knaw.dans.ersy.orm.Recommendation;
-import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
-import nl.knaw.dans.ersy.orm.RecommendationPid;
 
+import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -102,51 +101,36 @@ public final class RecursivePanel extends Panel {
 				final WebMarkupContainer row = new WebMarkupContainer("row");
 				row.setOutputMarkupId(true);
 				final SearchHit sh = (SearchHit) modelObject;
-				row.add(new SearchResultPanel("label", new Model<SearchHit>(sh)));
+				row.add(new SearchResultPanel("searchResultPanel", new Model<SearchHit>(sh)));
 
-				final Model<Integer> idModel = new Model<Integer>();
+				//final Model<Integer> idModel = new Model<Integer>();
 				final Model<Integer> votesModel = new Model<Integer>(0);
 
-				List<RecommendationPid> recPids = Recommendation
-						.findRelevancePids(DRM.STANDARD, pid);
-				for (RecommendationPid recPid : recPids) {
-					LOG.info("pid: " + pid);
-					if (recPid.getPid().equals(sh.getPid())) {
-						LOG.info("id: " + recPid.getId());
-						idModel.setObject(recPid.getId());
-						votesModel.setObject(Recommendation.getRating(recPid.getId()));
-						break;
-					}
-					//System.out.println(sh.getPid() + " " + recPid.getPid());
-				}
+				votesModel.setObject(Recommendation.getRating(sh.getId()));
+				WebMarkupContainer wmcVotes = new WebMarkupContainer("wmcVotes", new Model<Integer>(sh.getId()));
+				wmcVotes.setVisible(sh.getId() > 0);
+				row.add(wmcVotes);
+				wmcVotes.add(new Label("votes", votesModel));
 
-				row.add(new Label("votes", votesModel));
-
-				row.add(new AjaxLink<Void>("upvote") {
+				wmcVotes.add(new AjaxLink<Void>("upvote") {
 					private static final long serialVersionUID = -2304057805873427370L;
-
+					
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						if (idModel.getObject() != null) {
-							Recommendation.updateRating(idModel.getObject(), true);
-						}else
-							LOG.error("UPVOTE idModel is EMPTY for " + pid);
-						
+						MarkupContainer mc = this.getParent();
+						Recommendation.updateRating((Integer)mc.getDefaultModelObject(), true);
 						votesModel.setObject(votesModel.getObject() + 1);
 						target.add(row);
 					}
 				});
 
-				row.add(new AjaxLink<Void>("downvote") {
+				wmcVotes.add(new AjaxLink<Void>("downvote") {
 					private static final long serialVersionUID = -7029145553763006348L;
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						if (idModel.getObject() != null)
-							Recommendation.updateRating(idModel.getObject(), false);
-						else
-							LOG.error("DOWNVOTE idModel is EMPTY for " + pid);
-						
+						MarkupContainer mc = this.getParent();
+						Recommendation.updateRating((Integer)mc.getDefaultModelObject(), false);
 						votesModel.setObject(votesModel.getObject() - 1);
 						target.add(row);
 					}

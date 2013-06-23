@@ -94,11 +94,13 @@ public class SearchPanel extends Panel {
 	                            	boolean ol = (Boolean) locationRecCheckbox.getDefaultModelObject();
 	                            	
 	                            	List<String> pids = new ArrayList<String>();
+	                            	List<Integer> ids = new ArrayList<Integer>();
 	                            	if (oa) {
 	                            		List<RecommendationPid> rl = Recommendation.findRelevancePids(DRM.STANDARD, pid);
 		                            	LOG.info("Number of recommendations: " + rl.size());
 		                            	for (RecommendationPid r : rl) {
 		                            		pids.add(r.getPid().toString());
+		                            		ids.add(r.getId());
 		                            	}
 	                            	} else if (os) {
 	                            		
@@ -108,7 +110,7 @@ public class SearchPanel extends Panel {
 	                            		
 	                            	}
 	                            	List<Object> recs = new ArrayList<Object>();
-	                            	recs.add(retrieveRecommendationDatasets(pids));
+	                            	recs.add(retrieveRecommendationDatasets(pids, ids));
 	                            	rp.remove(recommendationPanels);
 	                            	rp.addOrReplace(new RecursivePanel("recommendationPanels", recs, pid));
 	                            	 target.add(rp);
@@ -121,12 +123,22 @@ public class SearchPanel extends Panel {
 							 * @param pids
 							 * @throws XPathExpressionException
 							 */
-							private List<Object> retrieveRecommendationDatasets(List<String> pids) {
+							private List<Object> retrieveRecommendationDatasets(List<String> pids, List<Integer> ids) {
 								List<Object> recs = new ArrayList<Object>();
 								try {
 									if (!pids.isEmpty()) {
 										ArrayList<SearchHit> hits = EasyRestConnector.get().pidsSearch(pids);
-										recs.add(hits);
+										int len = hits.size();
+										for (int i=0; i<len; i++) {
+											String pid = pids.get(i);
+											SearchHit sh = hits.get(i); {
+												if (!ids.isEmpty())
+													sh.setId(ids.get(i));
+												sh.setStoreId(pid);
+												sh.setPid(pid);
+											}
+										}
+										recs.addAll(hits);
 									}
 								} catch (XPathExpressionException e) {
 									e.printStackTrace();

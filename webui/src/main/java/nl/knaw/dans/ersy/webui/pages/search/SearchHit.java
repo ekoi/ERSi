@@ -11,8 +11,13 @@ public class SearchHit implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 9001971158886116179L;
+	private int id;
 	private String title;
 	private String storeId;
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
+
 	private String creator;
 	private String dateCreated;
 	private String pid;
@@ -57,10 +62,11 @@ public class SearchHit implements Serializable{
 	}
 
 	public String getStoreId() {
-		for (String s : identifiers) {
-			if (s.startsWith("urn:nbn:"))
-				return s;
-		}
+		if (storeId.startsWith("easy-dataset") || storeId == null || storeId.equals("") )
+			for (String s : identifiers) {
+				if (s.startsWith("urn:nbn:"))
+					return s;
+			}
 		return storeId;
 	}
 
@@ -100,6 +106,20 @@ public class SearchHit implements Serializable{
 	 */
 	public void setPid(String pid) {
 		this.pid = pid;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

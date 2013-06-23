@@ -5,8 +5,6 @@ package nl.knaw.dans.ersy.webui.pages.search;
 
 import java.util.ArrayList;
 
-import nl.knaw.dans.ersy.orm.Recommendation;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
