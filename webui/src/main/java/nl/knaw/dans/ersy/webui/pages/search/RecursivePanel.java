@@ -14,6 +14,8 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This example list knows how to display sublists. It expects a list where each
@@ -25,6 +27,7 @@ public final class RecursivePanel extends Panel {
 	 * 
 	 */
 	private static final long serialVersionUID = 3951206917295739260L;
+	private static Logger LOG = LoggerFactory.getLogger(RecursivePanel.class);
 
 	/**
 	 * Constructor.
@@ -107,7 +110,9 @@ public final class RecursivePanel extends Panel {
 				List<RecommendationPid> recPids = Recommendation
 						.findRelevancePids(DRM.STANDARD, pid);
 				for (RecommendationPid recPid : recPids) {
+					LOG.info("pid: " + pid);
 					if (recPid.getPid().equals(sh.getPid())) {
+						LOG.info("id: " + recPid.getId());
 						idModel.setObject(recPid.getId());
 						votesModel.setObject(Recommendation.getRating(recPid.getId()));
 						break;
@@ -122,7 +127,12 @@ public final class RecursivePanel extends Panel {
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						Recommendation.updateRating(idModel.getObject(), true);
+						if (idModel.getObject() != null) {
+							Recommendation.updateRating(idModel.getObject(), true);
+						}else
+							LOG.error("UPVOTE idModel is EMPTY for " + pid);
+						
+						votesModel.setObject(votesModel.getObject() + 1);
 						target.add(row);
 					}
 				});
@@ -132,12 +142,12 @@ public final class RecursivePanel extends Panel {
 
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						if (votesModel == null || votesModel.getObject() == null) {
-							votesModel.setObject(-1);
-						} else {
-							votesModel.setObject(votesModel.getObject() - 1);
-						}
-						Recommendation.updateRating(idModel.getObject(), false);
+						if (idModel.getObject() != null)
+							Recommendation.updateRating(idModel.getObject(), false);
+						else
+							LOG.error("DOWNVOTE idModel is EMPTY for " + pid);
+						
+						votesModel.setObject(votesModel.getObject() - 1);
 						target.add(row);
 					}
 				});
