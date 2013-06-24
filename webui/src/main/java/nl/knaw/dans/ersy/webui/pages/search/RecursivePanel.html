@@ -6,13 +6,15 @@
 				<span wicket:id="searchResultPanel" class="searchResult recommendation"></span>
 				<wicket:enclosure child="wmcVotes"> 
 				<div wicket:id="wmcVotes" class="rating">
+					<span wicket:id="votes" style="color: #666666;font-style:oblique;"></span>&nbsp;&nbsp;
+					<span style="color: #666666;font-style:oblique;" wicket:id="voteLabel"></span>	
 					<a wicket:id="upvote">
 						<img src="images/upvote.png" class="upvote"/>
 					</a>
-					<span wicket:id="votes" class="votes"></span>
 					<a wicket:id="downvote">
 						<img src="images/downvote.png" class="downvote"/>
 					</a>
+					
 				</div>
 				</wicket:enclosure> 
 			</li>

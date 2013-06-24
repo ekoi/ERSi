@@ -103,14 +103,21 @@ public final class RecursivePanel extends Panel {
 				final SearchHit sh = (SearchHit) modelObject;
 				row.add(new SearchResultPanel("searchResultPanel", new Model<SearchHit>(sh)));
 
-				//final Model<Integer> idModel = new Model<Integer>();
-				final Model<Integer> votesModel = new Model<Integer>(0);
-
-				votesModel.setObject(Recommendation.getRating(sh.getId()));
+				final Model<Integer> votesModel = new Model<Integer>(Recommendation.getRating(sh.getId()));
+				
 				WebMarkupContainer wmcVotes = new WebMarkupContainer("wmcVotes", new Model<Integer>(sh.getId()));
 				wmcVotes.setVisible(sh.getId() > 0);
 				row.add(wmcVotes);
-				wmcVotes.add(new Label("votes", votesModel));
+				final Label voteLabel = new Label("voteLabel","Was this helpful to you?");
+				wmcVotes.add(voteLabel);
+				
+				final Label votes = new Label("votes", new Model<String>(""));
+				if (votesModel.getObject() == 1)
+					votes.setDefaultModelObject(votesModel.getObject() + " user found this helpful.");
+				else
+					votes.setDefaultModelObject(votesModel.getObject() + " users found this helpful.");
+				votes.setVisible(votesModel.getObject() > 0);
+				wmcVotes.add(votes);
 
 				wmcVotes.add(new AjaxLink<Void>("upvote") {
 					private static final long serialVersionUID = -2304057805873427370L;
@@ -120,6 +127,14 @@ public final class RecursivePanel extends Panel {
 						MarkupContainer mc = this.getParent();
 						Recommendation.updateRating((Integer)mc.getDefaultModelObject(), true);
 						votesModel.setObject(votesModel.getObject() + 1);
+						voteLabel.setDefaultModelObject("Thank you. You found this helpful.");
+						this.setVisible(false);
+						mc.get("downvote").setVisible(false);
+						if (votesModel.getObject() == 1)
+							votes.setDefaultModelObject(votesModel.getObject() + " user found this helpful.");
+						else
+							votes.setDefaultModelObject(votesModel.getObject() + " users found this helpful.");
+						votes.setVisible(votesModel.getObject() > 0);
 						target.add(row);
 					}
 				});
@@ -132,6 +147,14 @@ public final class RecursivePanel extends Panel {
 						MarkupContainer mc = this.getParent();
 						Recommendation.updateRating((Integer)mc.getDefaultModelObject(), false);
 						votesModel.setObject(votesModel.getObject() - 1);
+						voteLabel.setDefaultModelObject("Unfortunatelly. You found this not helpful.");
+						this.setVisible(false);
+						mc.get("upvote").setVisible(false);
+						if (votesModel.getObject() == 1)
+							votes.setDefaultModelObject(votesModel.getObject() + " user found this helpful.");
+						else
+							votes.setDefaultModelObject(votesModel.getObject() + " users found this helpful.");
+						votes.setVisible(votesModel.getObject() > 0);
 						target.add(row);
 					}
 				});

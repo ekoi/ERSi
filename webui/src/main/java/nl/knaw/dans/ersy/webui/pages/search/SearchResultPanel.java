@@ -6,6 +6,8 @@ package nl.knaw.dans.ersy.webui.pages.search;
 import java.util.ArrayList;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.ExternalLink;
+import org.apache.wicket.markup.html.link.PopupSettings;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
@@ -34,6 +36,15 @@ public class SearchResultPanel extends Panel {
 		Label desc = new Label("description", shorten(
 				head(hit.getDescription()), 150));
 		desc.setEscapeModelStrings(false);
+		int popupPosition = 10;
+		if (hit.getId() != 0)
+			popupPosition = 710;
+		PopupSettings googlePopupSettings = new PopupSettings(PopupSettings.RESIZABLE |
+	            PopupSettings.SCROLLBARS).setHeight(500).setWidth(700).setLeft(popupPosition);
+	    
+		add(new ExternalLink("googlePopup", "http://persistent-identifier.nl/" + hit.getStoreId(),
+	            "View in EASY").setPopupSettings(googlePopupSettings));
+		
 		add(desc);
 	}
 

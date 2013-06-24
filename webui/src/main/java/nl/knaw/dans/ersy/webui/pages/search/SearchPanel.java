@@ -83,7 +83,7 @@ public class SearchPanel extends Panel {
 	                            if (c instanceof RecommendationPage) {
 	                            	RecommendationPage rp = (RecommendationPage)c;
 	                            	Component recommendationPanels = rp.get("recommendationPanels");
-	                            	
+	                            	rp.get("recommendationLabel").setDefaultModelObject("Recommendation for " + pid);
 	                            	Component stdRecCheckbox = rp.get("stdRecCheckbox");
 	                            	boolean os = (Boolean) stdRecCheckbox.getDefaultModelObject();
 	                            	

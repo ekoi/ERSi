@@ -374,8 +374,8 @@ nav ul li a.current {
 
 .rating img {
 	padding: 2px;
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 	vertical-align: middle;
 }
 
@@ -396,8 +396,8 @@ nav ul li a.current {
 }
 
 .votes {
-	font-weight: bold;
-	font-size: 22px;
+	
+	font-style:oblique;
 	color: #555;
 	vertical-align: middle;
 }

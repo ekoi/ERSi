@@ -9,6 +9,7 @@ import nl.knaw.dans.ersy.webui.pages.search.SearchPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 
@@ -42,6 +43,8 @@ public final class RecommendationPage extends Panel {
 		super(id);
 
 		add(new SearchPanel("searchPanel"));
+		add(new Label("recommendationLabel", "Recommendation"));
+		
 		List<Object> l1 = new ArrayList<Object>();
        
         RecursivePanel rp = new RecursivePanel("recommendationPanels", l1, "");
