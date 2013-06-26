@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import nl.knaw.dans.ersy.orm.Recommendation;
-import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
+import nl.knaw.dans.ersy.orm.Recommendation.DRM;
 import nl.knaw.dans.ersy.orm.RecommendationPid;
 import nl.knaw.dans.ersy.webui.pages.RecommendationPage;
 

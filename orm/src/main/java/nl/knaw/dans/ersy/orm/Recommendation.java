@@ -1,13 +1,13 @@
 package nl.knaw.dans.ersy.orm;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import nl.knaw.dans.ersy.orm.RecommendationFromDual.DRM;
 import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
 import nl.knaw.dans.ersy.orm.util.HibernateUtil;
@@ -21,69 +21,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Recommendation {
-
+	public enum DRM {
+		ABR {public String toString(){return "ABR";}} 
+		, STANDARD {public String toString(){return "STANDARD";}} 
+		, ABR_PLUS{public String toString(){return "ABR Plus";}}
+	}
+	
 	private static Logger LOG = LoggerFactory.getLogger(Recommendation.class);
-
-	public static void main(String args[]) {
-
-		System.out.println(getAllMiningProcessMethods());
-		// updateRating(7,true);
-		// List<RecommendationPid> reccoms =
-		// findRelevancePids("STANDARD-ABR","urn:nbn:nl:ui:13-yla-ywp");
-		//
-		// System.out.println("***************");
-		// for (RecommendationPid s: reccoms) {
-		// System.out.println(s.getPid() + "\t" + s.getDistance() + "\t" +
-		// s.getId());
-		//
-		// }
-		// System.out.println("==============================================\n"
-		// + reccoms.size());
-		// updateRating(25, "P-2",false);
-		// deleteAllTables();
-		// storeTest();
-		// listMiningProcess();
-		// store();
-
-		// listMiningProcess();
-		// updateMiningProcess("Raghav", "1234567890", "0123456789");
-		// deleteMiningProcess("Raghav", "0123456789");
-	}
-
-	private static void storeTest() {
-		List<MiningProcess> mps = new ArrayList<MiningProcess>();
-		MiningProcess mp = new MiningProcess("ABR");
-		Set<PidRelevancy> s = new HashSet<PidRelevancy>();
-		for (int j = 0; j < 3; j++) {
-			PidRelevancy d = new PidRelevancy();
-			d.setMiningProcess(mp);
-			d.setPid("A");
-			d.setPidRel("R_" + j);
-			d.setDistance(0.3 * j);
-			s.add(d);
-		}
-		for (int j = 0; j < 2; j++) {
-			PidRelevancy d = new PidRelevancy();
-			d.setMiningProcess(mp);
-			d.setPid("B-" + j);
-			d.setPidRel("A");
-			d.setDistance(0.3 * j);
-			s.add(d);
-		}
-
-		for (int j = 0; j < 5; j++) {
-			PidRelevancy d = new PidRelevancy();
-			d.setMiningProcess(mp);
-			d.setPid("C");
-			d.setPidRel("X_" + j);
-			d.setDistance(0.3 * j);
-			s.add(d);
-		}
-		mp.setPidRelevancies(s);
-		mps.add(mp);
-
-		store(mps);
-	}
 
 	public static void store(List<MiningProcess> miningProcesses) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -189,7 +133,7 @@ public class Recommendation {
 			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
 
 				Query queryPidRel = session
-						.createQuery("from PidRelevancy where miningProcess= :miningProcess and (pid= :pid or pidRel= :pid) order by rating desc, distance desc");
+						.createQuery("from PidRelevancy where miningProcess= :miningProcess and (pid= :pid or pidRel= :pid) order by distance desc");
 				queryPidRel.setParameter("pid", pid);
 				queryPidRel.setParameter("miningProcess", mps.get(0));
 				queryPidRel.setMaxResults(10);
@@ -198,13 +142,25 @@ public class Recommendation {
 
 			transaction.commit();
 		} catch (HibernateException e) {
-			transaction.rollback();
+			if (transaction != null)
+				transaction.rollback();
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			session.close();
 		}
+		
+		
+		Collections.sort(recs, new Comparator<RecommendationPid>() {
+	        public int compare(RecommendationPid o1, RecommendationPid o2) {
+	        	
+	        	return o2.getRating() > o1.getRating() ? 1 : (o1.getRating() < o2.getRating() ? -1 : 0);
+	        }
+
+	    });
+		
+		
 		LOG.info("Relevancies pid size: " + recs.size());
 		LOG.info("Duration: " + convertToHumanReadableDuration((begin)));
 		return recs;
@@ -349,5 +305,4 @@ public class Recommendation {
 			session.close();
 		}
 	}
-   
 }

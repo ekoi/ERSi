@@ -1,8 +1,11 @@
 package nl.knaw.dans.ersy.orm;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import nl.knaw.dans.ersy.orm.dao.MiningProcess;
 import nl.knaw.dans.ersy.orm.dao.PidRelevancy;
 import nl.knaw.dans.ersy.orm.util.HibernateUtil;
 
@@ -11,10 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
- 
- 
-public class RecommendationFromDual {
-	
+public class RecommendationTest {
 	public enum DRM {
 		ABR {public String toString(){return "ABR";}} 
 		, STANDARD {public String toString(){return "STANDARD";}} 
@@ -24,6 +24,27 @@ public class RecommendationFromDual {
 	public static void main(String args[]) {
     	
 		System.out.println(getAllMiningProcessMethods());
+		// updateRating(7,true);
+				// List<RecommendationPid> reccoms =
+				// findRelevancePids("STANDARD-ABR","urn:nbn:nl:ui:13-yla-ywp");
+				//
+				// System.out.println("***************");
+				// for (RecommendationPid s: reccoms) {
+				// System.out.println(s.getPid() + "\t" + s.getDistance() + "\t" +
+				// s.getId());
+				//
+				// }
+				// System.out.println("==============================================\n"
+				// + reccoms.size());
+				// updateRating(25, "P-2",false);
+				// deleteAllTables();
+				// storeTest();
+				// listMiningProcess();
+				// store();
+
+				// listMiningProcess();
+				// updateMiningProcess("Raghav", "1234567890", "0123456789");
+				// deleteMiningProcess("Raghav", "0123456789");
     }
     
   public static List<String> getAllMiningProcessMethods() {
@@ -234,6 +255,39 @@ public class RecommendationFromDual {
             session.close();
         }
     }
-  
-   
+    
+    private static void storeTest() {
+		List<MiningProcess> mps = new ArrayList<MiningProcess>();
+		MiningProcess mp = new MiningProcess("ABR");
+		Set<PidRelevancy> s = new HashSet<PidRelevancy>();
+		for (int j = 0; j < 3; j++) {
+			PidRelevancy d = new PidRelevancy();
+			d.setMiningProcess(mp);
+			d.setPid("A");
+			d.setPidRel("R_" + j);
+			d.setDistance(0.3 * j);
+			s.add(d);
+		}
+		for (int j = 0; j < 2; j++) {
+			PidRelevancy d = new PidRelevancy();
+			d.setMiningProcess(mp);
+			d.setPid("B-" + j);
+			d.setPidRel("A");
+			d.setDistance(0.3 * j);
+			s.add(d);
+		}
+
+		for (int j = 0; j < 5; j++) {
+			PidRelevancy d = new PidRelevancy();
+			d.setMiningProcess(mp);
+			d.setPid("C");
+			d.setPidRel("X_" + j);
+			d.setDistance(0.3 * j);
+			s.add(d);
+		}
+		mp.setPidRelevancies(s);
+		mps.add(mp);
+
+		Recommendation.store(mps);
+	}
 }
