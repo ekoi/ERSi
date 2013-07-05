@@ -1,8 +1,6 @@
 package nl.knaw.dans.ersy.webui.pages.search;
 
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,17 +60,11 @@ public class EasyRestConnector {
 	}
 
 	public String getResource(String resource) {
-		WebResource webResource;
-		try {
-			webResource = client.resource(host + URLEncoder.encode(resource, "UTF-8"));
-			ClientResponse response = webResource.get(ClientResponse.class);
-			return response.getStatus() == 200 ? response.getEntity(String.class)
-					: null;
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "";
+		resource = resource.trim().replaceAll(" ", "+");
+		WebResource webResource = client.resource(host + resource);
+		ClientResponse response = webResource.get(ClientResponse.class);
+		return response.getStatus() == 200 ? response.getEntity(String.class)
+				: null;
 	}
 
 	public static EasyRestConnector get() {
