@@ -17,18 +17,20 @@ public class SearchHit implements Serializable{
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
 	}
-
+	
 	private String creator;
 	private String dateCreated;
 	private String pid;
 	private ArrayList<String> description;
 	private ArrayList<String> identifiers;
+	private ArrayList<String> subjects;
 	private ArrayList<String> coverage;
 	private String accessCategory;
 
 	public SearchHit(Node hitNode) {
 		description = new ArrayList<String>();
 		identifiers = new ArrayList<String>();
+		subjects = new ArrayList<String>();
 		coverage = new ArrayList<String>();
 		NodeList nodes = hitNode.getChildNodes();
 		for (int i = 0; i < nodes.getLength(); i++)
@@ -50,6 +52,8 @@ public class SearchHit implements Serializable{
 			description.add(content);
 		} else if (name.equals("identifier")) {
 			identifiers.add(content);
+		} else if (name.equals("subjects")) {
+			subjects.add(content);
 		} else if (name.equals("coverage")) {
 			coverage.add(content);
 		} else if (name.equals("accessCategory")) {
@@ -65,7 +69,7 @@ public class SearchHit implements Serializable{
 		if (storeId.startsWith("easy-dataset") || storeId == null || storeId.equals("") )
 			for (String s : identifiers) {
 				if (s.startsWith("urn:nbn:"))
-					return s;
+					return s.trim();
 			}
 		return storeId;
 	}
@@ -120,6 +124,20 @@ public class SearchHit implements Serializable{
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the subjects
+	 */
+	public ArrayList<String> getSubjects() {
+		return subjects;
+	}
+
+	/**
+	 * @param subjects the subjects to set
+	 */
+	public void setSubjects(ArrayList<String> subjects) {
+		this.subjects = subjects;
 	}
 
 }

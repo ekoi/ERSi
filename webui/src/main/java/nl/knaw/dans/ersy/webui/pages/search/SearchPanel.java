@@ -129,15 +129,27 @@ public class SearchPanel extends Panel {
 									if (!pids.isEmpty()) {
 										ArrayList<SearchHit> hits = EasyRestConnector.get().pidsSearch(pids);
 										int len = hits.size();
-										for (int i=0; i<len; i++) {
-											String pid = pids.get(i);
-											SearchHit sh = hits.get(i); {
-												if (!ids.isEmpty())
-													sh.setId(ids.get(i));
-												sh.setStoreId(pid);
-												sh.setPid(pid);
+										int k = 0;
+										for (String pid : pids) {
+											for (SearchHit sh:hits) {
+												if (sh.getStoreId().equals(pid)) {
+													sh.setId(ids.get(k));
+													break;
+												}
 											}
+											k++;
 										}
+										
+										
+//										for (int i=0; i<len; i++) {
+//											String pid = pids.get(i);
+//											SearchHit sh = hits.get(i); {
+//												if (!ids.isEmpty())
+//													sh.setId(ids.get(i));
+//												sh.setStoreId(pid);
+//												sh.setPid(pid);
+//											}
+//										}
 										recs.addAll(hits);
 									}
 								} catch (XPathExpressionException e) {
