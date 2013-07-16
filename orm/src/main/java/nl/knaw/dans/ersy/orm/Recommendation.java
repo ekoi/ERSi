@@ -178,6 +178,34 @@ public class Recommendation {
 		return s;
 	}
 
+	public static List<MiningMethod> getAllMiningProcess() {
+		List<MiningMethod> miningMethods = new ArrayList<MiningMethod>();
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+
+			transaction = session.beginTransaction();
+			Query query = session
+					.createQuery("from MiningProcess");
+			List<MiningProcess> mps = query.list();
+			for (MiningProcess mp : mps) {
+				MiningMethod mm = new MiningMethod();
+				mm.setId(mp.getMpid());
+				mm.setMethodName(mp.getMethodName());
+				mm.setExecutionDate(mp.getExecutionDate());
+				miningMethods.add(mm);
+			}
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return miningMethods;
+	}
+	
 	public static List<RecommendationPid> findRelevancePids(DRM standard,
 			String pid, double distance) {
 		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
@@ -190,6 +218,40 @@ public class Recommendation {
 			Query query = session
 					.createQuery("from MiningProcess where methodName= :methodName");
 			query.setParameter("methodName", standard.toString());
+			List<MiningProcess> mps = query.list();
+			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
+				int mpid = mps.get(0).getMpid();
+
+				Query queryPidRel = session
+						.createQuery("from PidRelevancy p where p.miningProcess= :miningProcess and p.distance> :distance and (p.pid= :pid or p.pidRel= :pid) order by distance desc, rating desc");
+				queryPidRel.setParameter("pid", pid);
+				queryPidRel.setParameter("miningProcess", mps.get(0));
+				queryPidRel.setParameter("distance", distance);
+				recs.addAll(getPidsFromPidRelevance(queryPidRel, pid));
+			}
+
+			transaction.commit();
+		} catch (HibernateException e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return recs;
+	}
+	
+	
+	public static List<RecommendationPid> findRelevancePids(String pid, double distance, String methodName) {
+		List<RecommendationPid> recs = new ArrayList<RecommendationPid>();
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+
+			transaction = session.beginTransaction();
+			Query query = session
+					.createQuery("from MiningProcess where methodName= :methodName");
+			query.setParameter("methodName", methodName);
 			List<MiningProcess> mps = query.list();
 			if (mps != null && !mps.isEmpty() && mps.size() == 1) {
 				int mpid = mps.get(0).getMpid();
@@ -304,5 +366,11 @@ public class Recommendation {
 		} finally {
 			session.close();
 		}
+	}
+	
+	public static void main(String args[]) {
+		List<MiningMethod> lmm = getAllMiningProcess();
+		for (MiningMethod mm:lmm)
+		System.out.println(mm.getExecutionDate());
 	}
 }

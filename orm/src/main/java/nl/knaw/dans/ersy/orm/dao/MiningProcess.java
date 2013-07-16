@@ -1,5 +1,6 @@
 package nl.knaw.dans.ersy.orm.dao;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,6 +20,9 @@ public class MiningProcess {
      
     @Column(name = "method_name")
     private String methodName;
+    
+    @Column(name = "execution_date")
+    private Date executionDate;
      
     @OneToMany(mappedBy="miningProcess")
     private Set<PidRelevancy> pidRelevancies;
@@ -42,6 +46,12 @@ public class MiningProcess {
 	}
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
+	}
+	public Date getExecutionDate() {
+		return executionDate;
+	}
+	public void setExecutionDate(Date executionDate) {
+		this.executionDate = executionDate;
 	}
 	public Set<PidRelevancy> getPidRelevancies() {
 		return pidRelevancies;
